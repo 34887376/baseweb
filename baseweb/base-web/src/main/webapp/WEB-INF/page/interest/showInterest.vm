@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="yes" name="apple-touch-fullscreen" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="#ffffff" name="msapplication-TileColor" />
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+	name="viewport" />
+<title>靠谱APP</title>
+<link rel="stylesheet" href="../../../css/jd/skin/index.css" />
+
+</head>
+<body class="bgwhite body-bottom">
+	<div class="common-wrapper bg-fff">
+		<nav>
+			<div class="n-center pub-type">兴趣</div>
+		</nav>
+		<div class="menu">
+			<i class="down-icon fr"></i>
+			<ul class="bdb-1px" id="subjectList">
+				#foreach($subject in $subjectVOList)
+				#if($!{subject.id}==$!{selSubject.id})
+				<li id=$!{subject.id} class="curr" value=$!{subject.id} onclick="submitSubject(this);">
+				#else
+				<li id=$!{subject.id} class="subjectId" value=$!{subject.id} onclick="submitSubject(this);">
+				#end
+				<label>$!{subject.name}</label>
+				#end
+			</ul>
+		</div>
+ 		<div class="interest-pro-w" id="interestSkuList">
+ 			#if(${userSkuVOList}&& ${userSkuVOList.size()}>0)
+			#foreach($user in $userSkuVOList)
+			<div class="interest-pro fl">
+				<div class="inp-pic">
+					<i id=$!{user.skuId} class="love-icon" value=$!{user.skuId}
+						onclick="change($!{user.skuId})"></i> <img src=$!{user.imgUrl}>
+				</div>
+				<div class="inp-name">
+					<a href="http://item.m.jd.com/product/${user.skuId}.html">$!{user.skuName}</a>
+				</div>
+				<div class="inp-num">
+					#if($!{user.price})
+						<span class="inp-pay"> ¥$!{user.price} </span> 
+					#end
+					<span class="inp-from"> 来自：$!{user.fromName} </span>
+				</div>
+			</div>
+			#end
+			#else
+    		<div class="cos-pic">
+           	 	<p>该主题下没有感兴趣商品，请先将商品加入购物车或加关注！！！</p>
+       	 	</div>
+			#end			
+		</div> 
+#parse("/WEB-INF/page/common/footer.vm")		
+	</div>
+	<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+	<script src="../../../js/interest/interestInit.js?r=20150727"></script>
+</body>
+</html>

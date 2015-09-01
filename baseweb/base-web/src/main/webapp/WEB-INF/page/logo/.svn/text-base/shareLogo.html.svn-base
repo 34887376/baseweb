@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+   	<link rel="stylesheet" href="../../../css/jd/skin/index.css"/>
+   	</head> 
+<body class="bg2 body-bottom">   
+<div class="common-wrapper">
+    <nav>
+        <a href="/" class="n-left"><i class="back"></i>返回</a>
+        <div class="n-center pub-type">扫我一下哈</div>
+    </nav>
+	<div class="eqimg" id="headInfo">
+			<img src="../../../css/jd/skin/i/kaopulog.png" id="head-portrait"/>
+			<h2>靠   谱</h2>
+	</div>
+</div> 
+</body>
+</html>

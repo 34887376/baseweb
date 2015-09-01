@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/buy/purchase_java/!svn/ver/45240/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring
+END
+spring-service.xml
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/buy/purchase_java/!svn/ver/45556/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/spring-service.xml
+END
+spring-dao.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/buy/purchase_java/!svn/ver/45490/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/spring-dao.xml
+END
+spring-transaction.xml
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/buy/purchase_java/!svn/ver/45240/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/spring-transaction.xml
+END
+spring-jimdb.xml
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/buy/purchase_java/!svn/ver/45431/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/spring-jimdb.xml
+END
+spring-login.xml
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/buy/purchase_java/!svn/ver/45483/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/spring-login.xml
+END
+spring-manager.xml
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/buy/purchase_java/!svn/ver/45552/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/spring-manager.xml
+END
+spring-config-worker.xml
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/buy/purchase_java/!svn/ver/45571/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/spring-config-worker.xml
+END
+spring-datasource-mysql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/buy/purchase_java/!svn/ver/45240/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/spring-datasource-mysql.xml
+END

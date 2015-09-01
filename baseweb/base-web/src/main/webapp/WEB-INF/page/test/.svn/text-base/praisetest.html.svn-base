@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<title>Insert title here</title>
+</head>
+<body>
+    <script src="js/jquery-1.11.3/jquery-1.11.3.js"></script>
+<script >
+function   addPraise(){
+	var belongTopicId=$("#belongTopicId").val();
+	var targetPin=$("#targetPin").val();
+	alert("belongTopicId:"+belongTopicId+" targetPin:"+targetPin);
+	var url="/praise/addPraise.action?belongTopicId="+belongTopicId+"&targetPin="+targetPin;
+	var param="";
+	
+	$.post(url,param,function(data){
+		 //alert("praiseId:"+data.praiseId);
+		 var praiseId=data.praiseId;
+		 if(praiseId>0){
+		 $("#praiseId").val(praiseId);
+			 alert(" praiseId tag get val after:"+ $("#praiseId").val())
+			 $("#delPraise").show();
+			 $("#addPraise").hide();
+		 }
+		 else{
+			 alert("add fail");
+		 }
+		//var praiseId=data
+	},"json")
+	
+}
+function   delPraise(){
+	var belongTopicId=$("#belongTopicId").val();
+	var targetPin=$("#targetPin").val();
+	var praiseId= $("#praiseId").val();
+	alert("belongTopicId:"+belongTopicId+" targetPin:"+targetPin+" praiseId："+praiseId);
+	// 是否需要校验？
+	var url="/praise/delPraise.action?belongTopicId="+belongTopicId+"&targetPin="+targetPin+"&praiseId="+praiseId;
+	var param="";
+	
+	$.post(url,param,function(data){
+		 var isSuccess=data.isSuccess;
+		 if(isSuccess){
+			 alert("delSuccess");
+			 $("#praiseId").val("");
+			 $("#delPraise").hide();
+			 $("#addPraise").show();
+		 }
+	},"json")
+	
+}
+//数据测试用
+function   delPraiseTest(){
+	var belongTopicId=$("#belongTopicId").val();
+	var targetPin=$("#targetPin").val();
+	var praiseId= $("#praiseId").val();
+	alert("belongTopicId:"+belongTopicId+" targetPin:"+targetPin+" praiseId："+praiseId);
+	// 是否需要校验？
+	var url="/praise/delPraise.action?belongTopicId="+belongTopicId+"&targetPin="+targetPin+"&praiseId="+praiseId;
+	var param="";
+	
+	$.post(url,param,function(data){
+		 var isSuccess=data.isSuccess;
+		 if(isSuccess){
+			 alert("delSuccess");
+		 }
+	},"json")
+	
+}
+
+function queryPraiseByTopicId(){
+	var belongTopicId=$("#belongTopicId").val();
+	alert("belongTopicId:"+belongTopicId);
+	// 是否需要校验？queryPariseByTopicId
+	var url="/praise/queryPraiseByTopicId.action?belongTopicId="+belongTopicId;
+	var param="";
+	
+	$.post(url,param,function(data){
+	 
+	$("#showArea").html(data);
+		
+	})
+	
+}
+
+function queryPraiseByPin(){
+ 
+	// 是否需要校验？
+	var url="/praise/queryPraiseByPin.action";
+	var param="";
+	$.post(url,param,function(data){
+	$("#showArea").html(data);
+	})
+	
+}
+function queryPraiseCountByTopicId(){
+	var belongTopicId=$("#belongTopicId").val();
+	alert("belongTopicId:"+belongTopicId);
+	// 是否需要校验？queryPariseByTopicId
+	var url="/praise/queryPraiseCountByTopicId.action?belongTopicId="+belongTopicId;
+	var param="";
+	
+	$.post(url,param,function(data){
+	 
+       alert("coun json:"+data);
+		
+	})
+	
+}
+
+function queryPraiseCountByTargetPin(){
+ 
+	// 是否需要校验？
+	var url="/praise/queryPraiseCountByTargetPin.action";
+	var param="";
+	$.post(url,param,function(data){
+		 alert("coun json:"+data);
+	})
+}
+</script>
+topicId:<input id="belongTopicId"  type="text"/>
+targetPin:<input id="targetPin"  type="text"/>
+
+<input type="text"  id="praiseId">
+<br>
+ <input type="button"  id="addPraise"   value="addPraise" onclick="addPraise()"/>
+<br>
+
+ <input type="button"  id="delPraise"  value="delPraise"   style="display: none;"  onclick="delPraise()"/>
+ 
+ ******************************data_test****************************<br>
+ <input type="button"  id="delPraise1"  value="delPraise"    onclick="delPraiseTest()"/>
+ <br>
+ <input type="button"    value="queryPraiseByTopicId"    onclick="queryPraiseByTopicId()"/>
+ <br>
+ <input type="button"   value="queryPraiseByPin"    onclick="queryPraiseByPin()"/>
+ <br>
+ <span id="showArea">
+ 
+ </span>
+ <br>
+  <input type="button"    value="queryPraiseCountByTopicId"    onclick="queryPraiseCountByTopicId()"/>
+ <br>
+ <input type="button"   value="queryPraiseCountByPin"    onclick="queryPraiseCountByTargetPin()"/>
+ <br>
+</body>
+</html>

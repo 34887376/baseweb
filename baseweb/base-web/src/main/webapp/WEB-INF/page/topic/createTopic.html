@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+    <!-- Bootstrap -->
+    <link href="../../../css/bootstrap-3.3.4/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>你好，世界！</h1>
+	<form action="/topic/createTopic.action" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+	    <label for="subjectId">所属话题</label>
+	    <select class="form-control" id="subjectId" name="topicAbstractInfoVO.belongSubjectId">
+          <option value="1">手机</option>
+          <option value="2">电脑</option>
+          <option value="3">数码</option>
+          <option value="4">服饰</option>
+          <option value="5">图书</option>
+        </select>
+	  </div>
+	  <div class="form-group">
+	    <label for="content">话题内容</label>
+	    <textarea class="form-control" id="content" name="topicDetailInfoVO.content" rows="3" placeholder="填写内容"></textarea>
+	  </div>
+	  <div class="form-group">
+	    <label for="uploadImg">上传图片</label>
+	    <div class="table-responsive">
+          <table class="table">
+            <tr id="topicImgFileTr" style="display:none">
+              <td id="topicImgFiletd"><input id="upfile1" name="img1" type="file" onChange="preivew(this);"></td>
+            </tr>
+            <tr id="topicImgTableTr">
+              <td class="info" id="addImgButton"><img src="../../../img/topic/topicAddImg.png" alt="添加图片" class="img-rounded" onclick="addImg('topicImgTableTr');"></td>
+            </tr>
+          </table>
+        </div>
+	    <p class="help-block">Example block-level help text here.</p>
+	  </div>
+	  <div class="form-group">
+	    <label for="bindmark">绑定标签(用逗号分割)</label>
+	    <input type="txt" id="marks1" name="topicAbstractInfoVO.markIdList[0]">
+	    <input type="txt" id="marks2" name="topicAbstractInfoVO.markIdList[1]">
+	    <input type="txt" id="marks3" name="topicAbstractInfoVO.markIdList[2]">
+	    <input type="txt" id="marks4" name="topicAbstractInfoVO.markIdList[3]">
+	    <input type="txt" id="marks5" name="topicAbstractInfoVO.markIdList[4]">
+	    <p class="help-block">Example block-level help text here.</p>
+	  </div>
+	  <div class="checkbox">
+	    <label>
+	      <input type="checkbox"> Check me out
+	    </label>
+	  </div>
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../../js/bootstrap-3.3.4/bootstrap.min.js"></script>
+    <script src="../../../js/topic/createtopic.js"></script>
+  </body>
+</html>

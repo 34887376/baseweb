@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:saf="http://code.360buy.com/schema/saf"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.360buy.com/schema/saf
+       http://code.360buy.com/schema/saf/saf.xsd"
+	default-autowire="byName" default-lazy-init="false">
+
+	<saf:application name="kaopuweb" />
+	<saf:registry address="${saf.registry.address}" />
+
+	<!-- 商品评价服务 -->
+	<saf:reference id="clubSafService"
+		interface="com.jd.sns.club.soa.saf.open.ClubSafService" version="0.0.1"
+		group="CLUB_OPEN_API" timeout="800" />
+
+	<!-- 分类服务 -->
+	<saf:reference id="safCategoryService"
+		interface="jd.gms.category.dubbo.service.CategoryService" version="1.0"
+		group="new" />
+		
+	<!-- 获取商品信息服务 -->
+	<saf:reference id="tradeService"
+		interface="com.jd.catagory.pbim.pbia.dubbo.service.TradeService"
+		version="1.0" timeout="2000" retries="2" loadbalance="random" group="test_trade"
+		url="dubbo://192.168.153.139:20880/" />
+		
+	<!-- 订单列表服务 -->
+	<saf:reference id="orderListExportSaf"
+		interface="com.jd.order.list.export.orderlist.OrderListExport" group="ordercenter-test"
+		timeout="1000" check="false" version="1.0.0" />
+		
+	<!-- 购物车依赖 -->
+	<saf:reference id="cartService"
+		interface="com.jd.cart.client.service.CartService"   url="saf://192.168.225.105:36060"
+		version="1.1.2" protocol="dubbo" timeout="500" loadbalance="random"
+		check="true" lazy="true" />
+</beans>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="dataSourceWriteForCircles" parent="parentDataSource">
+		<property name="driverClassName" value="${jdbc.interest.driver}" />
+		<property name="url" value="${jdbc.interest.url}" />
+		<property name="username" value="${jdbc.interest.username}" />
+		<property name="password" value="${jdbc.interest.password}" />
+	</bean>
+
+	<bean id="dataSourceReadForCircles" parent="parentDataSource">
+		<property name="driverClassName" value="${jdbc.interest.driver}" />
+		<property name="url" value="${jdbc.interest.url}" />
+		<property name="username" value="${jdbc.interest.username}" />
+		<property name="password" value="${jdbc.interest.password}" />
+	</bean>
+
+	<bean id="sqlMapClientForCircles" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap-config.xml" />
+		<property name="dataSource" ref="dataSourceWriteForCircles" />
+	</bean>
+
+	<!-- 配置圈子数据库下分库分表的读写数据源 start -->
+	<bean id="circlesReadDataSource"
+		class="com.jd.sharding.client.datasource.DefaultMultiDataSourcesService">
+		<property name="dataSourcePool">
+			<map>
+				<!-- key值前缀和TableConfig中配置的数据库前缀保持一致 -->
+				<entry key="kaopu_interestdb0" value-ref="dataSourceReadForCircles" />
+			</map>
+		</property>
+	</bean>
+	<bean id="circlesWriteDataSource"
+		class="com.jd.sharding.client.datasource.DefaultMultiDataSourcesService">
+		<property name="dataSourcePool">
+			<map>
+				<!-- key值前缀和TableConfig中配置的数据库前缀保持一致 -->
+				<entry key="kaopu_interestdb0" value-ref="dataSourceWriteForCircles" />
+			</map>
+		</property>
+	</bean>
+	<!-- 配置圈子数据库下分库分表的读写数据源 end -->
+
+
+	<!-- ########################################圈子分库分表配置 start ################################################# -->
+	<!-- 水平切分数据库的路由规则 start -->
+	<bean id="circlesTableConfig" class="com.jd.sharding.client.config.TableConfig">
+		<!--MultipleDataSourcesService里面的key的前缀，如需要后缀，可以设置dbIndexSuffix属性 -->
+		<property name="dbIndexPrefix" value="kaopu_interestdb" />
+		<!-- 分库的库的个数 -->
+		<property name="dbCount" value="1" />
+		<!-- 物理表名的前缀，如需要后缀，可以设置tbNameSuffix属性 -->
+		<property name="tbNamePrefix" value="circles" />
+		<!-- 分表后的表的张数 -->
+		<property name="tableCount" value="99" />
+		<!-- 分库分表的字段名，通过反射从parameterObject中获取 -->
+		<property name="routeField" value="skuid" />
+		<!-- 需要传给ibatis引擎的物理表名的字段，通过反射往parameterObject中写入 -->
+		<property name="tabNameField" value="tableName" />
+		<!-- 路由规则，目前提供了简单的取模求余方式，如果分库的字段是字符串，会先用murmurhash计算hash值 -->
+		<property name="routeRule">
+			<bean class="com.jd.sharding.client.rule.SimpleRouteRule">
+				<!-- 分库的库的个数 -->
+				<constructor-arg index="0" value="1" />
+				<!-- 分表后的表的张数 -->
+				<constructor-arg index="1" value="99" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="circlesRouter" class="com.jd.sharding.client.router.SimpleRouter">
+		<property name="shardConfig">
+			<bean class="com.jd.sharding.client.config.ShardConfig">
+				<property name="tableConfig">
+					<map>
+						<!-- key为逻辑表名 -->
+						<entry key="circles" value-ref="circlesTableConfig" />
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 水平切分数据库的路由规则 end -->
+
+	<!-- 圈子写库分库分表数据配置 start -->
+	<bean id="circlesWriteShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="circles" />
+		<property name="sqlMapClient" ref="sqlMapClientForCircles" />
+		<property name="dataSourcesService" ref="circlesWriteDataSource" />
+		<property name="router" ref="circlesRouter" />
+		<property name="dataSource" ref="dataSourceWriteForCircles"></property>
+	</bean>
+	<!-- 圈子写库分库分表数据配置 end -->
+
+
+	<!-- 圈子读库水平切分的数据库模板配置 start -->
+	<bean id="circlesReadShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="circles" />
+		<property name="sqlMapClient" ref="sqlMapClientForCircles" />
+		<property name="dataSourcesService" ref="circlesReadDataSource" />
+		<property name="router" ref="circlesRouter" />
+		<property name="dataSource" ref="dataSourceReadForCircles"></property>
+	</bean>
+	<!-- 圈子读库水平切分的数据库模板配置 end -->
+	<!-- ########################################圈子分库分表配置 end ################################################# -->
+
+</beans>

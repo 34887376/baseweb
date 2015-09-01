@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+	<bean id="configClient"
+		class="com.jd.cachecloud.cfs.client.ConfigRESTClientFactoryBean">
+		<property name="serviceEndpoint" value="http://cfs.cache.jd.local" />
+		<property name="localSave" value="false"/>
+	</bean>
+	<!-- 2.Jim客户端配置 -->
+	<bean id="jimClient" class="com.jd.jim.cli.ReloadableJimClientFactoryBean">
+		<property name="configClient" ref="configClient" />
+		<!-- 配置拥有集群的客户端配置ID(必选) -->
+		<property name="configId" value="/redis/cluster/1206" />
+		<!-- 配置拥有集群的客户端配置Token(必选) -->
+		<property name="token" value="1434093110601" />
+	</bean>
+</beans>

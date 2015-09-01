@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+    <link rel="stylesheet" href="../../../css/jd/skin/index.css"/>
+</head> 
+<body>   
+<form method="post">
+<div class="common-wrapper">
+    <nav>
+        <a href="/" class="n-left"><i class="back"></i>返回</a>
+    </nav>
+    #if(${topic})
+    #else
+    	<div class="cos-pic">
+            <p>出错啦！！！</p>
+        </div>
+    #end
+    <div class="con-show">
+        <div class="cos-people">
+            <div class="cos-head">
+                <img src="$!{topic.headImgUrl}">
+            </div>
+            <div class="cos-name">
+                <p>$!{topic.niceName}</p>
+                <span>$!{topic.timeDetailShow}</span>
+            </div>
+            <div class="cos-interest">
+                <a href="javascript:;">与我感兴趣同款手机</a>
+            </div>
+        </div>
+        <div class="cos-pic">
+            <p>$!{topic.content}</p>
+            <div>
+            	#foreach( $imgUrl in $topic.imgUrlList)
+                    <img src="$imgUrl"/>
+            	#end
+            </div>
+            
+        </div>
+        
+        #if($skuList)
+        	#foreach($skuInfo in $skuList)
+		        <div class="cos-item">
+		        <a href="http://item.m.jd.com/product/${skuInfo.skuId}.html">
+		            <div class="cos-item-l">
+		                <img src="$!{skuInfo.imgUrl}" width="90" height="80">
+		            </div>
+		            <div class="cos-item-r">
+		                <img src="../../../css/jd/skin/i/love-icon.png" width="14" height="12">
+		            </div>
+		            <div class="cos-item-m">
+		                <p>$!{skuInfo.skuName}
+		                </p>
+		                #if($!{skuInfo.price})
+		                <span>
+		                    ¥$!{skuInfo.price}
+		                </span>
+		                #end
+		            </div></a>
+		        </div>
+        	#end
+        #end 
+       <div class="cos-bottom">       			
+<!-- 	        <div class="reply-count">
+	            <i class="reply-icon"></i>回复(${commentContent.size()})
+	        </div> -->
+            <div id="replyCount" class="cos-b-txt">
+                <img src="../../../css/jd/skin/i/reply-icon.png" id="topicComment" onclick="showReply()" width="14" height="12" >${commentContent.size()}
+            </div>	      
+            <div class="cos-b-num">
+	            #if($topic.pinPraiseId>0)
+              <i class="love-icon_cancel"  praiseId="$topic.pinPraiseId"  onclick="praise($topic.topicId,'$topic.pin',this);">del</i>(<span id="priaseTimes">$topic.priaseTimes</span>个)赞
+                #end
+                #if($topic.pinPraiseId<=0)
+                 <i class="love-icon_add"  praiseId="$topic.pinPraiseId"  onclick="praise($topic.topicId,'$topic.pin',this);">add </i>(<span id="priaseTimes">$topic.priaseTimes</span>个)赞
+                #end
+            </div>
+            
+        </div>
+        <div id="show_reply" class="list">
+         #if($commentContent)
+         #foreach($contentItem in $commentContent)
+    		<div class="item bdb-1px">
+            	<div class="fl">
+                	<img src="$!{contentItem.imgPathAuthor}"/>
+            	</div>
+            	<div class="des">
+                	<h3>$!{contentItem.nameAuthor}</h3>
+                	<!--nameAuthor表示回复给我的那个人的用户名，commentAuthor表示回复给我的那个人的pin,commentID表示回复者这条评论的id，belongTitle表示属于的话题，2表示我再回复的是人  -->
+                	<div class="fr"  onclick="replyMess('$!{contentItem.nameAuthor}','$!{contentItem.commentAuthor}','$!{contentItem.commentID}','$!{contentItem.belongTitle}','2')">回复</div>
+                	 <div class="fr">&nbsp;&nbsp;</div>
+                	<div class="fr"  onclick="delComment('$!{contentItem.commentID}','$!{contentItem.belongTitle}')">删除</div>
+                	<p class="time">$!{contentItem.commentDate}</p>
+                	#if($!{contentItem.replyToPin}&&$!{contentItem.commentType}==2)
+                	<p class="commet" style="color:green;">回复$!{contentItem.replyToName}：$!{contentItem.commentContent}</p>
+                	#else
+                	<p class="commet" style="color:green;">$!{contentItem.commentContent}</p>
+                	#end
+            	</div>
+        	</div>
+    	#end
+    	#end        			
+		</div>	
+    </div>
+    
+	<div class="reply-box" id="reply-box1">
+        <input type="text" id="conComment" name="conComment" placeholder="对话题发表评论："/>
+        <input type="hidden" id="conBelongTheme" name="conBelongTheme" value="$!{topic.belongSubjectId}" />
+        <a href="#" onclick="addComment($!{topic.topicId})">评论</a>
+    </div>
+
+    <div class="reply-box" id="reply-box">
+        <input type="text" id="replyCont" name="replyParam.commentContent" placeholder="回复买买提 Maitty："/>
+        <a href="#" onclick="submitReply()">回复</a>
+    </div>
+    <input type="hidden" id="replyToPin" name="replyParam.replyToPin" value="">
+    <input type="hidden" id="replyParent"  name="replyParam.commentParent" value="">
+    <input type="hidden" id="replyTitle" name="replyParam.belongTitle" value="">
+    <input type="hidden" id="replyType" name="replyParam.commentType" value="">
+</div> 
+
+
+
+</form>
+<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+<script src="../../../js/topic/content.js?r=20150707"></script>
+<script src="../../../js/praise/praise.js?r=20150707"></script>
+<script>
+/*      $(function(){
+        $("#show_reply").hide();
+     });    */   
+		
+/*         $(".commet").click(function(){
+            $("#reply-box").show();
+            $("#reply-box input").focus();
+        }); */
+/*      function myComment(){
+    		var parent = $("#myComment").parent().children().attr("class",null);
+    		$("#myComment").attr("class","curr");
+    		$("#myTopic_bg").attr("class",null);
+    		window.location.href = "/discuss/showReplyComment.action";
+    	}
+    	function myTopic(){
+    		window.location.href = "/home/home.action";
+    	} */
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="yes" name="apple-touch-fullscreen" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="#ffffff" name="msapplication-TileColor" />
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+	name="viewport" />
+<title>靠谱APP</title>
+<link rel="stylesheet" href="../../../css/jd/skin/index.css" />
+<link rel="stylesheet" href="../../../css/zoom/zoom.css" />
+
+</head>
+<body class="body-bottom">
+	<div class="common-wrapper">
+    <nav>
+        <a href="/home/setting.action"    class="n-right">设置</a>
+    </nav>
+
+		<div class="msg" id="headInfo">
+			<img src="$!{userInfo.imgUrl}" id="head-portrait" />
+			<h3>$!{userInfo.nickName}</h3>
+			<div class="sets">
+				<p class="txt">
+				经常逛的圈子：
+				#if($subjectList)
+				    #foreach($subject in $subjectList)
+				      ${subject.name}
+				    #end
+				#end
+				</p>
+			</div>
+		</div>
+
+		<div class="home-types bdb-1px">
+			<ul>
+				<li id="myTopic_bg" onclick="myTopic()" class="curr"><label>我的话题</label>
+				<!-- 
+				 <i class="home-count-bg"><span>1</span></i>
+				 -->
+				</li>
+				<li id="myComment" onclick="myComment()"><label>我的评论</label>
+				#if($!{commentCount}>0)
+				 <i id="comment_count" class="home-count-bg"><span>$!{commentCount}</span></i>
+				 #end
+				</li>
+			</ul>
+		</div>
+
+		<div id="my_home" class="list">
+
+			#if($topicList) 
+			#foreach( $topic in $topicList)
+			<div class="item bdb-1px">
+				<div class="fl">
+					<img src="$!{topic.headImgUrl}" />
+				</div>
+				<div class="fr">与我感兴趣同款手机</div>
+				<div class="des">
+					<h3>$!{topic.niceName}</h3>
+					<p class="time">$!{topic.timeDetailShow}</p>
+					<p class="commet" onclick="goToContent(${topic.topicId});">$!{topic.contentAbstract}</p>
+					#if($topic.imgUrlList)
+						<div class="gallery">
+							#foreach( $imgUrl in $topic.imgUrlList) 
+								<div class="pics"><a href="$imgUrl"><img src="$imgUrl"/></a></div>
+							#end
+						</div>
+					#else 
+					#end
+					<div class="tags">
+						#if($topic.markIdList) 
+						#foreach( $markInfo in $topic.markInfoList)
+						<a href="http://item.m.jd.com/product/${markInfo.markId}.html"><img src="${markInfo.markImgUrl}" alt=""></a> 
+						#end 
+						#end
+						<div class="fr">
+							<div class="reply-count">
+								<i class="reply-icon"></i>${topic.commentTimes}
+							</div>
+							<div class="love">
+							(<span
+									id="priaseTimes">$topic.priaseTimes</span>个)赞
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			#end 
+			#end
+		</div>
+
+    <div class="reply-box" id="reply-box">
+        <input type="text" id="replyCont" name="replyParam.commentContent" placeholder="回复买买提 Maitty："/>
+        <a href="#" onclick="submitReply()">回复</a>
+    </div>
+    <input type="hidden" name="replyParam.commentAuthor" id="commentAuthor" value="$!{commentAndReply.pin}">
+    <input type="hidden" id="replyToPin" name="replyParam.replyToPin" value="">
+    <input type="hidden" id="replyParent"  name="replyParam.commentParent" value="">
+    <input type="hidden" id="replyTitle" name="replyParam.belongTitle" value="">
+    <input type="hidden" id="replyType" name="replyParam.commentType" value="">
+
+		#parse("/WEB-INF/page/common/footer.vm")
+	</div>
+
+	<div class="popup-w" id="popup-w"></div>
+	<div class="popup" id="popup">
+		<div class="title">更换头像</div>
+		<div class="bdb-1px">拍照上传</div>
+		<div onclick="upHeadImg();">相册上传</div>
+		<div class="cancel" id="cancel">取消</div>
+	</div>
+	<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+	<script src="../../../js/home/home.js?r=20150707"></script>
+	<script src="../../../js/zoom/zoom.js?r=20150707"></script>
+	<script type="text/javascript" src="../../../js/zoom/zoom.min.js?r=20150707"></script>
+	<script>
+    $(function(){
+        $("#head-portrait").bind("click",function(){
+            $("#popup-w").show();
+            $("#popup").animate({
+                "bottom":"0px"
+            });
+        });
+        $("#cancel").bind("click",function(){
+            $("#popup-w").hide();
+            $("#popup").css("bottom","-380px");
+        });
+
+        $(".commet").click(function(){
+            $("#reply-box").show();
+            $("#reply-box input").focus();
+        });
+    });
+</script>
+
+</body>
+</html>

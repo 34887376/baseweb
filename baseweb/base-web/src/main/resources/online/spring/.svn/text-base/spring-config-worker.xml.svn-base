@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"  
+	default-autowire="byName">
+	<!-- 要调用的工作类 start -->
+	<bean id="userInfoSyncService" class="com.jd.kaopu.service.usersync.UserInfoSyncServiceImpl" />
+	<!-- 要调用的工作类 end-->
+	<!-- 定义调用对象和调用对象的方法 start -->
+	<bean id="jobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="userInfoSyncService" />
+		<property name="targetMethod" value="userSyncIncrement" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- 定义调用对象和调用对象的方法 end -->
+	<!-- 定义触发时间 start -->
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="jobDetail" />
+		<property name="cronExpression">
+			<value>0 30 3 * * ? *</value>
+		</property>
+	</bean>
+	<!-- 定义触发时间 end -->
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="schedulerFactory"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger" />
+			</list>
+		</property>
+	</bean>
+	</beans>
+	

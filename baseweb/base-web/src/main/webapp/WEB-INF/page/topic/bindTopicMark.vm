@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+    <link rel="stylesheet" href="../../../css/jd/skin/index.css"/>
+
+</head> 
+<body class="bgwhite">  
+<div class="common-wrapper">
+    <nav>
+        <a href="#" class="n-left" onclick="dropBindMark();">取消</a>
+        <a href="#" class="n-right" onclick="bindMarkSubmit();">确定</a>
+        <div class="n-center">添加商品标签</div>
+    </nav>
+    <div class="choose-tag">
+		<input id="subjectId" type="hidden" name="topicAbstractInfoVO.belongSubjectId" value="$belongSubjectId"></input>
+		<ul id="skuList">
+		#if($skuList)
+			#foreach( $sku in $skuList)
+				#if($sku.selected)
+					<li class="binded" onclick="selectSku(this);" id="$sku.skuId">
+				#else
+					<li onclick="selectSku(this);" id="$sku.skuId">
+				#end
+				
+					<input id="skuId" type="hidden" value="$sku.skuId"></input>
+                	<div class="c-img"><img src="$sku.imgUrl" alt=""></div>
+                	<div class="c-name">$sku.skuName</div>
+                	<div class="c-price">￥ $!{sku.price}</div>
+                	<div class="c-state">绑定</div>
+            	</li>
+			#end
+		#else
+			<textarea id="noSkuTip" placeholder="目前没有商品可选"></textarea>
+		#end
+        </ul>
+    </div>
+</div> 
+<script src="../../../js/jd/js/zepto.min.js"></script>
+<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+<script src="../../../js/topic/bindTopicMark.js?r=20150707"></script>
+</body>
+</html>

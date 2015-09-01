@@ -1,0 +1,23 @@
+    <div class="footer">
+        <ul id="footList">
+            <li class="footer-cur" id="togther">
+                <a href="/index.action">
+                    <i class="together-icon"></i>
+                    <p>扎堆儿</p>
+                </a>
+            </li>
+            <li id="interest">
+                <a href="/interest/obtainInterest.action">
+                    <i class="interest-icon"></i>
+                    <p>兴趣</p>
+                </a>
+            </li>
+            <li id="mine">
+                <a href="/home/home.action">
+                    <i class="me-icon"></i>
+                    <p>我</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script src="../../../js/common/footer.js?r=20150707"></script>

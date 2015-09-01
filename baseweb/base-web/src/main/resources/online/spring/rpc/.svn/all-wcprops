@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/buy/purchase_java/!svn/ver/45240/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/rpc
+END
+spring-rpc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/buy/purchase_java/!svn/ver/45835/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/rpc/spring-rpc.xml
+END
+spring-saf-client.xml
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/buy/purchase_java/!svn/ver/45656/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/rpc/spring-saf-client.xml
+END
+spring-jsf-client.xml
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/buy/purchase_java/!svn/ver/45652/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/online/spring/rpc/spring-jsf-client.xml
+END

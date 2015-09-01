@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<title>init</title>
+</head>
+    <script src="js/jquery-1.11.3/jquery-1.11.3.js"></script>
+   <script type="text/javascript">
+   function testUserRpc(){
+	   var pin=$("#pin").val();
+	   pin=$.trim(pin);
+      if(pin==null||pin==''){
+    	  alert("testUserRpc pin cannot be null!");
+    	  return false;
+      }	   
+  	var param ="pin="+pin;
+    alert("param:"+param);
+  	$.ajax({
+  		  url: "/init/userRpcTest.action",
+  	      type: "POST",
+  	      data: param,
+  	      //dataType: "json",
+  	      async:true,
+  	      success: function(msg){
+                 alert("result: "+msg)
+  	      },
+  	      error:function(msg){
+  	    	 //do noting
+  	      }
+  		 });
+
+   }
+ 
+ function skuCommentRpcTest(){
+	   var skuid=$("#skuid").val();
+	   skuid=$.trim(skuid);
+    if(skuid==null||skuid==''){
+  	  alert("skuCommentRpcTest skuid cannot be null!");
+  	  return false;
+    }	   
+	var param ="skuid="+skuid;
+  alert("param:"+param);
+	$.ajax({
+		  url: "/init/skuCommentRpcTest.action",
+	      type: "POST",
+	      data: param,
+	      //dataType: "json",
+	      async:true,
+	      success: function(msg){
+               alert("result: "+msg)
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+
+ }
+ function querySkuInfo(){
+	   var skuid2=$("#skuid2").val();
+	   skuid2=$.trim(skuid2);
+    if(skuid2==null||skuid2==''){
+  	  alert("querySkuInfo skuid2 cannot be null!");
+  	  return false;
+    }	   
+	var param ="skuid2="+skuid2;
+  alert("param:"+param);
+	$.ajax({
+		  url: "/init/querySkuInfo.action",
+	      type: "POST",
+	      data: param,
+	      //dataType: "json",
+	      async:true,
+	      success: function(msg){
+               alert("result: "+msg)
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+
+ }
+ function skuCategoryRPCTest(){
+	   var categoryId=$("#categoryId").val();
+	   categoryId=$.trim(categoryId);
+    if(categoryId==null||categoryId==''){
+  	  alert("skuCommentRpcTest skuid cannot be null!");
+  	  return false;
+    }	   
+	var param ="categoryId="+categoryId;
+     alert("param:"+param);
+	$.ajax({
+		  url: "/init/skuCategoryRPCTest.action",
+	      type: "POST",
+	      data: param,
+	      //dataType: "json",
+	      async:true,
+	      success: function(msg){
+               alert("result: "+msg)
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+
+ }
+ function categoryInfoRpcTest(){
+ 
+	var param ="";
+    
+	$.ajax({
+		  url: "/init/categoryInfoRpcTest.action",
+	      type: "POST",
+	      data: param,
+	      //dataType: "json",
+	      async:true,
+	      success: function(msg){
+               alert("result: "+msg)
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+
+ }
+ function dataInit(){
+ 
+	var param ="";
+    
+	$.ajax({
+		  url: "/init/dataInit.action",
+	      type: "POST",
+	      data: param,
+	      //dataType: "json",
+	      async:true,
+	      success: function(msg){
+               alert("result: "+msg)
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+
+ }
+   </script>
+<body>
+<table>
+<tr>
+ <th align="left">用户信息查询接口test</th>
+ <td>pin:<input  type="text"  id="pin" /> <input type="button"   value="testUserRpc"    onclick="testUserRpc()"/></td>
+ <td>测试环境测试值：testnewuser</td>
+</tr>
+<tr align="left">
+ <th>商品评论RPC接口test</th>
+ <td>skuid:<input  type="text"  id="skuid" /> <input type="button"   value="skuCommentRpcTest"    onclick="skuCommentRpcTest()"/></td>
+ <td>测试环境测试值：111324</td>
+</tr>
+<tr align="left">
+ <th>根据分类id查询商品信息RPC接口test</th>
+ <td>categoryId:<input  type="text"  id="categoryId" /> <input type="button"   value="skuCategoryRPCTest"    onclick="skuCategoryRPCTest()"/></td>
+ <td>测试环境测试值：7231，672</td>
+</tr>
+<tr align="left">
+ <th>根据skuid查询商品信息RPC接口test</th>
+ <td>skuid2:<input  type="text"  id="skuid2" /> <input type="button"   value="querySkuInfo"    onclick="querySkuInfo()"/></td>
+ <td>测试环境测试值：300254</td>
+</tr>
+<tr align="left">
+ <th>查询分类信息RPC接口test</th>
+ <td><input type="button"   value="categoryInfoRpcTest"    onclick="categoryInfoRpcTest()"/></td>
+ <td>测试环境测试值：无</td>
+</tr>
+<h3> 初始化:<input type="button"   value="dataInit"    onclick="dataInit()"/></h3>
+</table>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+    <!-- Bootstrap -->
+    <link href="../../../css/bootstrap-3.3.4/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>你好，世界！</h1>
+	<form action="/topic/queryTopicListForIndexPage.action" enctype="multipart/form-data" method="post" >
+       <div class="form-group">
+	    <label for="subjectId">所属话题</label>
+	    <select class="form-control" id="subjectId" name="topicAbstractInfoVO.belongSubjectId">
+          <option value="1">手机</option>
+          <option value="2">电脑</option>
+          <option value="3">数码</option>
+          <option value="4">服饰</option>
+          <option value="5">图书</option>
+        </select>
+	  </div>
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+	<div class="row">
+	  <div class="col-xs-6 col-sm-4">话题：$subjectName</div>
+		#foreach($topic in $topicList)
+	  		<div class="col-md-6">话题概要：$!{topic.contentAbstract}</div>
+	  		<div class="col-md-6">话题图片</div>
+	  		#foreach($imgUrl in $topic.imgUrlList)
+	  			<div class="col-md-6"><img width="100px" height="100px" id="imguploadIdsumTd" src=$imgUrl></div>
+	  		#end
+	  		<div class="col-md-6">标签：</div>
+	  		#foreach($markId in $topic.markIdList)
+	  			<div class="col-md-6">$markId</div>
+	  		#end
+	  		<div class="col-md-6">点赞次数：$!{topic.priaseTimes}</div>
+	  		<div class="col-md-6">评论次数：$!{topic.commentTimes}</div>
+		#end
+	</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../../js/bootstrap-3.3.4/bootstrap.min.js"></script>
+    <script src="../../../js/topic/querytopic.js"></script>
+  </body>
+</html>

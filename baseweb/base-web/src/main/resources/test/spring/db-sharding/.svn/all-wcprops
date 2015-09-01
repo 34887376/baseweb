@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/buy/purchase_java/!svn/ver/45294/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/test/spring/db-sharding
+END
+spring-discuss-datasource-mysql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/buy/purchase_java/!svn/ver/45392/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/test/spring/db-sharding/spring-discuss-datasource-mysql.xml
+END
+spring-interest-datasource-mysql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/buy/purchase_java/!svn/ver/45262/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/test/spring/db-sharding/spring-interest-datasource-mysql.xml
+END
+spring-topic-datasource-mysql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/buy/purchase_java/!svn/ver/45353/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/test/spring/db-sharding/spring-topic-datasource-mysql.xml
+END
+spring-user-datasource-mysql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/buy/purchase_java/!svn/ver/45546/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/test/spring/db-sharding/spring-user-datasource-mysql.xml
+END
+spring-usersubject-datasource-mysql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/buy/purchase_java/!svn/ver/45358/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/test/spring/db-sharding/spring-usersubject-datasource-mysql.xml
+END
+spring-praise-datasource-mysql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/buy/purchase_java/!svn/ver/45391/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/test/spring/db-sharding/spring-praise-datasource-mysql.xml
+END
+spring-circles-datasource-mysql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/buy/purchase_java/!svn/ver/45261/branches/kaopu/code/kaopu/kaopu-web/src/main/resources/test/spring/db-sharding/spring-circles-datasource-mysql.xml
+END

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	<!-- 配置用户话题数据库下分库分表的读写数据源 start   -->
+	
+	<bean id="dataSourceRead_userSubject" parent="parentDataSource">
+		<property name="driverClassName" value="${jdbc.user.driver}" />
+		<property name="url" value="${jdbc.user.url}" />
+		<property name="username" value="${jdbc.user.username}" />
+		<property name="password" value="${jdbc.user.password}" />
+	</bean>
+		<bean id="dataSourceWrite_userSubject" parent="parentDataSource">
+		<property name="driverClassName" value="${jdbc.user.driver}" />
+		<property name="url" value="${jdbc.user.url}" />
+		<property name="username" value="${jdbc.user.username}" />
+		<property name="password" value="${jdbc.user.password}" />
+	</bean>
+	 <bean id="userSubjectSqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap-config.xml" />
+		<property name="dataSource" ref="dataSourceRead_userSubject" />
+	</bean>
+	<bean id="userSubjectSqlMapClientTemplate"  class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+	<property name="sqlMapClient"  ref="userSubjectSqlMapClient"></property>
+	</bean>
+	
+	<!-- 配置用户话题数据库下分库分表的读写数据源 start   -->
+	<bean id="userSubjectReadDataSource"
+			class="com.jd.sharding.client.datasource.DefaultMultiDataSourcesService">
+			<property name="dataSourcePool">
+				<map>
+					<!-- key值前缀和TableConfig中配置的数据库前缀保持一致 -->
+					<!-- <entry key="praise_db0" value-ref="dataSourceRead_praise" /> -->
+					<entry key="kaopu_userdb0" value-ref="dataSourceRead_userSubject" />
+				</map>
+			</property>
+	</bean>
+	<bean id="userSubjectWriteDataSource"
+			class="com.jd.sharding.client.datasource.DefaultMultiDataSourcesService">
+			<property name="dataSourcePool">
+				<map>
+					<!-- key值前缀和TableConfig中配置的数据库前缀保持一致 -->
+		<!-- 			<entry key="praise_db0" value-ref="dataSourceWrite_praise" /> -->
+					<entry key="kaopu_userdb0" value-ref="dataSourceWrite_userSubject" />
+				</map>
+			</property>
+	</bean>
+	<!-- 配置点赞数据库下分库分表的读写数据源 end   -->
+ 
+<!-- ########################################用户主题分库分表配置 start ################################################# -->
+	<!-- 水平切分数据库的路由规则  start-->
+	<bean id="userSubjectTableConfig" class="com.jd.sharding.client.config.TableConfig">
+		<!--MultipleDataSourcesService里面的key的前缀，如需要后缀，可以设置dbIndexSuffix属性 -->
+		<property name="dbIndexPrefix" value="kaopu_userdb" />
+<!-- 		<property name="dbIndexPrefix" value="praise_db" /> -->
+		<!-- 分库的库的个数  -->
+		<property name="dbCount" value="1" />
+		<!-- 物理表名的前缀，如需要后缀，可以设置tbNameSuffix属性 -->
+		<property name="tbNamePrefix" value="user_subject" />
+		<!--  分表后的表的张数-->
+		<property name="tableCount" value="4" />
+		<!--  分库分表的字段名，通过反射从parameterObject中获取 -->
+		<property name="routeField" value="pin" />
+		<!--  需要传给ibatis引擎的物理表名的字段，通过反射往parameterObject中写入 -->
+		<property name="tabNameField" value="tableName" />
+		<!--  路由规则，目前提供了简单的取模求余方式，如果分库的字段是字符串，会先用murmurhash计算hash值  -->
+		<property name="routeRule">
+			<bean class="com.jd.sharding.client.rule.SimpleRouteRule">
+				<!--  分库的库的个数  -->
+				<constructor-arg index="0" value="1" />
+				<!--  分表后的表的张数-->
+				<constructor-arg index="1" value="4" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="userSubjectRouter" class="com.jd.sharding.client.router.SimpleRouter">
+		<property name="shardConfig">
+			<bean class="com.jd.sharding.client.config.ShardConfig">
+				<property name="tableConfig">
+					<map>
+						<!--  key为逻辑表名   -->
+						<entry key="user_subject" value-ref="userSubjectTableConfig" />
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 水平切分数据库的路由规则  end-->
+
+	<!-- 用户主题写库分库分表数据配置 start -->
+	<bean id="userSubjectWriteShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="user_subject" />
+		<property name="sqlMapClient" ref="sqlMapClient" />
+		<property name="dataSourcesService" ref="userSubjectWriteDataSource" />
+		<property name="router" ref="userSubjectRouter" />
+		<property name="dataSource" ref="dataSourceWrite_userSubject"></property>
+	</bean>
+	<!-- 用户主题写库分库分表数据配置 end -->
+	
+	
+   <!-- 用户主题读库水平切分的数据库模板配置  start -->
+	<bean id="userSubjectReadShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="user_subject" />
+		<property name="sqlMapClient" ref="sqlMapClient" />
+		<property name="dataSourcesService" ref="userSubjectReadDataSource" />
+		<property name="router" ref="userSubjectRouter" />
+		<property name="dataSource" ref="dataSourceRead_userSubject"></property>
+	</bean>
+	 <!-- 用户主题读库水平切分的数据库模板配置  end -->
+<!-- ########################################用户主题分库分表配置 end ################################################# -->   
+ 
+</beans>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/buy/purchase_java/!svn/ver/44333/branches/kaopu/code/kaopu/kaopu-web/src/main/webapp/WEB-INF/page/interest/result
+END
+delError.vm
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/buy/purchase_java/!svn/ver/44333/branches/kaopu/code/kaopu/kaopu-web/src/main/webapp/WEB-INF/page/interest/result/delError.vm
+END
+addSuccess.vm
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/buy/purchase_java/!svn/ver/44333/branches/kaopu/code/kaopu/kaopu-web/src/main/webapp/WEB-INF/page/interest/result/addSuccess.vm
+END
+addError.vm
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/buy/purchase_java/!svn/ver/44333/branches/kaopu/code/kaopu/kaopu-web/src/main/webapp/WEB-INF/page/interest/result/addError.vm
+END
+delSuccess.vm
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/buy/purchase_java/!svn/ver/44333/branches/kaopu/code/kaopu/kaopu-web/src/main/webapp/WEB-INF/page/interest/result/delSuccess.vm
+END

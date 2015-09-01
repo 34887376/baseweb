@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName" default-lazy-init="false">
+
+
+	<bean id="imageUploadRpc" class="com.jd.kaopu.rpc.img.impl.ImageUploadRpcImpl" />
+	<bean id="userInfoRPC" class="com.jd.kaopu.rpc.userinfo.impl.UserInfoRPCImpl" />
+	<bean id="skuInfoRpc" class="com.jd.kaopu.rpc.skuinfo.impl.SkuInfoRpcImpl" />
+	<!--  商品评论RPC -->
+    <bean id="skuCommentRPC" class=" com.jd.kaopu.rpc.comment.impl.SkuCommentRPCImpl"></bean>
+    <bean id="skuCategoryRPC"   class="com.jd.kaopu.rpc.skucategory.impl.SkuCategoryRPCImpl">
+    <property name="categorySkuinfoUrl"  value="${category.skuinfo.url}"></property>
+    </bean>
+    <!--  同步用户对商品动作信息Rpc -->
+    <bean id="userInfoSyncRpc" class="com.jd.kaopu.rpc.userinfosync.impl.UserInfoSyncRpcImpl"></bean>
+    <!-- 商品分类RPC -->
+    <bean id="categoryInfoRpc"  class=" com.jd.kaopu.rpc.category.impl.CategoryInfoRpcImpl"></bean>
+   <!-- 订单中心RPC -->
+   <bean id="orderListRPC"  class="com.jd.kaopu.rpc.orderlist.impl.OrderListRPCImpl"></bean>
+<!-- 关注RPC -->
+  <bean id="followSkuRpc"  class="com.jd.kaopu.rpc.follow.Impl.FollowSkuRpcImpl"></bean>
+   <!-- 购物车RPC -->
+   <bean id="cartRpc" class="com.jd.kaopu.rpc.cat.impl.CartRpcImpl">
+   <property name="ip"  value="${CartRpc.Param.id}"></property>
+   </bean>
+
+</beans>

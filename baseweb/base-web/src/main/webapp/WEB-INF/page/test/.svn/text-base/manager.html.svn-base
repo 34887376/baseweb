@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<title>主题与分类关系管理</title>
+</head>
+<script src="js/jquery-1.11.3/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+$(function(){
+	querySubjectCategoryInfo();
+	queryAllSubject();
+})
+
+
+
+
+
+//根据id删除一条记录
+function delById(id){
+	//var id =$("#id").val();
+	id=$.trim(id);
+	if(id==null||id==""){
+		alert("id="+id+"  id cannot be null");	
+		return false;
+	}
+	var param="id="+id
+	$.ajax({
+		  url: "/manager/delById.action",
+	      type: "POST",
+	      data: param,
+	      dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	  if(msg.success==true){
+	            alert("删除成功！");
+	            querySubjectCategoryInfo()
+	    	  }else{
+	    		    alert("删除失败！"); 
+	    		    querySubjectCategoryInfo()
+	    	  }
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+//根据主题id和三级分类id删除相应数据
+function delBySubjectIdAndCategoryId(){
+	var subjectId =$("#subjectId").val();
+	var categoryId =$("#categoryId").val();
+	subjectId=$.trim(subjectId);
+	if(subjectId==null||subjectId==""){
+		alert("subjectId="+subjectId+"  subjectId cannot be null");	
+		return false;
+	}
+	categoryId=$.trim(categoryId);
+	if(categoryId==null||categoryId==""){
+		alert("categoryId="+categoryId+"  categoryId cannot be null");	
+		return false;
+	}
+	var param="categoryId="+categoryId+"&subjectId="+subjectId;
+	$.ajax({
+		  url: "/manager/delBySubjectIdAndCategoryId.action",
+	      type: "POST",
+	      data: param,
+	      dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	  if(msg.success==true){
+	            alert("删除成功！");
+	            querySubjectCategoryInfo();
+	    	  }else{
+	    		    alert("删除失败！"); 
+		            querySubjectCategoryInfo();
+	    	  }
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+ 
+// 添加一条分类与主题关系记录
+function add(){
+	var subjectId =$("#subjectId").val();
+	var categoryId =$("#categoryId").val();
+	subjectId=$.trim(subjectId);
+	if(subjectId==null||subjectId==""){
+		alert("subjectId="+subjectId+"  subjectId cannot be null");	
+		return false;
+	}
+	categoryId=$.trim(categoryId);
+	if(categoryId==null||categoryId==""){
+		alert("categoryId="+categoryId+"  categoryId cannot be null");	
+		return false;
+	}
+	var param="categoryId="+categoryId+"&subjectId="+subjectId;
+	$.ajax({
+		  url: "/manager/add.action",
+	      type: "POST",
+	      data: param,
+	      dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	  if(msg.success==true){
+	            alert("添加成功！");
+	            querySubjectCategoryInfo();
+	    	  }else{
+		            querySubjectCategoryInfo();
+	    		    alert("添加失败！"); 
+	    	  }
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+
+
+
+//根据key查询一条缓存数据
+function showCache(){
+	var key =$("#key").val();
+	key=$.trim(key);
+	if(key.indexOf("/&")){
+		key=key.replace(/&/,"|and|");
+		//alert("replace after key:"+key);
+	}
+	if(key==null||key==""){
+		alert("key="+key+"  key cannot be null");	
+		return false;
+	}
+	var param="key="+key
+	$.ajax({
+		  url: "/manager/showCache.action",
+	      type: "POST",
+	      data: param,
+	      dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	  if(msg.success==true){
+	    		  
+	            alert("查询成功！");
+	            $("#cacheContent").html(msg.data);
+	    	  }else{
+	    		    alert("查询失败！"); 
+	    		    $("#cacheContent").html("");
+	    	  }
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+//根据key查询一条缓存数据
+function delCache(){
+	var key =$("#key").val();
+	key=$.trim(key);
+	if(key.indexOf("/&")){
+		key=key.replace(/&/,"|and|");
+		//alert("replace after key:"+key);
+	}
+	if(key==null||key==""){
+		alert("key="+key+"  key cannot be null");	
+		return false;
+	}
+	var param="key="+key
+	$.ajax({
+		  url: "/manager/delCache.action",
+	      type: "POST",
+	      data: param,
+	      dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	  if(msg.success==true){
+	            alert("删除成功！");
+	    	  }else{
+	    		    alert("删除失败！"); 
+	    	  }
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+// 根据pin查询兴趣表
+function queryUserSku(){
+ 
+	var param=""
+	$.ajax({
+		  url: "/manager/queryUserSku.action",
+	      type: "POST",
+	      data: param,
+	  //    dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	 alert("queryUserSku:"+msg);
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+// 根据pin查询兴趣表
+function queryUserSkuBy(){
+	var subjectId2 =$("#subjectId2").val();
+	subjectId2=$.trim(subjectId2);
+	if(subjectId2==null||subjectId2==""){
+		alert("subjectId2="+subjectId2+"  subjectId2 cannot be null");	
+		return false;
+	}
+ 
+	var param="subjectId2="+subjectId2;
+	$.ajax({
+		  url: "/manager/queryUserSkuBy.action",
+	      type: "POST",
+	      data: param,
+	  //    dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	 alert("queryUserSkuBy:"+msg);
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+// 查询所有分类与主题信息
+function querySubjectCategoryInfo(){
+ 
+	var param="";
+	$.ajax({
+		  url: "/manager/querySubjectCategoryInfo.action",
+	      type: "POST",
+	      data: param,
+	     dataType: "json",
+	      async:true,
+	      success: function(data){
+	    	 var  content="<tr><th>主键id</th><th>主题id</th><th>主题名</th><th>分类id</th><th>操作</th></tr>";
+	    	 for(var i=0;i<data.length;i++){
+	    		 var key=data[i].id;
+	    		 var subjectId=data[i].subjectId;
+	    		 var subjectName=data[i].subjectName;
+	    		 var categoryId=data[i].categoryId;
+	    		 var trHtml="<tr><td>"+key+"</td><td>"+subjectId+"</td><td>"+subjectName+"</td><td>"+categoryId+"</td><td><input type='button'   value='删除'   onclick='delById("+key+")'/></td></tr>"
+	    	     
+	    		 content+=trHtml;	    	 
+	    	 }
+	    		 $("#subjectCategoryContent").html(content);
+	    	 
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+//查询所有的主题信息
+function queryAllSubject(){
+	 
+	var param="";
+	$.ajax({
+		  url: "/manager/queryAllSubject.action",
+	      type: "POST",
+	      data: param,
+	     dataType: "json",
+	      async:true,
+	      success: function(data){
+	    var  content="<tr><th>主题id</th><th>主题名</th><th>运营排序id</th><th>热门主题排序id</th><th>操作</th></tr>";
+	    	 for(var i=0;i<data.length;i++){
+	    		 var subjectId=data[i].id;
+	    		 var subjectName=data[i].name;
+	    		 var orderId=data[i].orderId;
+	    		 var hotOrderId=data[i].hotOrderId;
+	    		 var trHtml="<tr><td>"+subjectId+"</td><td>"+subjectName+"</td><td align='center'>"+orderId+"</td><td align='center'>"+hotOrderId+"</td><td><input type='button'   value='删除'   onclick='delSubject("+subjectId+")'/></td></tr>"
+	    		 content+=trHtml;	    	 
+	    	 }
+	    		 $("#subjectContent").html(content);
+	    	 
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+
+//添加主题
+function addSubject(){
+	var subjectName =$("#subjectName").val();
+	var orderId =$("#orderId").val();
+	var hotOrderId =$("#hotOrderId").val();
+	subjectName=$.trim(subjectName);
+	if(subjectName==null||subjectName==""){
+		alert("subjectName="+subjectName+"  subjectName cannot be null");	
+		return false;
+	}
+	orderId=$.trim(orderId);
+	if(orderId==null||orderId==""){
+		alert("orderId="+orderId+"  orderId cannot be null");	
+		return false;
+	}
+	hotOrderId=$.trim(hotOrderId);
+	if(hotOrderId==null||hotOrderId==""){
+		alert("hotOrderId="+hotOrderId+"  hotOrderId cannot be null");	
+		return false;
+	}
+	var param="subjectName="+subjectName+"&orderId="+orderId+"&hotOrderId="+hotOrderId;
+	$.ajax({
+		  url: "/manager/addSubject.action",
+	      type: "POST",
+	      data: param,
+	      dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	  if(msg.success==true){
+	            alert("添加成功！");
+	            queryAllSubject();
+	    	  }else{
+	    		  queryAllSubject();
+	    		    alert("添加失败！"); 
+	    	  }
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+//删除主题
+function delSubject(subjectId){
+	subjectId=$.trim(subjectId);
+	if(subjectId==null||subjectId==""){
+		alert("subjectId="+subjectName+"  subjectId cannot be null");	
+		return false;
+	}
+	var param="subjectId="+subjectId;
+	$.ajax({
+		  url: "/manager/delSubject.action",
+	      type: "POST",
+	      data: param,
+	      dataType: "json",
+	      async:true,
+	      success: function(msg){
+	    	  if(msg.success==true){
+	            alert("删除成功！");
+	            queryAllSubject();
+	    	  }else{
+	    		    alert("删除失败！"); 
+	              queryAllSubject();
+	    	  }
+	      },
+	      error:function(msg){
+	    	 //do noting
+	      }
+		 });
+	
+}
+</script>
+<body>
+<h3>主题管理</h3>
+<table  id="subjectContent">
+
+</table>
+ 主题名：<input type="text"  id="subjectName"   /> orderId：<input type="text"  id="orderId" />hotOrderId：<input type="text"  id="hotOrderId" /><br>
+<input type="button"   value="添加主题" onclick="addSubject()"/><br>
+<hr>
+<h3>主题与三级分类管理</h3>
+
+<table  id="subjectCategoryContent">
+</table>
+
+<!-- <input type="button"   value="查询所有的主题分类关系信息"   onclick="querySubjectCategoryInfo()"/><br>
+ -->
+<!-- 数据主键id:<input type="text"  id="id" /> <input type="button"   value="根据id删除一条记录"   onclick="delById()"/><br>
+ -->
+ 主题id：<input type="text"  id="subjectId"   /> 分类id：<input type="text"  id="categoryId" /><br>
+
+<input type="button"   value="根据主题id和分类id删除一条记录"   onclick="delBySubjectIdAndCategoryId()"/> <input type="button"   value="根据主题id和分类id填加一条记录" onclick="add()"/><br>
+<hr/>
+
+<h3>缓存管理</h3>
+   主题对应的分类信息缓存key :kaopu_subject_+主题id<br>
+   三级分类对应的主题信息缓存key : kaopu_category_+分类id<br>
+   判断用户是否是活跃用户的key,用于感兴趣的商品初始化：userActive&+pin<br><br>
+key:<input type="text"  id="key"   /><input type="button"   value="根据key查询一条缓存记录"   onclick="showCache()"/> <input type="button"   value="根据key删除一条缓存记录" onclick="delCache()"/><br>
+
+cacheContent:<span id="cacheContent"></span>
+<hr/>
+<h3>兴趣查询</h3>
+<input type="button"   value="根据pin查询兴趣表"   onclick="queryUserSku()"/> <br>
+subjectId2:<input type="text"   id="subjectId2"   /><input type="button"   value="根据pin查询兴趣表_service层"   onclick="queryUserSkuBy()"/> <br>
+
+
+
+</body>
+</html>

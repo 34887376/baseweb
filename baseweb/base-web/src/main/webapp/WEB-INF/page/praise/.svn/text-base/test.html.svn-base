@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script >
+function   addPraise(){
+	var belongTopicId=$("#belongTopicId").val();
+	var targetPin=$("#targetPin").val();
+	alert("belongTopicId:"+belongTopicId+" targetPin:"+targetPin);
+	var url="/praise/addPraise;
+	var param="belongTopicId="+belongTopicId+"&targetPin="+targetPin";
+	$.post(url,param,function(data){
+		 alert("praiseId:"+data.praiseId);
+		//var praiseId=data
+		
+	},"json")
+}
+
+</script>
+topicId:<input id="belongTopicId"  type="text"/>
+targetPin:<input id="targetPin"  type="text"/>
+<br>
+addPraise:<input type="button"  id="addPraise"  onclick="addPraise()"/>
+<br>
+delPraise：<input type="button"  id="delPraise"  style="display: none;"/>
+
+</body>
+</html>

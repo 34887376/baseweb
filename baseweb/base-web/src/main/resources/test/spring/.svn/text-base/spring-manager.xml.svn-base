@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName" default-lazy-init="false">
+	<bean id="topicManager" class="com.jd.kaopu.manager.topic.impl.TopicManagerImpl" />
+	<bean id="interestManager" class="com.jd.kaopu.manager.interest.impl.InterestManagerImpl" />
+	<bean id="circlesManagerInteface" class="com.jd.kaopu.manager.circles.impl.CirclesManagerImpl" />
+	<bean id="praiseManager" class="com.jd.kaopu.manager.praise.impl.PraiseManagerImpl"></bean>
+	<bean id="userInfoManager" class="com.jd.kaopu.manager.user.impl.UserInfoManagerImpl"></bean>
+	<bean id="userTopicManagerInterface" class="com.jd.kaopu.manager.topic.impl.UserTopicManagerImpl"></bean>
+	<!-- 评论manager -->
+	<bean id="commentManager" class="com.jd.kaopu.manager.comment.impl.CommentManagerImpl"></bean>
+	<!-- 话题评论manager -->
+	<bean id="topicCommentManager" class="com.jd.kaopu.manager.comment.impl.TopicCommentManagerImpl"></bean>
+	<!-- 用户评论manager -->
+	<bean id="userCommentManager" class="com.jd.kaopu.manager.comment.impl.UserCommentManagerImpl"></bean>
+		<!-- 用户状态manager注入 -->
+	<bean id="userStateManager" class="com.jd.kaopu.manager.user.impl.UserStateManagerImpl">
+		<property name="userStateTableNamePrefix" value="${userStateTableNamePrefix}"></property>
+		<property name="tableTotalNum" value="${userStateTableNum}"></property>
+	</bean>
+</beans>

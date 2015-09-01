@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<title>Bootstrap 101 Template</title>
+<!-- Bootstrap -->
+<link href="../../../css/bootstrap-3.3.4/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+<body>
+	<h1>取消兴趣！</h1>
+	<form action="/interest/delInterest.action" method="post"
+		enctype="multipart/form-data">
+		<div class="form-group">
+			<label for="subjectId">主题id</label> <select class="form-control"
+				id="subjectId" name="userSkuVO.subjectId">
+				<option value="1">手机</option>
+				<option value="2">电脑</option>
+				<option value="3">数码</option>
+				<option value="4">服饰</option>
+				<option value="5">图书</option>
+			</select> 
+			<label for="skuId">商品id</label> <select class="form-control"
+				id="skuId" name="userSkuVO.skuId">
+				<option value="12138">华为12</option>
+				<option value="12139">iPhone6</option>
+				<option value="12131">魅族3</option>
+				<option value="12181">小米3</option>
+			</select>
+			<label for="categoryId">商品分类id</label> <select class="form-control"
+				id="categoryId" name="userSkuVO.categoryId">
+				<option value="13138">华为</option>
+				<option value="13139">iPhone</option>
+				<option value="13131">魅族</option>
+				<option value="13181">小米</option>
+			</select>
+			<label for="formId">商品来源</label> <select class="form-control"
+				id="formId" name="userSkuVO.fromId">
+				<option value="1">购物车</option>
+				<option value="2">浏览记录</option>
+				<option value="3">已购买</option>
+				<option value="4">关注列表</option>
+				<option value="5">其他</option>
+			</select>
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../../../js/bootstrap-3.3.4/bootstrap.min.js"></script>
+</body>
+</html>

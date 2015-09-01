@@ -1,0 +1,169 @@
+.bg2 {
+  background: #f6f6f6; }
+
+.bg-fff {
+  background: #fff; }
+
+.interest-item {
+  font-size: 1.3rem;
+  padding: 20px 0;
+  overflow: hidden;
+  width: 92%;
+  margin: 0 auto;
+  border-bottom: 1px solid #cbc9ce; }
+  .interest-item .ini-l {
+    float: left;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    overflow: hidden; }
+  .interest-item .ini-m {
+    /* float: left; */
+    /* width: 54%; */
+    padding: 0 10px;
+    line-height: 16px;
+    margin: 0 48px 0 84px; }
+    .interest-item .ini-m p {
+      height: 31px;
+      overflow: hidden; }
+      .interest-item .ini-m p a {
+        color: #666; }
+    .interest-item .ini-m span {
+      color: #e4393c;
+      margin-top: 5px;
+      display: block; }
+  .interest-item .ini-r a {
+    float: right;
+    color: #f65857; }
+
+.interest-pro-w {
+  width: 92%;
+  margin: 0 auto;
+  overflow: hidden;
+  font-size: 1.3rem;
+  line-height: 16px;
+  padding-top: 25px; }
+  .interest-pro-w .interest-pro {
+    width: 47.82608695652174%;
+    font-size: 1.3rem; }
+    .interest-pro-w .interest-pro a {
+      color: #666; }
+  .interest-pro-w .inp-pic {
+    width: 100%;
+    height: 164px;
+    line-height: 164px;
+    /* border:1px solid #e5e5e5; */
+    position: relative;
+    overflow: hidden;
+    text-align: center; }
+    .interest-pro-w .inp-pic:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+      border: 1px solid #e5e5e5;
+      border-radius: 0; }
+    .interest-pro-w .inp-pic img {
+      width: 138px;
+      height: 138px;
+      vertical-align: middle; }
+  .interest-pro-w .inp-name {
+    padding-top: 10px;
+    height: 43px;
+    overflow: hidden; }
+  .interest-pro-w .inp-num {
+    overflow: hidden;
+    padding-top: 6px; }
+    .interest-pro-w .inp-num .inp-pay {
+      color: #e4393c;
+      float: left; }
+    .interest-pro-w .inp-num .inp-from {
+      float: right;
+      color: #ccc; }
+
+.con-show {
+  padding: 21px 4%; }
+  .con-show .cos-people {
+    overflow: hidden;
+    font-size: 1.2rem;
+    color: #999999; }
+  .con-show .cos-head {
+    width: 40px;
+    height: 40px;
+    float: left;
+    overflow: hidden;
+    border-radius: 20px; }
+    .con-show .cos-head img {
+      max-width: 100%; }
+  .con-show .cos-name {
+    float: left;
+    padding-left: 4.63768115942029%;
+    padding-top: 3px; }
+    .con-show .cos-name p {
+      font-size: 1.4rem;
+      color: #2d2d2d;
+      padding-bottom: 7px; }
+  .con-show .cos-interest {
+    float: right; }
+    .con-show .cos-interest a {
+      color: #999999; }
+  .con-show .cos-pic {
+    font-size: 1.7rem;
+    color: #666;
+    padding: 13px 0 17px 0;
+    line-height: 21px; }
+    .con-show .cos-pic div {
+      width: 100%; }
+      .con-show .cos-pic div img {
+        max-width: 100%; }
+    .con-show .cos-pic p {
+      padding-bottom: 16px; }
+  .con-show .cos-item {
+    width: 100%;
+    height: 98px;
+    background: #fff;
+    border: 2px solid #f65857; }
+  .con-show .cos-item-l {
+    float: left;
+    width: 90px;
+    height: 98px;
+    line-height: 90px; }
+  .con-show .cos-item-m {
+    margin-left: 100px;
+    margin-right: 50px;
+    padding-top: 12px;
+    font-size: 1.3rem;
+    line-height: 1.5rem; }
+    .con-show .cos-item-m p {
+      height: 36px;
+      overflow: hidden; }
+    .con-show .cos-item-m span {
+      margin-top: 5px;
+      display: block;
+      color: #e4393c;
+      font-size: 1.7rem; }
+  .con-show .cos-item-r {
+    float: right;
+    margin-right: 10px;
+    margin-top: 16px; }
+  .con-show .cos-bottom {
+    overflow: hidden;
+    padding-top: 20px; }
+    .con-show .cos-bottom .cos-b-num, .con-show .cos-bottom .cos-b-txt {
+      float: right;
+      font-size: 1.2rem;
+      color: #999999; }
+      .con-show .cos-bottom .cos-b-num img, .con-show .cos-bottom .cos-b-txt img {
+        margin: 0 9px; }
+    .con-show .cos-bottom .cos-b-txt {
+      padding-right: 11px;
+      border-right: 1px solid #cccccc; }

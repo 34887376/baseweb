@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="yes" name="apple-touch-fullscreen" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="#ffffff" name="msapplication-TileColor" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<title>靠谱APP</title>
+<link rel="stylesheet" href="../../../css/jd/skin/index.css" />
+<link rel="stylesheet" href="../../../css/zoom/zoom.css" />
+</head>
+<body class="body-bottom body-white">
+	<div class="common-wrapper">
+		<nav>
+			<a href="/" class="n-left"><i class="back"></i>返回</a>
+		</nav>
+		<div class="list pad7">
+			#if($topicList) 
+			#foreach( $topic in $topicList)
+			<div class="item bdb-1px">
+				<div class="fl">
+					<img src="$!{topic.headImgUrl}" />
+				</div>
+				<div class="des">
+					<h3>$!{topic.niceName}</h3>
+					<p class="time">$!{topic.timeDetailShow}</p>
+					<p class="commet" onclick="goToContent(${topic.topicId});">$!{topic.contentAbstract}</p>
+	                <ul class="gallery">
+	                #if($topic.imgUrlList)
+							#foreach( $imgUrl in $topic.imgUrlList) 
+								<div class="pics"><a href="$imgUrl"><img src="$imgUrl"/></a></div>
+							#end
+	                 #else
+	                #end
+	                </ul>
+					<div class="tags">
+					 #if($topic.markIdList)
+		                	#foreach( $markInfo in $topic.markInfoList)
+		                		<a href="http://item.m.jd.com/product/${markInfo.markId}.html"><img src="${markInfo.markImgUrl}" alt=""></a>
+		                	#end
+		                	 
+		                #end
+						<div class="fr">
+							<div class="reply-count">
+								<i class="reply-icon"></i><span>${topic.commentTimes}</span>
+							</div>
+							<div class="love">
+								#if($topic.pinPraiseId>0) <i class="love-icon" praiseId="$topic.pinPraiseId"></i>(<span id="priaseTimes">$!{topic.priaseTimes}</span>)赞
+								#else <i class="love2-icon" praiseId="$topic.pinPraiseId"></i>(<span id="priaseTimes">0</span>)赞 
+								#end
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			#end
+			#end
+		</div>
+	</div>
+	<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+	<script src="../../../js/zoom/zoom.js?r=20150707"></script>
+	<script src="../../../js/topic/showtopicList.js?r=20150827"></script>
+</body>
+</html>

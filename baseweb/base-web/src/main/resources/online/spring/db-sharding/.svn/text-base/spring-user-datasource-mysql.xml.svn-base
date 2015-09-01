@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	<bean id="dataSourceWriteForUser" parent="parentDataSource">
+		<property name="driverClassName" value="${jdbc.user.driver}" />
+		<property name="url" value="${jdbc.user.url}" />
+		<property name="username" value="${jdbc.user.username}" />
+		<property name="password" value="${jdbc.user.password}" />
+	</bean>
+	
+	<bean id="dataSourceReadForUser" parent="parentDataSource">
+		<property name="driverClassName" value="${jdbc.user.driver}" />
+		<property name="url" value="${jdbc.user.url}" />
+		<property name="username" value="${jdbc.user.username}" />
+		<property name="password" value="${jdbc.user.password}" />
+	</bean>
+
+	<bean id="sqlMapClientForUser" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap-config.xml" />
+		<property name="dataSource" ref="dataSourceWriteForUser" />
+	</bean>
+	
+	<!-- 配置用户数据库下分库分表的读写数据源 start   -->
+	<bean id="userReadDataSource"
+			class="com.jd.sharding.client.datasource.DefaultMultiDataSourcesService">
+			<property name="dataSourcePool">
+				<map>
+					<!-- key值前缀和TableConfig中配置的数据库前缀保持一致 -->
+					<entry key="kaopu_userdb0" value-ref="dataSourceReadForUser" />
+				</map>
+			</property>
+	</bean>
+	<bean id="userWriteDataSource"
+			class="com.jd.sharding.client.datasource.DefaultMultiDataSourcesService">
+			<property name="dataSourcePool">
+				<map>
+					<!-- key值前缀和TableConfig中配置的数据库前缀保持一致 -->
+					<entry key="kaopu_userdb0" value-ref="dataSourceWriteForUser" />
+				</map>
+			</property>
+	</bean>
+	<!-- 配置用户数据库下分库分表的读写数据源 end   -->
+	
+	
+<!-- ########################################用户信息分库分表配置 start ################################################# -->
+	<!-- 水平切分数据库的路由规则  start-->
+	<bean id="userInfoTableConfig" class="com.jd.sharding.client.config.TableConfig">
+		<!--MultipleDataSourcesService里面的key的前缀，如需要后缀，可以设置dbIndexSuffix属性 -->
+		<property name="dbIndexPrefix" value="kaopu_userdb" />
+		<!-- 分库的库的个数  -->
+		<property name="dbCount" value="1" />
+		<!-- 物理表名的前缀，如需要后缀，可以设置tbNameSuffix属性 -->
+		<property name="tbNamePrefix" value="user_info" />
+		<!--  分表后的表的张数-->
+		<property name="tableCount" value="99" />
+		<!--  分库分表的字段名，通过反射从parameterObject中获取 -->
+		<property name="routeField" value="pin" />
+		<!--  需要传给ibatis引擎的物理表名的字段，通过反射往parameterObject中写入 -->
+		<property name="tabNameField" value="tableName" />
+		<!--  路由规则，目前提供了简单的取模求余方式，如果分库的字段是字符串，会先用murmurhash计算hash值  -->
+		<property name="routeRule">
+			<bean class="com.jd.sharding.client.rule.SimpleRouteRule">
+				<!--  分库的库的个数  -->
+				<constructor-arg index="0" value="1" />
+				<!--  分表后的表的张数-->
+				<constructor-arg index="1" value="99" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="userInfoRouter" class="com.jd.sharding.client.router.SimpleRouter">
+		<property name="shardConfig">
+			<bean class="com.jd.sharding.client.config.ShardConfig">
+				<property name="tableConfig">
+					<map>
+						<!--  key为逻辑表名   -->
+						<entry key="user_info" value-ref="userInfoTableConfig" />
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 水平切分数据库的路由规则  end-->
+
+	<!-- 用户信息写库分库分表数据配置 start -->
+	<bean id="userInfoWriteShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="user_info" />
+		<property name="sqlMapClient" ref="sqlMapClientForUser" />
+		<property name="dataSourcesService" ref="userWriteDataSource" />
+		<property name="router" ref="userInfoRouter" />
+		<property name="dataSource" ref="dataSourceWriteForUser"></property>
+	</bean>
+	<!-- 用户信息写库分库分表数据配置 end -->
+	
+	
+   <!-- 用户信息读库水平切分的数据库模板配置  start -->
+	<bean id="userInfoReadShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="user_info" />
+		<property name="sqlMapClient" ref="sqlMapClientForUser" />
+		<property name="dataSourcesService" ref="userReadDataSource" />
+		<property name="router" ref="userInfoRouter" />
+		<property name="dataSource" ref="dataSourceReadForUser"></property>
+	</bean>
+	 <!-- 用户信息读库水平切分的数据库模板配置  end -->
+<!-- ########################################用户信息分库分表配置 end ################################################# -->   
+
+<!-- ########################################用户状态分库分表配置 start ################################################# -->
+	<!-- 水平切分数据库的路由规则  start-->
+	<bean id="userStateTableConfig" class="com.jd.sharding.client.config.TableConfig">
+		<!--MultipleDataSourcesService里面的key的前缀，如需要后缀，可以设置dbIndexSuffix属性 -->
+		<property name="dbIndexPrefix" value="kaopu_userdb" />
+		<!-- 分库的库的个数  -->
+		<property name="dbCount" value="1" />
+		<!-- 物理表名的前缀，如需要后缀，可以设置tbNameSuffix属性 -->
+		<property name="tbNamePrefix" value="${userStateTableNamePrefix}" />
+		<!--  分表后的表的张数-->
+		<property name="tableCount" value="${userStateTableNum}" />
+		<!--  分库分表的字段名，通过反射从parameterObject中获取 -->
+		<property name="routeField" value="pin" />
+		<!--  需要传给ibatis引擎的物理表名的字段，通过反射往parameterObject中写入,写sql时的表名变量 -->
+		<property name="tabNameField" value="tableName" />
+		<!--  路由规则，目前提供了简单的取模求余方式，如果分库的字段是字符串，会先用murmurhash计算hash值  -->
+		<property name="routeRule">
+			<bean class="com.jd.sharding.client.rule.SimpleRouteRule">
+				<!--  分库的库的个数  -->
+				<constructor-arg index="0" value="1" />
+				<!--  分表后的表的张数-->
+				<constructor-arg index="1" value="${userStateTableNum}" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="userStateRouter" class="com.jd.sharding.client.router.SimpleRouter">
+		<property name="shardConfig">
+			<bean class="com.jd.sharding.client.config.ShardConfig">
+				<property name="tableConfig">
+					<map>
+						<!--  key为逻辑表名   -->
+						<entry key="${userStateTableNamePrefix}" value-ref="userStateTableConfig" />
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 水平切分数据库的路由规则  end-->
+
+	<!-- 用户状态写库分库分表数据配置 start -->
+	<bean id="userStatetWriteShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="${userStateTableNamePrefix}" />
+		<property name="sqlMapClient" ref="sqlMapClientForUser" />
+		<property name="dataSourcesService" ref="userWriteDataSource" />
+		<property name="router" ref="userStateRouter" />
+		<property name="dataSource" ref="dataSourceWriteForUser"></property>
+	</bean>
+	<!--用户状态写库分库分表数据配置 end -->
+	
+	
+   <!-- 用户状态读库水平切分的数据库模板配置  start -->
+	
+	<bean id="userStateReadShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="${userStateTableNamePrefix}" />
+		<property name="sqlMapClient" ref="sqlMapClientForUser" />
+		<property name="dataSourcesService" ref="userReadDataSource" />
+		<property name="router" ref="userStateRouter" />
+		<property name="dataSource" ref="dataSourceReadForUser"></property>
+	</bean>
+	 <!-- 用户状态读库水平切分的数据库模板配置  end -->
+<!-- ########################################用户状态分库分表配置 end ################################################# -->   
+
+</beans>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <base href="/">
+    <title>靠谱APP</title>
+    <link rel="stylesheet" href="/css/jd/skin/index.css"/>
+</head> 
+<body>  
+<div class="common-wrapper">
+    <nav>
+        <a href="/home/home.action"    class="n-left"><b class="back"></b>返回</a>
+        <div class="n-center">设置</div>
+    </nav>
+
+    <div class="settings">
+        <div class="interest-setting bdb-1px">
+            <span><a  href="/subject/getUserSubjectRelation.action">编辑我感兴趣的主题</a></span>
+       <!--      <i class="down-icon"></i> -->
+            <ul></ul>
+        </div>
+        <div class="">
+            <span>关于 靠谱</span>
+            <i class="down-icon"></i>
+            <ul></ul>
+        </div>
+<!--         <div class="clear-cache">
+            <span>清理缓存</span>
+            <span class="fr">33.0MB</span>
+        </div> -->
+        <div class="logout">
+            <a href="javascript:void(0)"  onclick="myLogout();">退出当前账号</a>
+        </div>
+    </div>
+
+</div> 
+
+
+<!-- <script type="text/javascript" src="js/zepto.min.js"></script> -->
+<script src="http://plogin.m.jd.com/st/js/logout.js?r=20150707"></script>
+<script type="text/javascript">
+/* function goBack(){
+	var url="/home/home.action"
+	window.location.url=url;
+} */
+
+	function myLogout() {
+		//业务域名及appid
+		var host  = "kaopu.jd.com",
+		    appid = 168;         
+		p_logout.logout(callback, host, appid);
+
+		function callback(ret) {
+			if(ret.errcode == 0) {
+	          var loginurl="http://plogin.m.jd.com/cgi-bin/m/mlogin?appid=168&returnurl=http%3A%2F%2Fm.kaopu.jd.com%2F%2Findex.action";
+				window.location.href =loginurl;
+				//alert('注销成功');
+			} else {
+				alert('注销失败：' + ret.message);
+			}
+		}
+	}
+</script>
+
+</body>
+</html>

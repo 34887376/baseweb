@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+	<!-- temp config -->
+			<bean id="redisUtils" class="com.jd.data.spring.RedisClientFactoryBean">
+			<!--zookeeper 配置优先文本配置，如果两个都有配置，只从zookeeper中取redis config -->
+			<!-- 文本配置 开始 -->
+			<!-- 单个应用中的链接池最大链接数 -->
+			<property name="maxActive" value="150" />
+			<!-- 单个应用中的链接池最大空闲数 -->
+			<property name="maxIdle" value="50" />
+			<!-- 单个应用中的链接池取链接时最大等待时间，单位：ms -->
+			<property name="maxWait" value="1000" />
+			<!-- 设置在每一次取对象时测试ping -->
+			<property name="testOnBorrow" value="false" />
+			<!-- 设置redis connect request response timeout 单位:ms -->
+			<property name="timeout" value="2000" />
+			<!-- master redis server 设置 -->
+			<!-- host:port:password[可选,password中不要有":"],redis server顺序信息一定不要乱，请按照分配顺序填写，乱了就可能会出现一致性hash不同，造成不命中cache情况 -->
+			<!-- 测试环境master -->
+			<property name="masterConfString" value="192.168.155.103:6379" />
+			<!-- 正式环境master
+			<property name="masterConfString" value="192.168.130.24:6379"/> -->
+			
+			<!-- slave redis server 设置[可选] -->
+			<!-- host:port:password[可选,password中不要有":"],redis server顺序信息一定不要乱，请按照分配顺序填写，乱了就可能会出现一致性hash不同，造成不命中cache情况 -->
+			<!-- 测试环境slave 
+			<property name="slaveConfString" value="10.10.224.80:6380,10.10.224.78:6380" />-->
+			<!-- 正式环境slave
+			 <property name="slaveConfString" value="192.168.130.25:6380,192.168.130.26:6380,192.168.130.27:6380"/> 
+			 -->
+			<!-- 文本配置 结束 -->
+		</bean>
+</beans>

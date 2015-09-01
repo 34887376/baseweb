@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+    <link rel="stylesheet" href="../../../css/jd/skin/index.css"/>
+
+</head> 
+<body>  
+<div class="common-wrapper">
+    <nav>
+        <a href="#" class="n-left" onclick="abortPublish();">取消</a>
+        <a id="publishButton" href="#" class="n-right" onclick="publishTopic();">发布</a>
+        <div class="n-center pub-type" id="subjectDiv"><span id="publishSubjectName">$!{belongSubjectName}</span><b class="tri-down" onclick="showMoreSubject();"></b></div>
+        <div class="pub-type-con">
+            <div class="tit">请选择你发布的商品话题类型</div>
+            <div class="con">
+                <ul>
+                #if($subjectList)
+                   #foreach($subject in $subjectList )
+                    <li><a href="javaScript:void(0)"   onclick="changeSelectedSubject('${subject.id}','${subject.name}')" >${subject.name}</a></li>
+                    #end
+                 #end
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <form id="uploadTopicForm" action="/topic/saveContentDraft.action" method="post" enctype="multipart/form-data">
+    <div class="public">
+        <div class="p-box">
+        	<input id="subjectId" type="hidden" name="topicAbstractInfoVO.belongSubjectId" value="$!{belongSubjectId}"></input>
+            <textarea id="topicContent" name="topicDetailInfoVO.content" placeholder="快来发布你感兴趣商品的话题，与你兴趣商品相同的小伙伴们可能会给你一些购买意见哦~~">$!{topicContent}</textarea>
+            <div class="p-link">
+				<div id="imgList">
+					#if($topicImgList)
+						#foreach( $imgUrlSrc in $topicImgList)
+							<a href="#"><img src="$imgUrlSrc" alt=""></a>
+						#end
+					#end
+			</div>
+				<div id="upImgFileList" style="display:none"><input id="upfile1" name="img1" type="file" onChange="preivew(this);"></div>
+                <a href="#" class="add-pic" id="touchPhotoTool" onclick="showPhoto();"><b></b></a>
+            </div>
+        </div>
+        <div class="p-add"><a href="#" onclick="addMark();">添加商品\标签<b class="more"></b></a></div>
+        <button id="uploadTopicSubmit" type="submit" style="display:none">Submit</button>
+    </div>
+    </form>
+    <div id="imgUploadTool" style="display:none">
+        <div class="mask"></div>
+        <div class="pic-selection">
+            <a href="#" class="fore1" onclick="takePhoto();">拍照上传</a>
+            <a href="#" class="fore2" onclick="uploadPhoto();">相册上传</a>
+            <a href="#" class="fore3" onclick="delPhoto();">取消</a>
+        </div>
+    </div>
+</div> 
+<script src="../../../js/jd/js/zepto.min.js"></script>
+<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+<script src="../../../js/topic/publishTopicSetp1.js?r=20150707"></script>
+<script>
+	var h=$(".pub-type-con").css("height");
+    $(".pub-type").bind('click',function(){
+		//var h=153px;
+        if(!$(this).hasClass("pub-type-open")){
+            $(".pub-type-con").css({"height":0,"visibility":"visible"}).animate({height:h},300);
+            $(this).addClass("pub-type-open");
+        }
+        else{
+
+            $(".pub-type-con").animate({height:0},300);
+            setTimeout(function(){
+                $(".pub-type-con").css({"height":h,"visibility":"hidden"});
+            },300);
+            $(this).removeClass("pub-type-open");
+        }
+    });
+</script>
+</body>
+</html>

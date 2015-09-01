@@ -1,0 +1,221 @@
+@charset "UTF-8";
+.bg2{
+  background: #f6f6f6; 
+}
+.bg-fff{
+  background:#fff;
+}
+
+
+@mixin bd-all-1px($bStyle,$color,$radius){
+  position: relative;
+  &:after{
+    content: '';
+    position: absolute; 
+    top: 0; left: 0;  
+    width: 200%; 
+    height: 200%; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;  
+    -webkit-transform: scale(0.5);  
+    transform: scale(0.5);
+    -webkit-transform-origin: left top; 
+    transform-origin: left top;
+    border: 1px $bStyle $color;
+    border-radius: $radius;
+  }
+}
+.interest-item{
+  font-size: 1.3rem;
+  padding: 20px 0;
+  overflow: hidden; 
+  width: 92%;
+  margin: 0 auto;
+  border-bottom:1px solid #cbc9ce;
+  .ini-l{
+    float: left;
+    width: 80px;
+    height: 80px;
+    border:1px solid #e5e5e5;
+    background:#fff;
+    overflow: hidden;
+  }
+  .ini-m{
+    /* float: left; */
+    /* width: 54%; */
+    padding:0 10px; 
+    line-height: 16px;
+    margin:0 48px 0 84px;
+    p{
+      height: 31px;
+      overflow: hidden;
+      a{
+        color: #666;
+      }
+    }
+    span{
+      color:#e4393c;
+      margin-top:5px;
+      display: block;
+    }
+  }
+  .ini-r{
+    a{
+      float: right;
+      color:#f65857;
+    }
+    
+  }
+}
+
+.interest-pro-w{
+  width: 92%;
+  margin: 0 auto; 
+  overflow: hidden;
+  font-size:1.3rem;
+  line-height: 16px;
+  padding-top:25px; 
+  .interest-pro{
+    width: 47.82608695652174%;
+    font-size: 1.3rem;
+
+    a{
+      color:#666;
+      
+    }
+  }
+  .inp-pic{
+    width: 100%;
+    height: 164px;
+    line-height: 164px;
+    /* border:1px solid #e5e5e5; */
+    @include bd-all-1px(solid,#e5e5e5,0);  
+    overflow: hidden;
+    text-align: center;
+    img{  
+      width: 138px; 
+      height: 138px;
+      vertical-align:middle;
+    }
+  } 
+  
+  .inp-name{
+    padding-top:10px;
+    height: 43px;
+    overflow: hidden;
+  }
+  .inp-num{
+    overflow: hidden;
+    padding-top:6px;
+    .inp-pay{
+      color:#e4393c;
+      float: left;
+    }
+    .inp-from{
+      float: right;
+      color: #ccc;
+    }
+
+  }
+  
+}
+
+.con-show{
+  padding:21px 4%;
+  .cos-people{
+    overflow: hidden;
+    font-size: 1.2rem;
+    color: #999999;
+  }
+  .cos-head{
+    width: 40px;
+    height: 40px;
+    float: left;
+    overflow: hidden;
+    border-radius:20px;
+    img{
+      max-width: 100%;
+    }
+  }
+  .cos-name{
+    float: left;
+    padding-left:4.63768115942029%;
+    padding-top:3px;
+    p{
+      font-size: 1.4rem;
+      color: #2d2d2d;
+      padding-bottom:7px;
+    }
+  }
+  .cos-interest{
+    float: right;
+    a{
+      color: #999999;
+    }
+  }
+  .cos-pic{
+    font-size: 1.7rem;
+    color: #666;
+    padding:13px 0 17px 0;
+    line-height: 21px;
+    div{
+      width: 100%;
+      img{
+        max-width: 100%;
+      }
+    }
+    p{
+      padding-bottom:16px;
+    }
+  }
+  .cos-item{
+    width: 100%;
+    height: 98px;
+    background:#fff;
+    border:2px solid #f65857;
+  }
+  .cos-item-l{
+    float: left;
+    width: 90px;
+    height: 98px;
+    line-height: 90px;
+  }
+  .cos-item-m{
+    margin-left: 100px;
+    margin-right: 50px;
+    padding-top:12px;
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+    p{
+      height: 36px;
+      overflow: hidden;
+    } 
+    span{
+      margin-top:5px;
+      display: block;
+      color:#e4393c;
+      font-size: 1.7rem;
+    }
+  }
+  .cos-item-r{
+    float: right;
+    margin-right: 10px;
+    margin-top:16px;
+  }
+  .cos-bottom{
+    overflow: hidden;
+    padding-top:20px;
+    .cos-b-num,.cos-b-txt{
+      float: right;
+      font-size: 1.2rem;
+      color: #999999;
+      img{
+        margin:0 9px;
+      }
+    }
+    .cos-b-txt{
+      padding-right:11px;
+      border-right:1px solid #cccccc;
+    }
+  }
+} 

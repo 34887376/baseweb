@@ -1,0 +1,24 @@
+#图片上传token
+imgAccessAuthCode=4cbb8c0c0ac1e0475608cae096363393
+imgUploadTempFilePath=D:\\uploade\\
+accessImgUrl=http://img20.360buyimg.com/kaopu/
+
+##m端登录中心url
+m.login.loginUrl=http://plogin.m.jd.com/cgi-bin/m/mlogin
+##m端获取pin的cookie
+m.login.pinCookieKey=pt_pin
+##m端登录回跳的域名
+m.login.targetDomainUrl=http://kaopu.jd.com
+##m端登录申请的appid,申请链接http://wsp.m.jd.com
+m.login.appId=168
+##从request上下文中获取pin参数
+m.login.pinName=user_pin
+
+#saf注册中心
+saf.registry.protocol=jdZooKeeper
+#测试环境saf zk 地址，线上环境要使用线上的zk地址
+saf.registry.address=jdZooKeeper://192.168.150.119,192.168.150.120,192.168.150.121:2181
+
+category.skuinfo.uril="servicelistyf.list.jd.local/?key=catid_str,,";
+
+

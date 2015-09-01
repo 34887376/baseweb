@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="dataSourceWriteForComment" parent="parentDataSource">
+		<property name="driverClassName" value="${jdbc.comment.driver}" />
+		<property name="url" value="${jdbc.comment.url}" />
+		<property name="username" value="${jdbc.comment.username}" />
+		<property name="password" value="${jdbc.comment.password}" />
+	</bean>
+
+	<bean id="dataSourceReadForComment" parent="parentDataSource">
+		<property name="driverClassName" value="${jdbc.comment.driver}" />
+		<property name="url" value="${jdbc.comment.url}" />
+		<property name="username" value="${jdbc.comment.username}" />
+		<property name="password" value="${jdbc.comment.password}" />
+	</bean>
+
+	<bean id="sqlMapClientForComment" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap-config.xml" />
+		<property name="dataSource" ref="dataSourceWriteForComment" />
+	</bean>
+
+	<!-- 配置评论数据库下分库分表的读写数据源 start -->
+	<bean id="commentReadDataSource"
+		class="com.jd.sharding.client.datasource.DefaultMultiDataSourcesService">
+		<property name="dataSourcePool">
+			<map>
+				<!-- key值前缀和TableConfig中配置的数据库前缀保持一致 -->
+				<entry key="kaopu_commentdb0" value-ref="dataSourceReadForComment" />
+			</map>
+		</property>
+	</bean>
+	<bean id="commentWriteDataSource"
+		class="com.jd.sharding.client.datasource.DefaultMultiDataSourcesService">
+		<property name="dataSourcePool">
+			<map>
+				<!-- key值前缀和TableConfig中配置的数据库前缀保持一致 -->
+				<entry key="kaopu_commentdb0" value-ref="dataSourceWriteForComment" />
+			</map>
+		</property>
+	</bean>
+	<!-- 配置评论数据库下分库分表的读写数据源 end -->
+
+
+	<!-- ########################################评论内容分库分表配置 start ################################################# -->
+	<!-- 水平切分数据库的路由规则 start -->
+	<bean id="commentMessTableConfig" class="com.jd.sharding.client.config.TableConfig">
+		<!--MultipleDataSourcesService里面的key的前缀，如需要后缀，可以设置dbIndexSuffix属性 -->
+		<property name="dbIndexPrefix" value="kaopu_commentdb" />
+		<!-- 分库的库的个数 -->
+		<property name="dbCount" value="1" />
+		<!-- 物理表名的前缀，如需要后缀，可以设置tbNameSuffix属性 -->
+		<property name="tbNamePrefix" value="comment_content" />
+		<!-- 分表后的表的张数 -->
+		<property name="tableCount" value="4" />
+		<!-- 分库分表的字段名，通过反射从parameterObject中获取 -->
+		<property name="routeField" value="id" />
+		<!-- 需要传给ibatis引擎的物理表名的字段，通过反射往parameterObject中写入 -->
+		<property name="tabNameField" value="tableName" />
+		<!-- 路由规则，目前提供了简单的取模求余方式，如果分库的字段是字符串，会先用murmurhash计算hash值 -->
+		<property name="routeRule">
+			<bean class="com.jd.sharding.client.rule.SimpleRouteRule">
+				<!-- 分库的库的个数 -->
+				<constructor-arg index="0" value="1" />
+				<!-- 分表后的表的张数 -->
+				<constructor-arg index="1" value="4" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="commentMessRouter" class="com.jd.sharding.client.router.SimpleRouter">
+		<property name="shardConfig">
+			<bean class="com.jd.sharding.client.config.ShardConfig">
+				<property name="tableConfig">
+					<map>
+						<!-- key为逻辑表名 -->
+						<entry key="comment_content" value-ref="commentMessTableConfig" />
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 水平切分数据库的路由规则 end -->
+
+	<!-- 评论内容写库分库分表数据配置 start -->
+	<bean id="commentMessWriteShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="comment_content" />
+		<property name="sqlMapClient" ref="sqlMapClientForComment" />
+		<property name="dataSourcesService" ref="commentWriteDataSource" />
+		<property name="router" ref="commentMessRouter" />
+		<property name="dataSource" ref="dataSourceWriteForComment"></property>
+	</bean>
+	<!-- 评论内容写库分库分表数据配置 end -->
+
+
+	<!-- 评论内容读库水平切分的数据库模板配置 start -->
+	<bean id="commentMessReadShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="comment_content" />
+		<property name="sqlMapClient" ref="sqlMapClientForComment" />
+		<property name="dataSourcesService" ref="commentReadDataSource" />
+		<property name="router" ref="commentMessRouter" />
+		<property name="dataSource" ref="dataSourceReadForComment"></property>
+	</bean>
+	<!-- 评论内容读库水平切分的数据库模板配置 end -->
+	<!-- ########################################评论内容分库分表配置 end ################################################# -->
+
+	<!-- ########################################话题评论关系分库分表配置 start ################################################# -->
+	<!-- 水平切分数据库的路由规则 start -->
+	<bean id="topicMessTableConfig" class="com.jd.sharding.client.config.TableConfig">
+		<!--MultipleDataSourcesService里面的key的前缀，如需要后缀，可以设置dbIndexSuffix属性 -->
+		<property name="dbIndexPrefix" value="kaopu_commentdb" />
+		<!-- 分库的库的个数 -->
+		<property name="dbCount" value="1" />
+		<!-- 物理表名的前缀，如需要后缀，可以设置tbNameSuffix属性 -->
+		<property name="tbNamePrefix" value="topic_comment" />
+		<!-- 分表后的表的张数 -->
+		<property name="tableCount" value="4" />
+		<!-- 分库分表的字段名，通过反射从parameterObject中获取 -->
+		<property name="routeField" value="topicId" />
+		<!-- 需要传给ibatis引擎的物理表名的字段，通过反射往parameterObject中写入,写sql时的表名变量 -->
+		<property name="tabNameField" value="tableName" />
+		<!-- 路由规则，目前提供了简单的取模求余方式，如果分库的字段是字符串，会先用murmurhash计算hash值 -->
+		<property name="routeRule">
+			<bean class="com.jd.sharding.client.rule.SimpleRouteRule">
+				<!-- 分库的库的个数 -->
+				<constructor-arg index="0" value="1" />
+				<!-- 分表后的表的张数 -->
+				<constructor-arg index="1" value="4" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="topicMessRouter" class="com.jd.sharding.client.router.SimpleRouter">
+		<property name="shardConfig">
+			<bean class="com.jd.sharding.client.config.ShardConfig">
+				<property name="tableConfig">
+					<map>
+						<!-- key为逻辑表名 -->
+						<entry key="topic_comment" value-ref="topicMessTableConfig" />
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 水平切分数据库的路由规则 end -->
+
+	<!-- 话题评论关系写库分库分表数据配置 start -->
+	<bean id="topicMessWriteShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="topic_comment" />
+		<property name="sqlMapClient" ref="sqlMapClientForComment" />
+		<property name="dataSourcesService" ref="commentWriteDataSource" />
+		<property name="router" ref="topicMessRouter" />
+		<property name="dataSource" ref="dataSourceWriteForComment"></property>
+	</bean>
+	<!-- 话题评论关系写库分库分表数据配置 end -->
+
+
+	<!-- 话题评论关系读库水平切分的数据库模板配置 start -->
+	<bean id="topicMessReadShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="topic_comment" />
+		<property name="sqlMapClient" ref="sqlMapClientForComment" />
+		<property name="dataSourcesService" ref="commentReadDataSource" />
+		<property name="router" ref="topicMessRouter" />
+		<property name="dataSource" ref="dataSourceReadForComment"></property>
+	</bean>
+	<!-- 话题评论关系读库水平切分的数据库模板配置 end -->
+	<!-- ########################################话题评论关系分库分表配置 end ################################################# -->
+
+
+	<!-- ########################################用户评论关系分库分表配置 start ################################################# -->
+	<!-- 水平切分数据库的路由规则 start -->
+	<bean id="userCommentTableConfig" class="com.jd.sharding.client.config.TableConfig">
+		<!--MultipleDataSourcesService里面的key的前缀，如需要后缀，可以设置dbIndexSuffix属性 -->
+		<property name="dbIndexPrefix" value="kaopu_commentdb" />
+		<!-- 分库的库的个数 -->
+		<property name="dbCount" value="1" />
+		<!-- 物理表名的前缀，如需要后缀，可以设置tbNameSuffix属性 -->
+		<property name="tbNamePrefix" value="user_comment" />
+		<!-- 分表后的表的张数 -->
+		<property name="tableCount" value="4" />
+		<!-- 分库分表的字段名，通过反射从parameterObject中获取 -->
+		<property name="routeField" value="pin" />
+		<!-- 需要传给ibatis引擎的物理表名的字段，通过反射往parameterObject中写入,写sql时的表名变量 -->
+		<property name="tabNameField" value="tableName" />
+		<!-- 路由规则，目前提供了简单的取模求余方式，如果分库的字段是字符串，会先用murmurhash计算hash值 -->
+		<property name="routeRule">
+			<bean class="com.jd.sharding.client.rule.SimpleRouteRule">
+				<!-- 分库的库的个数 -->
+				<constructor-arg index="0" value="1" />
+				<!-- 分表后的表的张数 -->
+				<constructor-arg index="1" value="4" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="userCommentRouter" class="com.jd.sharding.client.router.SimpleRouter">
+		<property name="shardConfig">
+			<bean class="com.jd.sharding.client.config.ShardConfig">
+				<property name="tableConfig">
+					<map>
+						<!-- key为逻辑表名 -->
+						<entry key="user_comment" value-ref="userCommentTableConfig" />
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 水平切分数据库的路由规则 end -->
+
+	<!-- 用户评论关系写库分库分表数据配置 start -->
+	<bean id="userCommentWriteShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="user_comment" />
+		<property name="sqlMapClient" ref="sqlMapClientForComment" />
+		<property name="dataSourcesService" ref="commentWriteDataSource" />
+		<property name="router" ref="userCommentRouter" />
+		<property name="dataSource" ref="dataSourceWriteForComment"></property>
+	</bean>
+	<!-- 用户评论关系写库分库分表数据配置 end -->
+
+
+	<!-- 用户评论关系读库水平切分的数据库模板配置 start -->
+	<bean id="userCommentReadShardJdbcTemplate" class="com.jd.sharding.client.SimpleShardJdbcTemplate">
+		<property name="logicalTabName" value="user_comment" />
+		<property name="sqlMapClient" ref="sqlMapClientForComment" />
+		<property name="dataSourcesService" ref="commentReadDataSource" />
+		<property name="router" ref="userCommentRouter" />
+		<property name="dataSource" ref="dataSourceReadForComment"></property>
+	</bean>
+	<!-- 用户评论关系读库水平切分的数据库模板配置 end -->
+	<!-- ########################################用户评论关系分库分表配置 end ################################################# -->
+
+</beans>
