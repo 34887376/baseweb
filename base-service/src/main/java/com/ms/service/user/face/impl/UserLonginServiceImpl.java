@@ -31,7 +31,7 @@ public class UserLonginServiceImpl implements IUserLonginService {
 			if(userType == UserLoginType.邮箱.getLoginType()){
 				userLoginDAO.setEmail(userName);
 			}else if(userType == UserLoginType.手机号.getLoginType()){
-				userLoginDAO.setPhone(Integer.parseInt(userName));
+				userLoginDAO.setPhone(Long.parseLong(userName));
 			}else if(userType == UserLoginType.用户名.getLoginType()){
 				userLoginDAO.setPin(userName);
 			}
@@ -64,7 +64,7 @@ public class UserLonginServiceImpl implements IUserLonginService {
 			if(userType == UserLoginType.邮箱.getLoginType()){
 				userLoginDAO.setEmail(userName);
 			}else if(userType == UserLoginType.手机号.getLoginType()){
-				userLoginDAO.setPhone(Integer.parseInt(userName));
+				userLoginDAO.setPhone(Long.parseLong(userName));
 			}else if(userType == UserLoginType.用户名.getLoginType()){
 				userLoginDAO.setPin(userName);
 			}
@@ -89,7 +89,7 @@ public class UserLonginServiceImpl implements IUserLonginService {
 			if(userType == UserLoginType.邮箱.getLoginType()){
 				userLoginDAO.setEmail(userName);
 			}else if(userType == UserLoginType.手机号.getLoginType()){
-				userLoginDAO.setPhone(Integer.parseInt(userName));
+				userLoginDAO.setPhone(Long.parseLong(userName));
 			}else if(userType == UserLoginType.用户名.getLoginType()){
 				userLoginDAO.setPin(userName);
 			}
@@ -115,8 +115,7 @@ public class UserLonginServiceImpl implements IUserLonginService {
 			userLoginDAO.setEmail(userLoginBO.getEmail());
 			userLoginDAO.setPin(userLoginBO.getPin());
 			userLoginDAO.setPhone(userLoginBO.getPhone());
-			userLoginDAO.setPwd(userLoginBO.getPwd());
-			userLoginDAO.setPwdNew(userLoginBO.getPwdNew());
+			userLoginDAO.setPwd(EnAndDeEncryptUtils.encryptMD5WithKey(userLoginBO.getPwd(), LoginParamConstant.getMd5Seed()));
 			boolean hasOk = iUserLoginDAO.addNewUser(userLoginDAO);
 			if(hasOk){
 				return true;
@@ -136,7 +135,7 @@ public class UserLonginServiceImpl implements IUserLonginService {
 			if(userType == UserLoginType.邮箱.getLoginType()){
 				userLoginDAO.setEmail(keyWord);
 			}else if(userType == UserLoginType.手机号.getLoginType()){
-				userLoginDAO.setPhone(Integer.parseInt(keyWord));
+				userLoginDAO.setPhone(Long.parseLong(keyWord));
 			}else{
 				userLoginDAO.setNickName(keyWord);
 			}
@@ -178,7 +177,7 @@ public class UserLonginServiceImpl implements IUserLonginService {
 		return false;
 	}
 
-	public boolean hasPhoneRecord(Integer phone) {
+	public boolean hasPhoneRecord(Long phone) {
 		try {
 			boolean hasOk = iUserLoginDAO.hasPhoneRecord(phone);
 			if(hasOk){
@@ -212,7 +211,7 @@ public class UserLonginServiceImpl implements IUserLonginService {
 			if(userType == UserLoginType.邮箱.getLoginType()){
 				userLoginDAO.setEmail(userName);
 			}else if(userType == UserLoginType.手机号.getLoginType()){
-				userLoginDAO.setPhone(Integer.parseInt(userName));
+				userLoginDAO.setPhone(Long.parseLong(userName));
 			}else if(userType == UserLoginType.用户名.getLoginType()){
 				userLoginDAO.setPin(userName);
 			}

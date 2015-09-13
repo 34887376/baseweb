@@ -29,6 +29,6 @@
     <import resource="spring/spring-datasource-mysql.xml"/>
     <import resource="spring/spring-login.xml"/>
     <import resource="spring/spring-dao.xml"/>
-<!--     <import resource="spring/spring-service.xml"/>  --> 
+    <import resource="spring/spring-service.xml"/>
 
 </beans>

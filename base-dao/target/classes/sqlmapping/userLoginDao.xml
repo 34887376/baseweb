@@ -100,22 +100,22 @@
 	</select>
 	
 	<!--新用户注册时，检查是否已经有对应的pin-->
-	<select id="hasPinRecord" resultClass="int" parameterClass="java.lang.String">
+	<select id="hasPinRecord" resultClass="long" parameterClass="java.lang.String">
 		select id from userLogin where pin=#pin#
 	</select>
 	
 	<!--新用户注册时，检查是否已经有对应的email-->
-	<select id="hasEmailRecord" resultClass="int" parameterClass="java.lang.String">
+	<select id="hasEmailRecord" resultClass="long" parameterClass="java.lang.String">
 		select id from userLogin where email=#email#
 	</select>
 	
 		<!--新用户注册时，检查是否已经有对应的手机号-->
-	<select id="hasPhoneRecord" resultClass="int" parameterClass="int">
+	<select id="hasPhoneRecord" resultClass="long" parameterClass="long">
 		select id from userLogin where phone=#phone#
 	</select>
 	
 	<!--新用户注册时，检查是否已经有对应的昵称-->
-	<select id="hasNicknameRecord" resultClass="int" parameterClass="java.lang.String">
+	<select id="hasNicknameRecord" resultClass="long" parameterClass="java.lang.String">
 		select id from userLogin where nickname=#nickName#
 	</select>
 	

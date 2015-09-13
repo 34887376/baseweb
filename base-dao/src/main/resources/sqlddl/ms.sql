@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50517
 File Encoding         : 65001
 
-Date: 2015-09-07 11:26:43
+Date: 2015-09-13 17:04:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -123,11 +123,11 @@ CREATE TABLE `sku` (
 DROP TABLE IF EXISTS `userlogin`;
 CREATE TABLE `userlogin` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(30) DEFAULT NULL COMMENT 'uuid随机生成唯一标号',
+  `uuid` varchar(50) DEFAULT NULL COMMENT 'uuid随机生成唯一标号',
   `pin` varchar(30) DEFAULT NULL COMMENT '用户名',
   `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `pwd` varchar(64) DEFAULT NULL COMMENT ' 密码',
-  `phone` int(11) DEFAULT NULL COMMENT '电话号码',
+  `phone` bigint(11) DEFAULT NULL COMMENT '电话号码',
   `email` varchar(64) DEFAULT NULL COMMENT '邮箱',
   `status` tinyint(2) DEFAULT NULL COMMENT '用户状态 1 正常，2 封号 3 恶意账号',
   PRIMARY KEY (`id`)

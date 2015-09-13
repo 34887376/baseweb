@@ -40,7 +40,7 @@ public class UserLoginBO implements Serializable {
 	/**
 	 * 用户注册、认证手机号
 	 */
-	private Integer phone;
+	private Long phone;
 	
 	/**
 	 * 用户邮件地址
@@ -92,14 +92,6 @@ public class UserLoginBO implements Serializable {
 		this.pwd = pwd;
 	}
 
-	public Integer getPhone() {
-		return phone;
-	}
-
-	public void setPhone(Integer phone) {
-		this.phone = phone;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -122,6 +114,14 @@ public class UserLoginBO implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Long getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Long phone) {
+		this.phone = phone;
 	}
 	
 }

@@ -1,5 +1,6 @@
 function registry(){
 	var userName=$("#userName").val();
+	var nickName=$("#nickName").val();
 	var password=$("#pwd").val();
 	var repeatePassword=$("#repeatePwd").val();
 	var userEmail=$("#userEmail").val();
@@ -34,7 +35,7 @@ function registry(){
 		$("#userEmail").focus();
 		return;
 	}
-	if(!isEmail()){
+	if(!isEmail(userEmail)){
 		$("#userEmail").text("请输入正确的邮箱格式");
 		$("#userEmail").focus();
 		return;
@@ -52,14 +53,13 @@ function registry(){
 		return;
 	}
 	
-	var param = "userName="+userName+"&pwd="+password+"&repeatPwd="+repeatePassword+"&email="+userEmail+"&phone="+userPhone+"&r="+(new Date()).getTime();
+	var param = "pin="+userName+"&nickName="+nickName+"&pwd="+password+"&repeatPwd="+repeatePassword+"&email="+userEmail+"&phone="+userPhone+"&r="+(new Date()).getTime();
 	$.ajax({
 		  url: "/login/registry.action",
-	      global: false,
 	      type: "POST",
 	      data: param,
 	      dataType: "json",
-	      async:true,
+	      async:false,
 	      success: function(msg){
 	    	  if(msg.success){
 	    		  window.location.href = "/index.action?r="+(new Date()).getTime();

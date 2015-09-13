@@ -7,7 +7,7 @@
 
 	<!-- 用户登录的请求配置 -->
 	<package name="loginPath" namespace="/login" extends="struts-base">
-		<action name="*" method="{1}" class="com.ms.login.action.LoginAction" >
+		<action name="*" method="{1}" class="com.ms.login.action.LoginAction">
 			<!-- 用户登陆链接页面有两种方式可以跳转到登录页：http://www.ms.com/login/goLogin.action?aimUrl=http://www.baidu.com?df=dds
 				和http://www.ms.com/login.html?aimUrl=http://www.baidu.com?fdsafp=fdas-->
 			<!-- <result name="loginHtml" type="dispatcher">/WEB-INF/page/login/login.html?aimUrl=${aimUrl}</result> -->

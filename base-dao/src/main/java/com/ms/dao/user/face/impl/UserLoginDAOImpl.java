@@ -1,8 +1,5 @@
 package com.ms.dao.user.face.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.ms.dao.base.dao.BaseMysqlDAO;
 import com.ms.dao.user.face.IUserLoginDAO;
 import com.ms.domain.user.dao.UserLoginDAO;
@@ -22,15 +19,15 @@ public class UserLoginDAOImpl extends BaseMysqlDAO implements IUserLoginDAO {
 	}
 
 	public boolean updatePassWord(UserLoginDAO userLoginDAO) throws Exception{
-		Integer affectRowNum = (Integer)this.update("UserLogin.updateUserPass", userLoginDAO);
-		if(affectRowNum!=null && affectRowNum>0){
+		int affectRowNum = this.update("UserLogin.updateUserPass", userLoginDAO);
+		if(affectRowNum>0){
 			return true;
 		}
 		return false;
 	}
 
 	public boolean addNewUser(UserLoginDAO userLoginDAO) throws Exception{
-		Integer affectRowNum = (Integer)this.insert("UserLogin.insertUserRegistryInfo", userLoginDAO);
+		Long affectRowNum = (Long)this.insert("UserLogin.insertUserRegistryInfo", userLoginDAO);
 		if(affectRowNum!=null && affectRowNum>0){
 			return true;
 		}
@@ -43,7 +40,7 @@ public class UserLoginDAOImpl extends BaseMysqlDAO implements IUserLoginDAO {
 	}
 
 	public boolean hasPinRecord(String pin) throws Exception {
-		Integer recordNum = (Integer)this.queryForObject("UserLogin.hasPinRecord", pin);
+		Long recordNum = (Long)this.queryForObject("UserLogin.hasPinRecord", pin);
 		if(recordNum!=null && recordNum>0){
 			return true;
 		}
@@ -51,15 +48,15 @@ public class UserLoginDAOImpl extends BaseMysqlDAO implements IUserLoginDAO {
 	}
 
 	public boolean hasEmailRecord(String email) throws Exception {
-		Integer recordNum = (Integer)this.queryForObject("UserLogin.hasEmailRecord", email);
+		Long recordNum = (Long)this.queryForObject("UserLogin.hasEmailRecord", email);
 		if(recordNum!=null && recordNum>0){
 			return true;
 		}
 		return false;
 	}
 
-	public boolean hasPhoneRecord(Integer phone) throws Exception {
-		Integer recordNum = (Integer)this.queryForObject("UserLogin.hasPhoneRecord", phone);
+	public boolean hasPhoneRecord(Long phone) throws Exception {
+		Long recordNum = (Long)this.queryForObject("UserLogin.hasPhoneRecord", phone);
 		if(recordNum!=null && recordNum>0){
 			return true;
 		}
@@ -67,7 +64,7 @@ public class UserLoginDAOImpl extends BaseMysqlDAO implements IUserLoginDAO {
 	}
 
 	public boolean hasnickNameRecord(String nickName) throws Exception {
-		Integer recordNum = (Integer)this.queryForObject("UserLogin.hasNicknameRecord", nickName);
+		Long recordNum = (Long)this.queryForObject("UserLogin.hasNicknameRecord", nickName);
 		if(recordNum!=null && recordNum>0){
 			return true;
 		}
@@ -75,8 +72,8 @@ public class UserLoginDAOImpl extends BaseMysqlDAO implements IUserLoginDAO {
 	}
 
 	public boolean updateUserStatus(UserLoginDAO userLoginDAO) throws Exception {
-		Integer affectRowNum = (Integer)this.update("UserLogin.updateUserStatus", userLoginDAO);
-		if(affectRowNum!=null && affectRowNum>0){
+		int affectRowNum = this.update("UserLogin.updateUserStatus", userLoginDAO);
+		if(affectRowNum>0){
 			return true;
 		}
 		return false;

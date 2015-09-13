@@ -45,7 +45,7 @@ public class LoginAction extends BaseAction{
 	private String repeatePwdNew;
 	
 	 // 用户注册、认证手机号
-	private Integer phone;
+	private Long phone;
 	
 	 //用户邮件地址
 	private String email;
@@ -312,7 +312,7 @@ public class LoginAction extends BaseAction{
 		return null;
 	}
 	
-	private String validatePhone(Integer phone){
+	private String validatePhone(Long phone){
 		if(phone==null){
 			return "注册手机号码不能为空！！！";
 		}else{
@@ -395,14 +395,6 @@ public class LoginAction extends BaseAction{
 		this.repeatePwdNew = repeatePwdNew;
 	}
 
-	public Integer getPhone() {
-		return phone;
-	}
-
-	public void setPhone(Integer phone) {
-		this.phone = phone;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -421,6 +413,12 @@ public class LoginAction extends BaseAction{
 
 	public void setUserLonginService(IUserLonginService userLonginService) {
 		this.userLonginService = userLonginService;
+	}
+	public Long getPhone() {
+		return phone;
+	}
+	public void setPhone(Long phone) {
+		this.phone = phone;
 	}
 
 }

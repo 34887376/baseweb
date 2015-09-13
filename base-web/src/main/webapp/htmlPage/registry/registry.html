@@ -20,30 +20,53 @@
   </head>
 
   <body>
-  <form class="form-horizontal">
+  <form class="form-registry-horizontal">
     <fieldset>
-      <div id="legend" class="">
-        <legend class="">敬请注册</legend>
+      <div class="registry-group">
+	      <div id="legend" class="">
+	        <legend class="">敬请注册</legend>
+	      </div>
+      </div>
+      <div class="registry-group">
+      	<font color="red"><strong><label id="tipInfo" ></label></strong></font>
       </div>
       <div class="registry-group">
 	    <label><font color="red">*</font>用户名</label>
 	    <input type="text" class="form-control" id="userName" placeholder="用户名、邮箱、手机">
 	  </div>
+      <div class="registry-group">
+	    <label>昵称</label>
+	    <input type="text" class="form-control" id="nickName" placeholder="昵称">
+	  </div>
 	  <div class="registry-group">
-	    <label>*密码</label>
+	    <label><font color="red">*</font>密码</label>
 	    <input type="password" class="form-control" id="pwd" placeholder="密码">
 	  </div>
   	  <div class="registry-group">
-	    <label>*请确认密码</label>
-	    <input type="password" class="form-control" id="pwd" placeholder="密码">
+	    <label><font color="red">*</font>请确认密码</label>
+	    <input type="password" class="form-control" id="repeatePwd" placeholder="请再次输入密码">
 	  </div>
-
-  	  <button type="submit" class="btn btn-success btn-lg btn-block">注   册</button>
+  	  <div class="registry-group">
+	    <label><font color="red">*</font>电子邮箱</label>
+	    <input type="email" class="form-control" id="userEmail" placeholder="Email">
+	  </div>
+  	  <div class="registry-group">
+	    <label><font color="red">*</font>手机号码</label>
+	    <input type="text" min="1" max="10" class="form-control" id="phone" placeholder="手机号码">
+	  </div>
+  	  <div class="registry-group">
+  	  	<label></label>
+  	  </div>
+	  <div class="registry-group">
+  	     <button type="button" class="btn btn-success btn-lg btn-block" onclick="registry();">注   册</button>
+  	  </div>
     </fieldset>
   </form>
  
   	<script src="../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
 	<script src="../../js/bootstrap-3.3.5/bootstrap.js?r=20150707"></script>
+	<script src="../../js/common/utils.js?r=20150707"></script>
+	<script src="../../js/ms/registry/registry.js?r=20150707"></script>
   </body>
 
 </html>

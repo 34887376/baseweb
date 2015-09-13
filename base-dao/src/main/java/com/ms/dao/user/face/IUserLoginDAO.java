@@ -62,7 +62,7 @@ public interface IUserLoginDAO {
 	 * @param phone
 	 * @return
 	 */
-	boolean hasPhoneRecord(Integer phone) throws Exception;
+	boolean hasPhoneRecord(Long phone) throws Exception;
 	
 	/**
 	 *	校验用户注册的nickName信息是否已经存在

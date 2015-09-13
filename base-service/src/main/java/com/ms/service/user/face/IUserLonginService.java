@@ -68,7 +68,7 @@ public interface IUserLonginService {
 	 * @param phone
 	 * @return
 	 */
-	boolean hasPhoneRecord(Integer phone);
+	boolean hasPhoneRecord(Long phone);
 	
 	/**
 	 *	校验用户注册的nickName信息是否已经存在

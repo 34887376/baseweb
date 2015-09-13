@@ -3006,15 +3006,15 @@ select[multiple].input-lg {
   margin-left: -15px;
 }
 
+.form-registry-horizontal .registry-group {
+  margin-right: 100px;
+  margin-left: 400px;
+  
+}
 
 .form-login-horizontal .login-group {
   margin-right: 100px;
   margin-left: 500px;
-}
-
-.form-horizontal .registry-group {
-  margin-right: -15px;
-  margin-left: -15px;
 }
 
 @media (min-width: 768px) {
@@ -3038,8 +3038,12 @@ select[multiple].input-lg {
     padding-top: 6px;
     font-size: 12px;
   }
-    .form-login-horizontal{
+  .form-login-horizontal{
     padding-top: 260px;
+    font-size: 12px;
+  }
+  .form-registry-horizontal{
+    padding-top: 60px;
     font-size: 12px;
   }
 }
