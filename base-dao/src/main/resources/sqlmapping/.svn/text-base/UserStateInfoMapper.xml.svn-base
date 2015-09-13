@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="UserStateInfo">
+
+	<typeAlias alias="UserStateDAO" type ="com.jd.kaopu.domain.dao.user.UserStateDAO" />  
+	<typeAlias alias="singlePin" type ="com.jd.kaopu.domain.dao.user.SinglePinUserDAO" />  
+
+	<resultMap id="userStateResult" class="com.jd.kaopu.domain.dao.user.UserStateDAO">
+		<result property="id" column="id" />
+		<result property="pin" column="pin" />
+		<result property="active" column="active" />
+		<result property="last_login" column="last_login" />
+		<result property="last_update" column="last_update" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,pin,active,last_login,last_update
+	</sql>
+	
+	<select id="queryActiveUserState" resultClass="java.lang.String">
+		select pin from $tableName$ where active=1
+	</select>
+	
+	<select id="exsistUserState" resultClass="java.lang.Long" parameterClass="singlePin">
+		select id from $tableName$ where pin=#pin#
+	</select>
+	
+	<insert id="insertUserState" parameterClass="UserStateDAO">
+		insert into $tableName$ (id,pin,active,last_login,last_update) values
+		(#id#,#pin#,#active#,now(),now())
+        <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+
+	<update id="updateUserState" parameterClass="UserStateDAO">
+		update $tableName$
+			<dynamic prepend="set">
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend=","  property="active">
+					active= #active#
+				</isNotNull>
+				<isNotNull prepend=","  property="last_login">
+					last_login= now()
+				</isNotNull>
+				<isNotNull prepend=","  property="last_update">
+					last_update= now()
+				</isNotNull>
+			</dynamic>
+		 where pin=#pin#
+	</update>
+	
+	<insert id="obtainUserStateIndex">
+		insert into user_state_index values (null)
+        <selectKey resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+	
+</sqlMap>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="topicAbstract">
+
+	<typeAlias alias="topicAbstractDAO" type ="com.jd.kaopu.domain.dao.topic.TopicAbstractDAO" />  
+	<typeAlias alias="topicIdDAO" type ="com.jd.kaopu.domain.dao.topic.SingleTopicIdDAO" />  
+
+	<resultMap id="topicAbstractDAOResult" class="com.jd.kaopu.domain.dao.topic.TopicAbstractDAO">
+		<result property="_id" column="id" />
+		<result property="pin" column="pin" />
+		<result property="belongSubjectId" column="subjectId" />
+		<result property="contentAbstract" column="contentAbstract" />
+		<result property="markIds" column="markIds" />
+		<result property="imgUrls" column="imgUrls" />
+		<result property="commentTimes" column="commentTimes" nullValue="0"/>
+		<result property="priaseTimes" column="priaseTimes" nullValue="0"/>
+		<result property="creatTime" column="creatTime" />
+		<result property="yn" column="yn" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,pin,subjectId,contentAbstract,markIds,imgUrls,commentTimes,priaseTimes,creatTime,yn
+	</sql>
+	
+	<!-- 根据话题id查询一条话题内容 -->
+	<select id="queryTopicAbstract" resultMap="topicAbstractDAOResult" parameterClass="topicAbstractDAO">
+		select * from $tableName$ where id=#_id#
+	</select>
+	
+	<!-- 根据话题id批量查询话题列表 -->
+	<select id="queryTopicAbstractListById" resultMap="topicAbstractDAOResult" parameterClass="topicIdDAO">
+		select * from $tableName$ where id =#_id#
+	</select>
+	
+	<!-- 将用户pin下的话题topicid设置为无效 -->
+	<update id="updateTopicAbstractInvalid" parameterClass="topicAbstractDAO">
+		update $tableName$ set yn=0 where id=#_id# and pin=#pin#
+	</update>
+	
+	<!-- 物理删除该条话题记录 -->
+	<delete id="deleteTopicAbstract"  parameterClass="topicAbstractDAO">
+		delete from $tableName$ where id=#_id# and pin=#pin#
+	</delete>
+	
+	<!-- 添加一条新的话题内容 -->
+	<insert id="addTopicAbstract" parameterClass="topicAbstractDAO">
+		insert into $tableName$ (id,pin,subjectId,contentAbstract,markIds,imgUrls,commentTimes,priaseTimes,creatTime,yn) values
+		(#_id#,#pin#,#belongSubjectId#,#contentAbstract#,#markIds#,#imgUrls#,#commentTimes#,#priaseTimes#,#creatTime#,#yn#)
+        <selectKey resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+	
+	<!-- 查询用户pin或者某个主题下的话题个数 -->
+	<select id="coutnTopicNum" resultClass="java.lang.Integer" parameterClass="topicAbstractDAO">
+		select count(1) from $tableName$ where 
+		<dynamic>
+				<isNotNull prepend="and"  property="pin">
+					pin= #pin#
+				</isNotNull>
+				<isNotNull prepend="and"  property="subjectId">
+					subjectId= #belongSubjectId#
+				</isNotNull>
+		</dynamic>
+	</select>
+	
+	<!-- 根据时间点查询最近某个时间段内，某个用户或者某个主题下的话题列表 -->
+	<select id="queryLastTopicList" resultMap="topicAbstractDAOResult" parameterClass="topicAbstractDAO">
+		select * from $tableName$ where 
+		<dynamic>
+				<isNotNull prepend="and"  property="pin">
+					pin= #pin#
+				</isNotNull>
+				<isNotNull prepend="and"  property="subjectId">
+					subjectId= #belongSubjectId#
+				</isNotNull>
+				<isNotNull prepend="and"  property="creatTime">
+					creatTime between #creatTime# and now()
+				</isNotNull>
+		</dynamic>
+	</select>
+	
+	<insert id="obtainTopicAbstractIndex">
+		insert into topic_abstract_index values (null)
+        <selectKey resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+	
+</sqlMap>

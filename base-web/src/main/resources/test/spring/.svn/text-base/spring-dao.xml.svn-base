@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName" default-lazy-init="false">
+
+	<bean id="topicDAO" class="com.jd.kaopu.dao.topic.impl.TopicDAOImpl" />
+	<!-- 用户话题dao add by chenchangqun -->
+	<bean id="userTopicDAOInterface" class="com.jd.kaopu.dao.topic.impl.UserTopicDAOInterfaceImpl"></bean>
+	<bean id="markTopicDAOInterface" class="com.jd.kaopu.dao.topic.impl.MarkTopicDAOImpl"></bean>
+	<bean id="interestDao" class="com.jd.kaopu.dao.interest.impl.InterestDaoImpl" />
+	<bean id="circlesDAOInterface" class="com.jd.kaopu.dao.circles.impl.CirclesDaoImpl" />
+	<!-- 点赞 mongodb dao -->
+	<!-- <bean id="praiseDAO" class="com.jd.kaopu.dao.praise.impl.PraiseDAOImpl"></bean> 
+		<bean id="topicPraiseDAO" class="com.jd.kaopu.dao.praise.impl.TopicPraiseDAOImpl"></bean> 
+		<bean id="userPraiseDAO" class="com.jd.kaopu.dao.praise.impl.UserPraiseDAOImpl"></bean> -->
+	<!-- 点赞 mysqlDao -->
+	<bean id="userPraiseDAO" class="com.jd.kaopu.dao.praise.impl.UserPraiseDAOMysqlImpl"></bean>
+	<bean id="praiseDAO" class="com.jd.kaopu.dao.praise.impl.PraiseDAOMysqlImpl"></bean>
+	<bean id="topicPraiseDAO" class="com.jd.kaopu.dao.praise.impl.TopicPraiseDAOMysqlImpl"></bean>
+
+
+	<bean id="userInfoDAOInterface" class="com.jd.kaopu.dao.user.baseInfo.impl.UserInfoDAOImpl"></bean>
+	<bean id="subjectClassifyDAOInterface" class="com.jd.kaopu.dao.subject.impl.SubjectClassifyDAOImpl"></bean>
+	<bean id="subjectDAO" class="com.jd.kaopu.dao.subject.impl.SubjectDAOImpl"></bean>
+	<bean id="relationDAO" class="com.jd.kaopu.dao.subject.impl.UserSubjectDAOImpl"></bean>
+	<!--评论表 -->
+	<bean id="commentDAOInterface" class="com.jd.kaopu.dao.comment.impl.CommentDaoImpl"></bean>
+	<!--话题评论表 -->
+	<bean id="topicCommentDAOInterface" class="com.jd.kaopu.dao.comment.impl.TopicCommentDaoImpl"></bean>
+	<!--用户评论表 -->
+	<bean id="userCommentDAOInterface" class="com.jd.kaopu.dao.comment.impl.UserCommentDaoImpl"></bean>
+
+
+	<bean id="categoryDAO" class="com.jd.kaopu.dao.category.impl.CategoryDAOImpl"></bean>
+	<!--用户状态DAO -->
+	<bean id="userStateDAOInterface" class="com.jd.kaopu.dao.user.baseInfo.impl.UserStateDAOImpl"></bean>
+</beans>

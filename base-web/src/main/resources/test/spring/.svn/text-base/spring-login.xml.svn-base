@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:saf="http://code.360buy.com/schema/saf"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+    <bean id="loginInterceptorProcess" class="com.jd.kaopu.interceptor.login.LoginInterceptor">
+        <property name="pinCookieName" value="${m.login.pinCookieKey}"/>
+       <property name="keyCookieName" value="${m.login.keyCookieName}"/>
+        <property name="targetDomainUrl" value="${m.login.targetDomainUrl}"/>
+        <property name="loginUrl" value="${m.login.loginUrl}"></property>
+        <property name="appId" value="${m.login.appId}"></property>
+        <property name="pinName" value="${m.login.pinName}"></property>
+        <property name="loginCheckUrl" value="${m.login.check.url}"></property>
+    </bean>
+    
+   <bean class="com.jd.kaopu.base.action.KaoPuBaseAction">
+        <property name="targetDomainUrl" value="${m.login.targetDomainUrl}"/>
+        <property name="loginUrl" value="${m.login.loginUrl}"></property>
+        <property name="appId" value="${m.login.appId}"></property>
+        <property name="pinName" value="${m.login.pinName}"></property>
+    </bean>
+</beans>

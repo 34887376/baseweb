@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "UTF-8"?>  
+<!--下面是Struts2配置文件的DTD信息 -->  
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  
+    "http://struts.apache.org/dtds/struts-2.0.dtd">  
+<struts>
+	<package name="interest" namespace="/interest" extends="struts-login">
+		<action name="*" method="{1}" class="com.jd.kaopu.interest.action.ManagerInterestAction">
+			<result name="queryInitError" type="velocity">/WEB-INF/page/interest/showInterest.vm</result>
+			<result name="querySuccess" type="velocity">/WEB-INF/page/interest/showInterest.vm</result>
+			<result name="queryError" type="json">
+				<param name="contentType">text/html</param>
+			</result>			
+			<result name="addInitError" type="dispatcher">/WEB-INF/page/interest/addInterest.html</result>
+			<result name="addSuccess" type="velocity">/WEB-INF/page/interest/result/addSuccess.vm</result>
+			<result name="addError" type="velocity">/WEB-INF/page/interest/result/addError.vm</result>
+			<result name="delInitError" type="dispatcher">/WEB-INF/page/interest/delInterest.html</result>
+			<result name="delSuccess" type="velocity">/WEB-INF/page/interest/result/delSuccess.vm</result>
+			<result name="delError" type="velocity">/WEB-INF/page/interest/result/delError.vm</result>
+			<result name="userSkuInfo" type="json">
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+</struts>

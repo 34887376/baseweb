@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="TopicPraise">
+<typeAlias alias="topicPraise" type="com.jd.kaopu.domain.dao.praise.TopicPraiseRelationDAO"/>
+
+<resultMap id="topicPraiseMap" class="com.jd.kaopu.domain.dao.praise.TopicPraiseRelationDAO"  >
+  <result property="_id"  column="id"/>
+<result property="praiseId"  column="praiseId"/>
+<result property="topicId"  column="topicId"/>
+<result property="pin"    column="pin"/>
+<result property="createTime"  column="createTime"/>
+</resultMap>
+<!-- 获得  praise_topic的主键-->
+<insert id="getPrimaryKey" >
+  insert praise_topic_index() values()
+<selectKey   resultClass="java.lang.Long">
+            select LAST_INSERT_ID() 
+  </selectKey>
+</insert>
+<!-- 添加话题赞 -->
+<insert id="addPraise"  parameterClass="topicPraise">
+ insert $tableName$(id,topicId,praiseId,pin,createTime) values(#_id#,#topicId#,#praiseId#,#pin#,now())
+</insert>
+<!-- 删除话题赞 -->
+<delete id="delPraise" parameterClass="topicPraise">
+delete from $tableName$ where topicId=#topicId# and praiseId=#praiseId#
+</delete>
+<!-- 根据话题id查询点赞数据 -->
+<select id="queryPraiseCountByTopicId"   parameterClass="topicPraise"  resultClass="java.lang.Integer">
+ select count(id) from $tableName$ where topicId=#topicId#  
+</select>
+<!-- 根据话题id和pin查询点赞数 -->
+<select id="queryPraiseCount"   parameterClass="topicPraise"  resultClass="java.lang.Integer">
+ select count(id) from $tableName$  where topicId=#topicId#   and pin=#pin#  
+</select>
+<!-- 根据话题id和pin查询一条话题点赞数据 -->
+<select id="queryPraiseByPinAndTopicId"   parameterClass="topicPraise"  resultMap="topicPraiseMap">
+ select id,topicId,praiseId,pin,createTime from $tableName$  where topicId=#topicId#   and pin=#pin#  
+</select>
+
+</sqlMap>

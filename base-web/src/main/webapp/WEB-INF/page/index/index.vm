@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+    <link href="../../../css/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet">
+
+</head> 
+<body>
+<div>
+	#parse("/htmlPage/common/header.vm")
+
+    <div class="menu">
+    	<i class="down-icon fr" onclick="alert(1);"></i>
+        <ul class="bdb-1px" id="subjectList">
+        	#if($subjectList)
+        		#foreach($subjectInfo in $subjectList)
+        			#if($selectedSubject == $subjectInfo.id)
+		            	<li class="curr" id="subjectId_$subjectInfo.id" onclick="selectSubject(this);">
+		            #else
+		            	<li id="subjectId_$subjectInfo.id" onclick="selectSubject(this);">
+		            #end
+		                <label>$subjectInfo.name</label>
+		            </li>
+        		#end
+        	#end
+        </ul>
+    </div>
+
+    <div class="same-interest">
+        <a href="javascript:void(0)">与我同兴趣的人都在看什么？</a>
+    </div>
+
+    <div class="list pad7" id="topicList">
+	#if($topicList)
+		#foreach( $topic in $topicList)
+			<div class="item bdb-1px">
+	            <div class="fl">
+	                <img src="$!{topic.headImgUrl}"/>
+	            </div>
+	            <div class="fr" id="relationCategoryShow">$!{topic.relationCategoryShow}</div>
+	            <div class="des">
+	                <h3 id="niceName">$!{topic.niceName}</h3>
+	                <p class="time" id="timeDetailShow">$!{topic.timeDetailShow}</p>
+	                <p class="commet" onclick="goToContent(${topic.topicId});">$!{topic.contentAbstract}</p>
+	                <ul class="gallery">
+	                #if($topic.imgUrlList)
+							#foreach( $imgUrl in $topic.imgUrlList) 
+								<div class="pics"><a href="$imgUrl"><img src="$imgUrl"/></a></div>
+							#end
+	                 #else
+	                #end
+	                </ul>
+	                <div class="tags">
+		                #if($topic.markIdList)
+		                	#foreach( $markInfo in $topic.markInfoList)
+		                		<a href="javascript:void(0)" onclick="goToTopicList(${markInfo.markId})"><img src="${markInfo.markImgUrl}" alt=""></a>
+		                	#end
+		                	 
+		                #end
+		                <div class="fr">
+	                        <div class="reply-count">
+	                            <i class="reply-icon"></i>${topic.commentTimes}
+	                        </div>
+	                        <div class="love">
+	                       <!--
+	                       topicId:${topic.topicId}
+	                         -->
+	                        
+	                        #if($topic.pinPraiseId>0)
+	                      <i class="love-icon_cancel"  praiseId="$topic.pinPraiseId"  onclick="praise($topic.topicId,'$topic.pin',this);"></i>(<span id="priaseTimes">$!{topic.priaseTimes}</span>)赞
+	                        #end
+	                        #if($topic.pinPraiseId<=0)
+	                         <i class="love-icon_add"  praiseId="$topic.pinPraiseId"  onclick="praise($topic.topicId,'$topic.pin',this);"></i>(<span id="priaseTimes">$!{topic.priaseTimes}</span>)赞
+	                        #end
+	                        </div>
+	                    </div>
+                    </div>
+	            </div>
+	        </div>
+		#end
+	#else
+		该话题下还没有任何人来过，留下你的脚印，争当第一个哥伦布吧！！！
+	#end  
+    </div>
+    #parse("/htmlPage/common/bottom.html")
+</div>
+
+  	<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+	<script src="../../../js/bootstrap-3.3.5/bootstrap.js?r=20150707"></script>
+	<script src="../../../js/common/utils.js?r=20150707"></script>
+	<script src="../../../js/ms/registry/registry.js?r=20150707"></script>
+
+</body>
+</html>

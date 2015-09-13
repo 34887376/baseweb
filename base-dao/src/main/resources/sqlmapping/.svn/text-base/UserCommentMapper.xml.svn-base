@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="UserComment">
+
+
+	<typeAlias alias="userCommentParam"
+		type="com.jd.kaopu.domain.dao.comment.UserCommentRelationDAO" />
+
+	<resultMap id="userCommentResult"
+		class="com.jd.kaopu.domain.dao.comment.UserCommentRelationDAO">
+		<result property="id" column="id" />
+		<result property="pin" column="pin" />
+		<result property="commentId" column="commentId" />
+		<result property="type" column="type" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+
+
+
+
+	<sql id="allFileds">
+		id,pin,commentId,type,createTime
+	</sql>
+	<insert id="obtainUserCommentIndex">
+		insert into user_comment_index values (null)
+		<selectKey resultClass="long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<select id="selectUserComment" resultMap="userCommentResult"
+		parameterClass="userCommentParam">
+		select
+		<include refid="UserComment.allFileds" />
+		from $tableName$ where pin=#pin#
+		<isNotEmpty prepend="AND" property="type">
+			type=#type#
+		</isNotEmpty>
+	</select>
+
+	<insert id="insertUserComment" parameterClass="userCommentParam">
+		insert into $tableName$ (id,pin,commentId,type,createTime)
+		values
+		(#id#,#pin#,#commentId#,#type#,now())
+		<selectKey resultClass="long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<delete id="deleteUserComment" parameterClass="userCommentParam">   
+		<![CDATA[  
+			delete from  
+			$tableName$  
+			where  
+			commentId = #commentId# and pin = #pin# and type = #type# 
+		]]>
+	</delete>
+
+</sqlMap>

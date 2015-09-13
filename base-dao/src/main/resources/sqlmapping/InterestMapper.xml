@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Interest">
+	<typeAlias alias="userSkuDAO" type="com.jd.kaopu.domain.dao.circles.UserSkuDAO" />
+	<resultMap id="userSkuDAOResult" class="com.jd.kaopu.domain.dao.circles.UserSkuDAO">
+		<result property="id" column="id" />
+		<result property="pin" column="pin" />
+		<result property="skuId" column="skuId" />
+		<result property="categoryId" column="categoryId" />
+		<result property="fromId" column="fromId" />
+		<result property="isInterest" column="isInterest" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+
+	<sql id="validFields">
+		id,pin,skuId,categoryId,fromId,isInterest,createTime
+	</sql>
+	<insert id="obtainInterestIndex">
+		insert into user_sku_info_index values (null)
+        <selectKey resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+	<select id="selectSku" resultMap="userSkuDAOResult" parameterClass="userSkuDAO">
+		select
+		<include refid="Interest.validFields" />
+		from $tableName$ where pin=#pin# and isInterest=1
+	</select>
+	<insert id="insertSkuToUserSku" parameterClass="userSkuDAO">
+		insert into $tableName$ (id,pin,skuId,categoryId,fromId,isInterest,createTime) values
+		(#id#,#pin#,#skuId#,#categoryId#,#fromId#,1,now())
+	</insert>
+	<delete id="deleteSkuToUserSku" parameterClass="userSkuDAO">
+		<![CDATA[  
+		delete from $tableName$ where pin=#pin# and skuId=#skuId#
+		]]>   
+	</delete> 
+	<select id="selectUserSku" resultClass="java.lang.Integer" parameterClass="userSkuDAO">
+		select
+		count(1)
+		from $tableName$ where pin=#pin# and skuId=#skuId#
+	</select>
+<!-- 	<update id="deleteSkuToUserSku" parameterClass="com.jd.kaopu.domain.dao.circles.UserSkuDAO">
+		update userskuinfo set isInterest=0,yn=0 
+		where pin=#pin# and skuId=#skuId#
+	</update>  -->
+	<!--  <update id="updateGoods" parameterClass="com.jd.kaopu.domain.vo.goods.Goods">
+		update goods set
+		isInterest=#isInterest#,yn=1
+		where pin=#pin# and skuid=#skuid#
+	</update>
+	<insert id="insertGoods" parameterClass="java.util.List">
+		insert into goods (pin,skuid,isInterest,addTime,yn) values
+		<iterate conjunction="," open="(" close=")">
+			#addGoodsList[].pin#,
+			#addGoodsList[].skuid#,
+			#addGoodsList[].isInterest#,
+			now(),
+			1
+		</iterate>
+	</insert>
+	<insert id="insertCircles" parameterClass="java.util.List">
+		insert into circles (skuid,pin) values
+		<iterate conjunction="," open="(" close=")">
+			#circlesList[].skuid#,
+			#circlesList[].pin#
+		</iterate>
+	</insert> -->
+	
+</sqlMap>

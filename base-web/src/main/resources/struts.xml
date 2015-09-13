@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="struts-base" extends="struts-default">
+        <result-types>
+            <result-type name="velocity"  class="org.apache.struts2.dispatcher.VelocityResult" default="true" />
+            <result-type name="json" class="org.apache.struts2.json.JSONResult" />
+        </result-types>
+        <!-- 异常跳转到JD公用的错误页，error为参数操作错误跳转页 -->
+        <global-results>
+            <result name="exception" type="redirect">http://www.baidu.com</result>
+            <result name="error" type="redirect">http://www.baidu.com</result>
+            <result name="login" type="redirect">http://www.baidu.com</result>
+        </global-results>
+    </package>
+    
+    	<!-- 登陆拦截器配置 需要登录的action继承 struts-login -->
+   	<package name="struts-login" extends="struts-base">
+		<interceptors>
+			<interceptor name="kaopuH5Login"  class="loginInterceptorProcess" />
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">error</param>
+				</interceptor-ref>
+				<interceptor-ref name="kaopuH5Login" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mydefault" />
+			<!-- 异常跳转到JD公用的错误页，error为参数操作错误跳转页 -->
+		<global-results>
+			<result name="exception" type="redirect">http://www.baidu.com</result>
+			<result name="error"  type="redirect">http://www.baidu.com</result>
+			<result name="login" type="redirect">http://www.baidu.com</result>
+		</global-results>
+	</package>
+	
+
+
+	<constant name="struts.action.extension" value="do,action" />
+	<!-- 配置后缀名为.do 默认为.action -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<!-- 指定默认编码集 ，作用于HttpServletRequest的setCharacterEncoding（）和freemarker，vilocity的输出 -->
+	<constant name="struts.serve.static.bowserCache" value="false" />
+	<!-- 设置浏览器是否缓存静态内容 ，默认值为true（生产环境下使用）开发阶段最好关闭 -->
+	<constant name="struts.configuration.xmlreload" value="false" />
+	<!-- 当struts配置文件修改时是否自动加载 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 开发模式下打印详细的错误信息 -->
+	<constant name="struts.ui.theme" value="simple" />
+	<!-- 默认的试图主题 -->
+
+	<!-- 与spring集成时设置由spring来创建action的对像 -->
+	<constant name="struts.objectFactory" value="spring" />
+	<!-- 设置文件上传时的最大限制（单位字节） -->
+	<constant name="struts.multipart.maxSize" value="2000000" />
+	<!-- 禁止动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.mapper.alwaysSelectFullNamespace" value="true" />
+	<include file="struts/struts-login.xml" />
+	<include file="struts/struts-index.xml" />
+	
+</struts>

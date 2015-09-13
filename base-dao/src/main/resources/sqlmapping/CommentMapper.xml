@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Comment">
+	<typeAlias alias="commentDAOParam" type="com.jd.kaopu.domain.dao.comment.CommentDAO" />
+
+	<resultMap id="commentDAOResult" class="com.jd.kaopu.domain.dao.comment.CommentDAO">
+		<result property="id" column="id" />
+		<result property="content" column="context" />
+		<result property="authorPin" column="author" />
+		<result property="belongTopicId" column="belong_topic" />
+		<result property="createTime" column="createTime" />
+		<result property="type" column="type" />
+		<result property="targetPin" column="accepter" />
+		<result property="parentComment" column="parent_commentId" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,context,author,belong_topic,createTime,type,accepter,parent_commentId
+	</sql>
+	<insert id="obtainCommentContentIndex">
+		insert into comment_content_index values (null)
+		<selectKey resultClass="long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<select id="selectCommentById" resultMap="commentDAOResult"
+		parameterClass="commentDAOParam">
+		select
+		<include refid="Comment.allFileds" />
+		from $tableName$ where id=#id#
+	</select>
+
+	<insert id="insertComment" parameterClass="commentDAOParam">
+		insert into $tableName$
+		(id,context,author,belong_topic,createTime,type,accepter,parent_commentId)
+		values
+		(#id#,#content#,#authorPin#,#belongTopicId#,now(),#type#,#targetPin#,#parentComment#)
+		<selectKey resultClass="long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<delete id="deleteComment" parameterClass="commentDAOParam">   
+		<![CDATA[  
+			delete from  
+			$tableName$  
+			where  
+			id = #id# 
+		]]>
+	</delete>
+
+</sqlMap>

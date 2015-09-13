@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Circle">
+	<typeAlias alias="circlesDAO" type="com.jd.kaopu.domain.dao.circles.CirclesDAO" />
+	<resultMap id="circlesDAOResult" class="com.jd.kaopu.domain.dao.circles.CirclesDAO">
+		<result property="_id" column="_id" />
+		<result property="skuid" column="skuid" />
+		<result property="pin" column="pin" />
+		<result property="type" column="type" />
+	</resultMap>
+
+	<sql id="validFields">
+		_id,skuid,pin,type
+	</sql>
+	<insert id="obtainCirclesIndex">
+		insert into circles_index values (null)
+        <selectKey resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+	<select id="selectPinList" resultClass="java.lang.String"
+		parameterClass="circlesDAO">
+		select pin
+		from $tableName$ where 1=1
+		<isNotEmpty prepend="AND" property="skuid">
+			skuid=#skuid#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="type">
+			type=#type#
+		</isNotEmpty>
+	</select>
+	<select id="selectCircleList" resultMap="circlesDAOResult"
+		parameterClass="circlesDAO">
+		select
+		<include refid="Circle.validFields" />
+		from $tableName$ where 1=1
+		<isNotEmpty prepend="AND" property="skuid">
+			skuid=#skuid#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="type">
+			type=#type#
+		</isNotEmpty>
+	</select>
+
+	<insert id="insertCircle" parameterClass="circlesDAO">
+		insert into $tableName$
+		(_id,skuid,pin,type) values
+		(#_id#,#skuid#,#pin#,#type#)
+	</insert>
+	<delete id="deleteCircle" parameterClass="circlesDAO">
+		delete from $tableName$ where 1=1
+		<isNotEmpty prepend="AND" property="_id">
+			_id=#_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="skuid">
+			skuid=#skuid#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="pin">
+			pin=#pin#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="type">
+			type=#type#
+		</isNotEmpty>
+	</delete>
+	<delete id="deleteMinCircle" parameterClass="circlesDAO">
+		delete from $tableName$ where _id=(select a.id from
+    		(select min(_id) id from circles where type=1 and skuid=#skuid#)a)
+	</delete>
+	<!-- <insert id="insertCircles" parameterClass="java.util.List"> insert 
+		into circles (skuid,pin) values <iterate conjunction="," open="(" close=")"> 
+		#circlesList[].skuid#, #circlesList[].pin# </iterate> </insert> -->
+
+</sqlMap>

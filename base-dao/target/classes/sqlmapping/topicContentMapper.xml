@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="topicContent">
+
+	<typeAlias alias="topicContentDAO" type ="com.jd.kaopu.domain.dao.topic.TopicContentDetailDAO" />  
+	<typeAlias alias="topicIdDAO" type ="com.jd.kaopu.domain.dao.topic.SingleTopicIdDAO" />  
+	
+	<resultMap id="topicContentResult" class="com.jd.kaopu.domain.dao.topic.TopicContentDetailDAO">
+		<result property="_id" column="id" />
+		<result property="content" column="content" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,content
+	</sql>
+	
+	<!-- 根据话题id查询一条话题内容 -->
+	<select id="queryTopicContent" resultMap="topicContentResult" parameterClass="topicContentDAO">
+		select * from $tableName$ where id=#_id#
+	</select>
+	
+	<!-- 根据话题id批量查询话题列表 -->
+	<select id="queryTopicContentListById" resultMap="topicContentResult" parameterClass="topicIdDAO">
+		select * from $tableName$ where id =#_id#
+	</select>
+	
+	<!-- 物理删除该条话题记录 -->
+	<delete id="deleteTopicContent"  parameterClass="topicContentDAO">
+		delete from $tableName$ where id=#_id#
+	</delete>
+	
+	<!-- 添加一条新的话题内容 -->
+	<insert id="addTopicContent" parameterClass="topicContentDAO">
+		insert into $tableName$ (id,content) values (#_id#,#content#)
+        <selectKey resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+</sqlMap>

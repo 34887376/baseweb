@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/buy/purchase_java/!svn/ver/45391/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/praise
+END
+OriginPraiseMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/buy/purchase_java/!svn/ver/45168/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/praise/OriginPraiseMapper.xml
+END
+TopicPraiseMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/buy/purchase_java/!svn/ver/45168/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/praise/TopicPraiseMapper.xml
+END
+UserPraiseMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/buy/purchase_java/!svn/ver/45391/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/praise/UserPraiseMapper.xml
+END

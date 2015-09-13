@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="subjectInfo">
+
+	<typeAlias alias="subjectBO" type ="com.jd.kaopu.domain.dao.subject.SubjectDAO" />  
+
+	<resultMap id="subjectResult" class="com.jd.kaopu.domain.dao.subject.SubjectDAO">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="orderId" column="orderId" />
+		<result property="hotOrderId" column="hotOrderId" />
+		<result property="yn" column="yn" />
+	</resultMap>
+	
+	<sql id="allFileds">
+		id,name,orderId,hotOrderId,yn
+	</sql>
+	
+	<select id="selectSubjectByIds"    resultMap="subjectResult"    parameterClass="java.util.List">
+		select
+		<include refid="subjectInfo.allFileds" />
+		from subject where yn=1 and id in
+		<iterate conjunction=","  open="(" close=")">  
+        <![CDATA[ 
+            #subjectIdList[]#
+        ]]>  
+    </iterate>  
+    </select>
+	<select id="selectSubjectById"    resultMap="subjectResult"    parameterClass="java.lang.Integer">
+		select
+		<include refid="subjectInfo.allFileds" />
+		from subject where yn=1 and id =#subjectId#
+  
+    </select>
+	<select id="selectSubjectByIds_NotIn"    resultMap="subjectResult"    parameterClass="java.util.List">
+		select
+		<include refid="subjectInfo.allFileds" />
+		from subject where yn=1 and id  not in
+		<iterate conjunction=","  open="(" close=")">  
+        <![CDATA[ 
+            #subjectIdList[]#
+        ]]>  
+    </iterate>  
+	</select>
+	
+	<select id="selectAllSubject" resultMap="subjectResult">
+		select
+		<include refid="subjectInfo.allFileds" />
+		from subject where yn=1 order by orderId
+	</select>
+	
+	<insert id="insertSubject" parameterClass="subjectBO">
+		insert into subject (`name`,orderId,hotOrderId,yn,`create`,updateTime) values
+		(#name#,#orderId#,#hotOrderId#,#yn#,now(),now())
+        <selectKey keyProperty="id" resultClass="java.lang.Integer">
+            select LAST_INSERT_ID() AS id
+        </selectKey> 
+	</insert>
+	
+	<delete id="deleteSubject" parameterClass="subjectBO">   
+		<![CDATA[  
+			delete from  
+			subject  
+			where  
+			id = #id# 
+		]]>   
+	</delete> 
+	
+</sqlMap>

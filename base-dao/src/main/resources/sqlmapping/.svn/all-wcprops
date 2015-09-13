@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/buy/purchase_java/!svn/ver/45510/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping
+END
+CategoryMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/buy/purchase_java/!svn/ver/44947/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/CategoryMapper.xml
+END
+UserTopicMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/buy/purchase_java/!svn/ver/45198/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/UserTopicMapper.xml
+END
+markTopicRelationMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/buy/purchase_java/!svn/ver/45954/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/markTopicRelationMapper.xml
+END
+UserInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/buy/purchase_java/!svn/ver/45198/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/UserInfoMapper.xml
+END
+UserStateInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/buy/purchase_java/!svn/ver/45542/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/UserStateInfoMapper.xml
+END
+SubjectClassifyMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/buy/purchase_java/!svn/ver/45835/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/SubjectClassifyMapper.xml
+END
+InterestMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/buy/purchase_java/!svn/ver/45188/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/InterestMapper.xml
+END
+SubjectMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/buy/purchase_java/!svn/ver/46068/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/SubjectMapper.xml
+END
+ThemeUserRelationMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/buy/purchase_java/!svn/ver/45375/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/ThemeUserRelationMapper.xml
+END
+UserCommentMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/buy/purchase_java/!svn/ver/45579/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/UserCommentMapper.xml
+END
+TopicCommentMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/buy/purchase_java/!svn/ver/45932/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/TopicCommentMapper.xml
+END
+CircleMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/buy/purchase_java/!svn/ver/45187/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/CircleMapper.xml
+END
+CommentMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/buy/purchase_java/!svn/ver/45510/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/CommentMapper.xml
+END
+topicAbstractMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/buy/purchase_java/!svn/ver/45266/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/topicAbstractMapper.xml
+END
+topicContentMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/buy/purchase_java/!svn/ver/45266/branches/kaopu/code/kaopu/kaopu-dao/src/main/resources/sqlmapping/topicContentMapper.xml
+END

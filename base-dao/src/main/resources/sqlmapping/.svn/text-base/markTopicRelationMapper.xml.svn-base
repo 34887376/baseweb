@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="markTopicRelation">
+
+	<typeAlias alias="markTopicDAO" type ="com.jd.kaopu.domain.dao.topic.MarkTopicDAO" />  
+	<typeAlias alias="markId" type ="com.jd.kaopu.domain.dao.topic.SingleMarkIdDAO" />  
+
+	<resultMap id="markTopicDAOResult" class="com.jd.kaopu.domain.dao.topic.MarkTopicDAO">
+		<result property="_id" column="id" />
+		<result property="markId" column="markId" />
+		<result property="topicId" column="topicId" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,markId,topicId
+	</sql>
+	
+	<select id="queryTopicList" resultClass="java.lang.Long" parameterClass="markId">
+		select topicId from $tableName$ where markId=#markId#
+	</select>
+	<delete id="delMarkTopicByTopicId"  parameterClass="markTopicDAO">
+		delete from $tableName$ where topicId=#topicId#
+	</delete>
+	
+	<insert id="addMarkTopicRelation" parameterClass="markTopicDAO">
+		insert into $tableName$ (id,markId,topicId) values
+		(#_id#,#markId#,#topicId#)
+     <!--    <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey>  -->
+	</insert>
+	
+	<insert id="obtainMarkTopicIndex">
+		insert into mark_topic_relation_index values (null)
+        <selectKey resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+	
+	
+</sqlMap>

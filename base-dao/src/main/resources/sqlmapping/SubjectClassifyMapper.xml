@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="SubjectClassify">
+	<resultMap id="SubjectCategoryDAO" class="com.jd.kaopu.domain.dao.subject.SubjectCategoryDAO">
+		<result property="id" column="id" />
+		<result property="subjectId" column="subjectId" />
+		<result property="categoryId" column="categoryId" />
+		<result property="yn" column="yn" />
+		<result property="subjectName" column="subjectName"/>
+	</resultMap>
+	<resultMap id="SubjectCategoryDAO2" class="com.jd.kaopu.domain.dao.subject.SubjectCategoryDAO">
+		<result property="id" column="id" />
+		<result property="subjectId" column="subjectId" />
+		<result property="categoryId" column="categoryId" />
+		<result property="yn" column="yn" />
+	</resultMap>
+	<insert id="addSubjectClassify"   parameterClass="com.jd.kaopu.domain.dao.subject.SubjectCategoryDAO">
+		insert subject_classfiy(subjectId,categoryId,yn) values (#subjectId#,#categoryId#,#yn#)
+		<selectKey keyProperty="id" resultClass="java.lang.Long">
+		   select 	LAST_INSERT_ID() as id
+		  
+		</selectKey>
+	</insert>
+	
+
+	<sql id="validFields">
+		id,subjectId,categoryId,yn
+	</sql>
+	<select id="selectCategoryId" resultClass="java.lang.Integer"
+		parameterClass="java.lang.Integer">
+		select categoryId
+		from subject_classfiy where subjectId=#subjectId# and yn=1
+	</select>
+	
+ <!-- 根据主键id查询一条主题与分类关系数据 -->
+	<select id="queryById"  parameterClass="java.lang.Long"   resultMap="SubjectCategoryDAO2">
+	 select 	id,subjectId,categoryId,yn from  subject_classfiy where id =#id#
+	</select>
+	
+	<!-- 查询所有的主题与三级分类关系 add by chenchangqun -->
+	<select id="selectAll"  resultMap="SubjectCategoryDAO" >
+		select 
+         sc.id,sc.subjectId,su.name as subjectName,sc.categoryId,sc.yn
+		from subject_classfiy   sc   left join subject su  on sc.subjectId=su.id
+		    where  sc.yn=1 order by sc.subjectid,sc.categoryid asc
+	</select>
+	
+	<select id="selectSubjectId" resultClass="java.lang.Integer"
+		parameterClass="java.lang.Integer">
+		select subjectId
+		from subject_classfiy where categoryId=#categoryId# and yn=1
+	</select>
+	<delete id="delBySubjectIdAndCategoryId"  parameterClass="java.util.HashMap">
+	  delete from  subject_classfiy where yn=1  and subjectId=#subjectId# and categoryId=#categoryId#
+	</delete>
+	<delete id="delById"    parameterClass="java.lang.Long">
+	  delete from  subject_classfiy where yn=1  and id=#id#
+	</delete>
+</sqlMap>

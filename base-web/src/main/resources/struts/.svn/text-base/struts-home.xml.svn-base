@@ -1,0 +1,14 @@
+<?xml version = "1.0" encoding = "UTF-8"?>  
+<!--下面是Struts2配置文件的DTD信息 -->  
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  
+    "http://struts.apache.org/dtds/struts-2.0.dtd">  
+<struts>
+	<package name="homePage" namespace="/home" extends="struts-login">
+		<action name="*" method="{1}" class="com.jd.kaopu.front.home.action.HomeAction">
+			<result name="queryUserInfoSuccess" type="velocity">/WEB-INF/page/home/home.vm</result>
+			<result name="updateUserInfoSuccess" type="redirect">/home/home.action</result>
+			<result name="settingResult" type="velocity">/WEB-INF/page/setting/setting.html</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="UserLogin">
+
+	<typeAlias alias="userLoginDAO" type ="com.ms.domain.user.dao.UserLoginDAO" />  
+	<resultMap id="userLoginResult" class="com.ms.domain.user.dao.UserLoginDAO">
+		<result property="id" column="id" />
+		<result property="uuid" column="uuid" />
+		<result property="pin" column="pin" />
+		<result property="nickName" column="nickName" />
+		<result property="pwd" column="pwd" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,uuid,pin,nickname,pwd,phone,email,status
+	</sql>
+	
+	<!-- 查询用户注册的信息 -->
+	<select id="queryUserRegistryInfo" resultMap="userLoginResult" parameterClass="userLoginDAO">
+		select
+		<include refid="UserLogin.allFileds" />
+		from userLogin where 1=1
+		<dynamic>
+			<!-- isNotNull判断参数是否存在,Integer类型 -->
+			<isNotNull  prepend="and"  property="pin">
+				pin= #pin#
+			</isNotNull>
+			<isNotNull  prepend="and"  property="phone">
+				phone= #phone#
+			</isNotNull>
+			<isNotNull  prepend="and" property="email">
+				email= #email#
+			</isNotNull>
+			<isNotNull  prepend="and"  property="status">
+				status= #status#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<!-- 校验用户登录的账号密码，返回用户pin -->
+	<select id="validateUserPassRePin" resultClass="java.lang.String" parameterClass="userLoginDAO">
+		select pin from userLogin where pwd=#pwd#
+		<dynamic prepend="and">
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend=" "  property="pin">
+					pin= #pin#
+				</isNotNull>
+				<isNotNull prepend=" "  property="phone">
+					phone= #phone#
+				</isNotNull>
+				<isNotNull prepend=" "  property="email">
+					email= #email#
+				</isNotNull>
+		</dynamic>
+	</select>
+	
+	<!-- 添加新用户 -->
+	<insert id="insertUserRegistryInfo" parameterClass="userLoginDAO">
+		insert into userLogin (id,uuid,pin,nickname,pwd,phone,email,status) values
+		(#id#,#uuid#,#pin#,#nickName#,#pwd#,#phone#,#email#,1)
+        <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+
+	<!-- 更新用户密码 -->
+	<update id="updateUserPass" parameterClass="userLoginDAO">
+		update userLogin set pwd= #pwdNew# where pwd=#pwd#
+		<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend="and"  property="pin">
+					pin= #pin#
+				</isNotNull>
+				<isNotNull prepend="and"  property="phone">
+					phone= #phone#
+				</isNotNull>
+				<isNotNull prepend="and"  property="email">
+					email= #email#
+				</isNotNull>
+			</dynamic>
+	</update>
+	<!--根据用户手机号、邮箱或者昵称获取用户pin -->
+	<select id="queryPinByKeyWord" resultClass="java.lang.String" parameterClass="userLoginDAO">
+		select pin from userLogin where pwd=#pwd#
+		<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend="and"  property="nickName">
+					nickName= #nickName#
+				</isNotNull>
+				<isNotNull prepend="and"  property="phone">
+					phone= #phone#
+				</isNotNull>
+				<isNotNull prepend="and"  property="email">
+					email= #email#
+				</isNotNull>
+		</dynamic>
+	</select>
+	
+	<!--新用户注册时，检查是否已经有对应的pin-->
+	<select id="hasPinRecord" resultClass="int" parameterClass="java.lang.String">
+		select id from userLogin where pin=#pin#
+	</select>
+	
+	<!--新用户注册时，检查是否已经有对应的email-->
+	<select id="hasEmailRecord" resultClass="int" parameterClass="java.lang.String">
+		select id from userLogin where email=#email#
+	</select>
+	
+		<!--新用户注册时，检查是否已经有对应的手机号-->
+	<select id="hasPhoneRecord" resultClass="int" parameterClass="int">
+		select id from userLogin where phone=#phone#
+	</select>
+	
+	<!--新用户注册时，检查是否已经有对应的昵称-->
+	<select id="hasNicknameRecord" resultClass="int" parameterClass="java.lang.String">
+		select id from userLogin where nickname=#nickName#
+	</select>
+	
+	<!-- 更新用户状态 -->
+	<update id="updateUserStatus" parameterClass="userLoginDAO">
+		update userLogin set status=#status# where
+		<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend="and"  property="pin">
+					pin= #pin#
+				</isNotNull>
+				<isNotNull prepend="and"  property="phone">
+					phone= #phone#
+				</isNotNull>
+				<isNotNull prepend="and"  property="email">
+					email= #email#
+				</isNotNull>
+			</dynamic>
+	</update>
+</sqlMap>

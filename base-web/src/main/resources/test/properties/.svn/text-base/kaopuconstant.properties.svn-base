@@ -1,0 +1,6 @@
+SYNC_DAY=30
+
+##用户状态表名前缀
+userStateTableNamePrefix=user_state
+##用户状态分表的个数0-99共100张
+userStateTableNum=4

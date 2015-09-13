@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="UserPraise">
+<typeAlias alias="userPraise"   type="com.jd.kaopu.domain.dao.praise.UserPraiseRelationDAO"/>
+<!-- 获得  praise_topic的主键-->
+<insert id="getPrimaryKey" >
+  insert praise_user_index() values()
+<selectKey   resultClass="java.lang.Long">
+            select LAST_INSERT_ID() 
+  </selectKey>
+</insert>
+<insert id="addPraise"   parameterClass="userPraise">
+insert into $tableName$(id,pin,praiseId,belongTopicId,type,createTime) 
+values (#_id#,#pin#,#praiseId#,#belongTopicId#,#type#,now())
+<selectKey keyProperty="_id" resultClass="java.lang.Long">
+  select  LAST_INSERT_ID() as id 
+</selectKey>
+</insert>
+<delete id="delPraise" parameterClass="userPraise">
+  delete from $tableName$ where pin=#pin# and praiseId=#praiseId# and type=#type#
+</delete>
+<select id="queryPraiseCountByTargetPin"  parameterClass="userPraise" resultClass="java.lang.Integer">
+<!-- type= 2 ,被点赞数据 -->
+  select count(id) from $tableName$ where  pin =#pin# and type=#type#  
+ 
+</select>
+</sqlMap>

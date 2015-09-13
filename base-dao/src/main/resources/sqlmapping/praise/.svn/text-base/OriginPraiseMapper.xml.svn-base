@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="OriginPraise">
+<typeAlias alias="originPraise"  type="com.jd.kaopu.domain.dao.praise.OriginPraiseRelationDAO"/>
+<!-- 添加话题赞 -->
+<insert id="addPraise"  parameterClass="originPraise" >
+insert   $tableName$(id,pin,targetPin,belongTopicId,createTime) 
+  values
+ (#_id#,#pin#,#targetPin#,#belongTopicId#,now())
+</insert>
+<!-- 删除话题赞 -->
+<delete id="delPraise" parameterClass="originPraise">
+  delete from  $tableName$ where id=#_id#
+</delete>
+<!-- 获得  praise_origin的主键-->
+<insert id="getPrimaryKey" >
+  insert praise_origin_index() values()
+<selectKey   resultClass="java.lang.Long">
+            select LAST_INSERT_ID() 
+  </selectKey>
+</insert>
+
+</sqlMap>

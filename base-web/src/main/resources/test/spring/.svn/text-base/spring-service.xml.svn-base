@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName" default-lazy-init="false">  
+
+	<!-- 图片上传临时文件路径配置 -->
+	<bean class="com.jd.kaopu.common.constant.UploadImgTempFilePath">
+		<property name="filePath" value="${imgUploadTempFilePath}"></property>
+	</bean>
+	
+	<!-- 话题服务 -->
+	<bean id="topicService" class="com.jd.kaopu.service.topic.impl.TopicServiceImpl"/>
+     <!-- 标签话题关系服务 -->
+	<bean id="markTopicService"   class="com.jd.kaopu.service.topic.impl.MarkTopicServiceImpl"></bean>
+	<!-- 用户话题关系服务 -->
+	<bean id="userTopicServiceInterface"   class="com.jd.kaopu.service.topic.impl.UserTopicServiceImpl"></bean>
+	<!--管理兴趣  -->
+	<bean id="interestService" class="com.jd.kaopu.service.interest.impl.InterestServiceImpl"/>
+	<!-- 圈子 -->
+	<bean id="circlesServiceInterface" class="com.jd.kaopu.service.circles.impl.CirclesServiceImpl"/>
+	<!-- 主题服务 -->
+	<bean id="subjectServiceInterface" class="com.jd.kaopu.service.subject.impl.SubjectServiceImpl"/>
+	<!-- 话题存储到redis -->
+	<bean id="topicStoreService" class="com.jd.kaopu.service.topic.impl.TopicStoreServiceImpl"/>
+     <!-- 点赞服务-->
+	<bean id="praiseService"  class="com.jd.kaopu.service.praise.impl.PraiseServiceImpl"/>
+	<!-- 获取用户基本信息 -->
+	<bean id="userInfoService" class="com.jd.kaopu.service.user.impl.UserInfoServiceImpl"/>
+     <!-- 初始化数据服务 -->
+    <bean id="skuUserCommentInitService" class="com.jd.kaopu.service.init.impl.SkuUserCommentInitServiceImpl"/>
+ 	<!-- 获取用户状态 -->
+	<bean id="userStateService" class="com.jd.kaopu.service.user.impl.UserStateServiceImpl">
+	<property name="isCheckActive"  value="${isCheckActive}"></property>
+	</bean>
+	 <!-- 同步日志 -->
+	<bean id="userInfoSyncService" class="com.jd.kaopu.service.usersync.impl.UserInfoSyncServiceImpl">
+		<property name="DAY" value="${SYNC_DAY}" />
+		<property name="inOrderTypesStr"  value="${inOrderTypesStr}"></property>
+	</bean>
+	 <!-- 主题信息-->
+	<bean id="subjectClassifyServiceInterface" class="com.jd.kaopu.service.subject.impl.SubjectClassifyImpl"/>
+      <!-- 初始化数据服务 -->
+    <bean id="userSubjectServiceInterface" class="com.jd.kaopu.service.subject.impl.UserSubjectServiceImpl"/>
+      <!-- 查询商品信息 -->
+    <bean id="productBaseInfoService" class="com.jd.kaopu.service.product.impl.ProductBaseInfoServiceImpl"/>
+    <!-- 初始化评论服务 -->
+    <bean id="commentService" class="com.jd.kaopu.service.comment.impl.CommentMessModleServiceImpl"/>
+    <!-- 评论Service -->
+    <bean id="commentServiceInterface" class="com.jd.kaopu.service.comment.impl.CommentServiceImpl"/>
+    <!-- 话题评论Service -->
+    <bean id="topicCommentServiceInterface" class="com.jd.kaopu.service.comment.impl.TopicCommentServiceImpl"/>
+    <!-- 用户评论Service -->
+    <bean id="userCommentServiceInterface" class="com.jd.kaopu.service.comment.impl.UserCommentServiceImpl"/>
+    <!-- 初始化主题与用户关系服务 -->
+    <bean id="relationService" class="com.jd.kaopu.app.service.subject.impl.UserSubjectRelationServiceImpl"/>
+    <bean id="relationRpcService" class="com.jd.kaopu.service.subject.impl.UserSubjectServiceImpl"/>
+    <!--图片上传服务  -->
+    <bean id="upLoadImgService" class="com.jd.kaopu.service.img.impl.UpLoadImgServiceImpl"/>
+</beans>

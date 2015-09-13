@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ThemeUserRelation">
+	<resultMap id="UserSubjectRelBO" class="com.jd.kaopu.domain.bo.subject.UserSubjectRelBO">
+		<result property="id" column="id" />
+		<result property="pin" column="pin" />
+		<result property="name" column="name" />
+		<result property="orderId" column="orderId" />
+		<result property="hotOrderId" column="hotOrderId" />
+	</resultMap>
+<resultMap id="UserSubjectBO"  class="com.jd.kaopu.domain.bo.subject.UserSubjectBO">
+		<result property="id" column="id" />
+        <result property="pin" column="pin" />
+         <result property="subjectId" column="subjectid" />
+         <result property="orderId" column="orderId" />
+</resultMap>
+<!-- 获得  user_subject的主键-->
+	<insert id="getPrimaryKey" >
+	  insert user_subject_index() values()
+	<selectKey   resultClass="java.lang.Long">
+	            select LAST_INSERT_ID() 
+	  </selectKey>
+	</insert>
+
+	<sql id="validFields">
+		a.id,b.pin,a.name,a.orderId,a.hotOrderId
+	</sql>
+<!-- 	<select id="selectThemeByPin" resultMap="UserSubjectRelBO" parameterClass="com.jd.kaopu.domain.dao.subject.UserSubjectDAO">
+		select
+		<include refid="ThemeUserRelation.validFields" />
+		from subject as a , $tableName$ as b where a.id=b.subjectId and pin=#pin#
+	</select> -->
+	<!-- 根据pin 查询相关的主题id -->
+	<select id="querySubjectIdsByPin"   parameterClass="com.jd.kaopu.domain.dao.subject.UserSubjectDAO"   resultClass="java.lang.Integer">
+	 select  subjectId from  $tableName$ where pin=#pin#
+	</select>
+	
+	<select id="selectNotThemeByPin" resultMap="UserSubjectRelBO"  parameterClass="com.jd.kaopu.domain.dao.subject.UserSubjectDAO">
+		<![CDATA[  
+			select a.id,a.name,a.orderId,a.hotOrderId,#pin# as pin
+			from $tableName$ as a
+			where a.id not in(
+				select subjectId from usersubject where pin = #pin#
+			)
+		]]>  
+	</select>
+	
+	<select id="selUserSubjectByPinAndSubjectid"  resultMap="UserSubjectBO"  parameterClass="com.jd.kaopu.domain.dao.subject.UserSubjectDAO" >
+		select
+		 id,pin,subjectId,orderId
+		from $tableName$ where pin=#pin# and subjectid=#subjectId#
+	</select>
+	
+	
+	<insert id="insertThemeRelation" parameterClass="com.jd.kaopu.domain.dao.subject.UserSubjectDAO">
+		insert into $tableName$ (id,pin,subjectId,orderId) values
+		(#id#,#pin#,#subjectId#,#orderId#)
+	</insert>
+	
+	<delete id="deleteThemeRelation" parameterClass="com.jd.kaopu.domain.dao.subject.UserSubjectDAO">   
+		<![CDATA[  
+			delete from  
+			$tableName$  
+			where  
+			pin = #pin# and subjectId = #subjectId# 
+		]]>   
+	</delete> 	
+</sqlMap>

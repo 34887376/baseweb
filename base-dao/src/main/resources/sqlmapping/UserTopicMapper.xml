@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="userTopicRelation">
+
+	<typeAlias alias="userTopicDAO" type ="com.jd.kaopu.domain.dao.topic.UserTopicDAO" />  
+	<typeAlias alias="pinTopicDAO" type ="com.jd.kaopu.domain.dao.topic.SinglePinDAO" />  
+
+	<resultMap id="userTopicResult" class="com.jd.kaopu.domain.dao.topic.UserTopicDAO">
+		<result property="id" column="id" />
+		<result property="pin" column="pin" />
+		<result property="topicId" column="topicId" />
+		<result property="belongSubjectId" column="subjectId" />
+		<result property="yn" column="yn" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,pin,topicId,subjectId,yn
+	</sql>
+	
+	<select id="queryTopicListByPin" resultMap="userTopicResult" parameterClass="pinTopicDAO">
+		select
+		<include refid="userTopicRelation.allFileds" />
+		from $tableName$ where yn=1 and pin=#pin#
+	</select>
+	
+	<insert id="insertUserTopicRelation" parameterClass="userTopicDAO">
+		insert into $tableName$ (id,pin,topicId,subjectId,createTime,yn) values
+		(#id#,#pin#,#topicId#,#belongSubjectId#,now(),1)
+        <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+	
+	<update id="updateInvalid" parameterClass="userTopicDAO">
+		update $tableName$ set yn=0 where topicId=#topicId# and pin=#pin#
+	</update>
+
+	<delete id="delUserTopic"  parameterClass="userTopicDAO">
+		delete from $tableName$ where topicId=#topicId# and pin=#pin#
+	</delete>
+	
+	<insert id="obtainUserTopicIndex">
+		insert into user_topic_relation_index values (null)
+        <selectKey resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey> 
+	</insert>
+	
+</sqlMap>

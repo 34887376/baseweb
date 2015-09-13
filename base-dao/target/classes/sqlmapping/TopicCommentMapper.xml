@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="TopicComment">
+
+
+	<typeAlias alias="topicCommentParam"
+		type="com.jd.kaopu.domain.dao.comment.TopicCommentRelationDAO" />
+
+	<resultMap id="topicCommentResult"
+		class="com.jd.kaopu.domain.dao.comment.TopicCommentRelationDAO">
+		<result property="id" column="id" />
+		<result property="topicId" column="topicId" />
+		<result property="commentId" column="commentId" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,topicId,commentId,createTime
+	</sql>
+	<insert id="obtainTopicCommentIndex">
+		insert into topic_comment_index values (null)
+		<selectKey resultClass="long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<select id="selectTopicCommentList" resultMap="topicCommentResult"
+		parameterClass="topicCommentParam">
+		select
+		<include refid="TopicComment.allFileds" />
+		from $tableName$ where topicId=#topicId#
+	</select>
+
+	<insert id="insertTopicComment" parameterClass="topicCommentParam">
+		insert into $tableName$
+		(id,topicId,commentId,createTime)
+		values
+		(#id#,#topicId#,#commentId#,now())
+		<selectKey resultClass="long">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<delete id="deleteTopicComment" parameterClass="topicCommentParam">   
+		<![CDATA[  
+			delete from  
+			$tableName$  
+			where  
+			commentId = #commentId# and topicId=#topicId#
+		]]>
+	</delete>
+	<!-- by chenchangqun  根据话题id查询评论数 -->
+	<select id="queryCommentCountByTopicId"  parameterClass="topicCommentParam" resultClass="java.lang.Integer">
+	 select count(1) from $tableName$   where topicId=#topicId#
+	</select>
+
+</sqlMap>

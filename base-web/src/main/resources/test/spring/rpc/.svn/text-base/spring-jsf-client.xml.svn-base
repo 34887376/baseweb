@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jsf="http://jsf.jd.com/schema/jsf"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://jsf.jd.com/schema/jsf 
+       http://jsf.jd.com/schema/jsf/jsf.xsd"
+	default-autowire="byName" default-lazy-init="false">  
+
+	<!-- 注册中心  192.168.150.121 i.jsf.jd.com  #测试index服务地址 -->
+    <jsf:registry id="jsfRegistry" protocol="jsfRegistry" index="i.jsf.jd.com"/>
+    
+    <!-- 服务调用者配置 直连使用 url="jsf://10.12.113.111:22000;jsf://10.12.113.112:22000" -->
+    <!-- 用户中间件jsf配置 -->
+    <bean id="userSdkConsumerFilter" class="com.jd.user.sdk.export.filter.UserSdkConsumerFilter" scope="prototype"/>
+    <jsf:consumer id="userInfoExportService" interface="com.jd.user.sdk.export.UserInfoExportService" alias="userSdk-136" filter="userSdkConsumerFilter">
+	    <jsf:parameter key="source" value="jy_warranty" hide="true" />
+	</jsf:consumer>
+     <jsf:consumer id="kaoPuUserDataService" interface="com.jd.kp.export.KaoPuUserDataService"
+                   protocol="jsf" alias="jypt_kp_user" timeout="10000" >
+    </jsf:consumer>  
+        
+    <!-- 关注商品服务 -->
+	<jsf:consumer id="followProductRpc" interface="com.jd.sns.follow.soa.rpc.product.FollowProductFacade"
+	    protocol="jsf" alias="FOLLOW" timeout="5000" />                                   
+</beans>
