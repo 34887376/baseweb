@@ -35,7 +35,7 @@ public class PromotionSequenceDAO implements Serializable {
 	/**
 	 * 促销结束时间
 	 */
-	private Date endtime;
+	private Date endTime;
 	
 	public Long getId() {
 		return id;
@@ -77,13 +77,12 @@ public class PromotionSequenceDAO implements Serializable {
 		this.startTime = startTime;
 	}
 
-	public Date getEndtime() {
-		return endtime;
+	public Date getEndTime() {
+		return endTime;
 	}
 
-	public void setEndtime(Date endtime) {
-		this.endtime = endtime;
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
-
 
 }

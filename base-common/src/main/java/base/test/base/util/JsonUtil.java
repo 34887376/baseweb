@@ -1,6 +1,7 @@
 package base.test.base.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -106,6 +107,14 @@ public class JsonUtil {
         return null;
     }
 
+	public static <T>  T readValue(InputStream josnStr, Class<T> cls) throws RuntimeException {
+		try {
+			return (T)OBJECT_MAPPER.readValue(josnStr, cls);
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new RuntimeException(e);
+		}
+	}
     /**
      * 取出Mapper做进一步的设置或使用其他序列化API.
      */

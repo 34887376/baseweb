@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="skuTable">
+
+	<typeAlias alias="skuDAO" type ="com.ms.domain.sku.dao.SkuDAO" />  
+	<resultMap id="skuResult" class="com.ms.domain.sku.dao.SkuDAO">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="num" column="num" />
+		<result property="adverst" column="adverst" />
+		<result property="imgUrl" column="imgUrl" />
+		<result property="inprice" column="inprice" />
+		<result property="outprice" column="outprice" />
+		<result property="yn" column="yn" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,name,num,adverst,imgUrl,inprice,outprice,yn
+	</sql>
+
+	<!-- 添加新的阶梯信息 -->
+	<insert id="addSku" parameterClass="skuDAO">
+		insert into sku (id,name,num,adverst,imgUrl,inprice,outprice,yn) values
+		(#id#,#name#,#num#,#adverst#,#imgUrl#,#inprice#,#outprice#,#yn#)
+        <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+
+	<!-- 更新阶梯规则-->
+	<update id="updateSkuInfo" parameterClass="skuDAO">
+		update sku set
+				<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend=","  property="name">
+					name= #name#
+				</isNotNull>
+				<isNotNull prepend=","  property="num">
+					num= #num#
+				</isNotNull>
+				<isNotNull prepend=","  property="adverst">
+					adverst= #adverst#
+				</isNotNull>
+				<isNotNull prepend=","  property="imgUrl">
+					imgUrl= #imgUrl#
+				</isNotNull>
+				<isNotNull prepend=","  property="inprice">
+					inprice= #inprice#
+				</isNotNull>
+				<isNotNull prepend=","  property="outprice">
+					outprice= #outprice#
+				</isNotNull>
+				<isNotNull prepend=","  property="yn">
+					yn= #yn#
+				</isNotNull>
+			</dynamic>
+		where id=#id#
+	</update>
+	
+	<!-- 根据id批量查询阶梯规则 -->
+	<select id="querySkuListByIds" resultClass="java.util.list" parameterClass="java.util.list">
+		select
+		<include refid="skuTable.allFileds" />
+		from sku where yn=1 and id in
+		 <iterate conjunction="," open="(" close=")">
+		  #idList[]#
+		 </iterate>
+	</select>
+	
+	<!--根据id查询阶梯规则-->
+	<select id="querySkuById" resultClass="skuDAO" parameterClass="long">
+		select <include refid="skuTable.allFileds" /> from sku where id=#id# and yn=1
+	</select>
+	
+	<!-- 根据id删除阶梯规则 -->
+	<delete id="delSkuInfo" parameterClass="java.lang.long">
+		delete from sku where id =#id#
+	</delete>
+</sqlMap>

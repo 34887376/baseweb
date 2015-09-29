@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ladderTable">
+
+	<typeAlias alias="ladderDAO" type ="com.ms.domain.ladder.dao.LadderDAO" />  
+	<resultMap id="ladderResult" class="com.ms.domain.ladder.dao.LadderDAO">
+		<result property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="pricediscount" column="pricediscount" />
+		<result property="numpercent" column="numpercent" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,type,pricediscount,numpercent
+	</sql>
+	
+	<!-- 根据id批量查询阶梯规则 -->
+	<select id="queryLadderList" resultClass="java.util.list" parameterClass="java.util.list">
+		select
+		<include refid="ladderTable.allFileds" />
+		from ladder where id in
+		 <iterate conjunction="," open="(" close=")">
+		  #idList[]#
+		 </iterate>
+	</select>
+	
+	<!-- 查询所有的阶梯信息 -->
+	<select id="queryAllLadder" resultClass="java.util.list">
+		select
+		<include refid="ladderTable.allFileds" />
+		from ladder where 1=1
+	</select>
+	
+	<!-- 添加新的阶梯信息 -->
+	<insert id="addLadder" parameterClass="ladderDAO">
+		insert into ladder (id,type,pricediscount,numpercent) values
+		(#id#,#type#,#pricediscount#,#numpercent#)
+        <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+
+	<!-- 更新阶梯规则-->
+	<update id="updateLadder" parameterClass="ladderDAO">
+		update ladder set
+				<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend=","  property="type">
+					type= #type#
+				</isNotNull>
+				<isNotNull prepend=","  property="pricediscount">
+					pricediscount= #pricediscount#
+				</isNotNull>
+				<isNotNull prepend=","  property="numpercent">
+					numpercent= #numpercent#
+				</isNotNull>
+			</dynamic>
+		where id=#id#
+	</update>
+	
+	<!--根据id查询阶梯规则-->
+	<select id="queryLadderById" resultClass="ladderDAO" parameterClass="long">
+		select <include refid="ladderTable.allFileds" /> from ladder where id=#id#
+	</select>
+	
+	<!-- 根据id删除阶梯规则 -->
+	<delete id="delLadder" parameterClass="java.lang.long">
+		delete from ladder where id =#id#
+	</delete>
+</sqlMap>

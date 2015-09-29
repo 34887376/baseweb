@@ -11,6 +11,8 @@ import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
+import com.ms.domian.action.promotion.vo.PromotionInfoVO;
+
 import base.test.base.action.BaseAction;
 
 
@@ -25,6 +27,11 @@ public class IndexAction extends BaseAction {
     public String showIndex() {
         
         return SUCCESS;
+    }
+    
+    private PromotionInfoVO queryPromotion(List<Long> promotionIdList){
+    	return null;
+    	
     }
 
 

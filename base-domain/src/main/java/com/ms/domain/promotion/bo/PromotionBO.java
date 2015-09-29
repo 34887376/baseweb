@@ -4,44 +4,57 @@ import java.io.Serializable;
 
 public class PromotionBO implements Serializable {
 
-	private static final long serialVersionUID = 6817221000574046543L;
-	
+	private static final long serialVersionUID = 858241821185021952L;
+
 	/**
 	 * 促销id
 	 */
-	private long id;
+	private Long id;
 
 	/**
 	 * 商品id
 	 */
-	private long skuId;
+	private Long skuId;
 	
 	/**
 	 * 促销的商品数量
 	 */
-	private int skuNum;
+	private Integer skuNum;
+	
+	/**
+	 * 是否有效
+	 */
+	private boolean yn;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getSkuId() {
+	public Long getSkuId() {
 		return skuId;
 	}
 
-	public void setSkuId(long skuId) {
+	public void setSkuId(Long skuId) {
 		this.skuId = skuId;
 	}
 
-	public int getSkuNum() {
+	public Integer getSkuNum() {
 		return skuNum;
 	}
 
-	public void setSkuNum(int skuNum) {
+	public void setSkuNum(Integer skuNum) {
 		this.skuNum = skuNum;
+	}
+
+	public boolean isYn() {
+		return yn;
+	}
+
+	public void setYn(boolean yn) {
+		this.yn = yn;
 	}
 }

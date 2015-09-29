@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="promotionTable">
+
+	<typeAlias alias="promotionDAO" type ="com.ms.domain.promotion.dao.PromotionDAO" />  
+	<resultMap id="promotionResult" class="com.ms.domain.promotion.dao.PromotionDAO">
+		<result property="id" column="id" />
+		<result property="skuId" column="skuid" />
+		<result property="skuNum" column="skunum" />
+		<result property="yn" column="yn" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,skuid,skunum,yn
+	</sql>
+	
+	<!-- 根据促销id查询多个促销信息 -->
+	<select id="queryPromotionsByIds" resultClass="java.util.list" parameterClass="java.util.list">
+		select
+		<include refid="promotionTable.allFileds" />
+		from promotion where id in
+		 <iterate conjunction="," open="(" close=")">
+		  #idList[]#
+		 </iterate>
+	</select>
+	
+	<!-- 添加新促销信息 -->
+	<insert id="addPromotion" parameterClass="promotionDAO">
+		insert into promotion (id,skuid,skunum,yn) values
+		(#id#,#skuId#,#skuNum#,1)
+        <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+
+	<!-- 更新促销信息 -->
+	<update id="updatePromotion" parameterClass="promotionDAO">
+		update promotion set 
+				<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend=","  property="skuid">
+					skuid= #skuId#
+				</isNotNull>
+				<isNotNull prepend=","  property="skunum">
+					skunum= #skuNum#
+				</isNotNull>
+				<isNotNull prepend=","  property="yn">
+					yn= #yn#
+				</isNotNull>
+			</dynamic>
+		where id=#id#
+	</update>
+	
+	<!--根据id查询某一个促销信息-->
+	<select id="queryPromotionById" resultClass="promotionResult" parameterClass="long">
+		select <include refid="promotionTable.allFileds" /> from promotion where id=#id#
+	</select>
+	
+	<!-- 批量删除促销信息 -->
+	<delete id="delPromotionsByIds" parameterClass="java.util.list">
+		delete from promotion where id in
+		 <iterate conjunction="," open="(" close=")">
+		  #idList[]#
+		 </iterate>
+	</delete>
+</sqlMap>

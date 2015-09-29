@@ -24,6 +24,11 @@ public class SkuDAO implements Serializable {
 	private String name;
 	
 	/**
+	 * 商品数量
+	 */
+	private Integer num;
+	
+	/**
 	 * 商品广告
 	 */
 	private String adverst;
@@ -102,6 +107,14 @@ public class SkuDAO implements Serializable {
 
 	public void setYn(boolean yn) {
 		this.yn = yn;
+	}
+
+	public Integer getNum() {
+		return num;
+	}
+
+	public void setNum(Integer num) {
+		this.num = num;
 	}
 
 }

@@ -20,6 +20,11 @@ public class PromotionDAO implements Serializable {
 	 * 促销的商品数量
 	 */
 	private Integer skuNum;
+	
+	/**
+	 * 是否有效
+	 */
+	private boolean yn;
 
 	public Long getId() {
 		return id;
@@ -43,5 +48,13 @@ public class PromotionDAO implements Serializable {
 
 	public void setSkuNum(Integer skuNum) {
 		this.skuNum = skuNum;
+	}
+
+	public boolean isYn() {
+		return yn;
+	}
+
+	public void setYn(boolean yn) {
+		this.yn = yn;
 	}
 }

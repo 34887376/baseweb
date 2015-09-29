@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ladderpromotionTable">
+
+	<typeAlias alias="ladderPromotionDAO" type ="com.ms.domain.ladderpromotion.dao.LadderPromotionDAO" />  
+	<resultMap id="ladderPromotionResult" class="com.ms.domain.ladderpromotion.dao.LadderPromotionDAO">
+		<result property="id" column="id" />
+		<result property="promotionId" column="promotionid" />
+		<result property="ladderId" column="ladderid" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,promotionid,ladderid
+	</sql>
+	
+	<!-- 添加新促销信息 -->
+	<insert id="addLadderPromotion" parameterClass="ladderPromotionDAO">
+		insert into ladderpromotion (id,promotionid,ladderid) values
+		(#id#,#promotionId#,#ladderId#)
+        <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+
+	<!-- 更新促销信息 -->
+	<update id="updateLadderPromotion" parameterClass="ladderPromotionDAO">
+		update ladderpromotion set 
+				<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend=","  property="promotionId">
+					promotionid= #promotionId#
+				</isNotNull>
+				<isNotNull prepend=","  property="ladderId">
+					ladderid= #ladderId#
+				</isNotNull>
+			</dynamic>
+		where id=#id#
+	</update>
+	
+	<!--根据id查询某一个促销信息-->
+	<select id="queryLadderPromoitonByCondition" resultClass="ladderPromotionResult" parameterClass="ladderPromotionDAO">
+		select <include refid="ladderpromotionTable.allFileds" /> from ladderpromotion 
+		where 1=1
+		<dynamic>
+			<!-- isNotNull判断参数是否存在,Integer类型 -->
+			<isNotNull prepend="and"  property="promotionId">
+				promotionid= #promotionId#
+			</isNotNull>
+			<isNotNull prepend="and"  property="ladderId">
+				ladderid= #ladderId#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<!-- 批量删除促销信息 -->
+	<delete id="delLadderPromotion" parameterClass="ladderPromotionDAO">
+		delete from ladderpromotion where 1=1
+		<dynamic>
+			<!-- isNotNull判断参数是否存在,Integer类型 -->
+			<isNotNull prepend="and"  property="promotionId">
+				promotionid= #promotionId#
+			</isNotNull>
+			<isNotNull prepend="and"  property="ladderId">
+				ladderid= #ladderId#
+			</isNotNull>
+		</dynamic>
+	</delete>
+</sqlMap>

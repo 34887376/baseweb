@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="promotionSequenceTable">
+
+	<typeAlias alias="promotionSequenceDAO" type ="com.ms.domain.promotionsequence.dao.PromotionSequenceDAO" />  
+	<resultMap id="promotionSequenceResult" class="com.ms.domain.promotionsequence.dao.PromotionSequenceDAO">
+		<result property="id" column="id" />
+		<result property="promotionId" column="promotionid" />
+		<result property="hasLoad" column="hasload" />
+		<result property="nextOrder" column="nextorder" />
+		<result property="startTime" column="starttime" />
+		<result property="endtime" column="endTime" />
+		<result property="yn" column="yn" />
+	</resultMap>
+
+	<sql id="allFileds">
+		id,promotionid,hasload,nextorder,starttime,endtime,yn
+	</sql>
+	
+	<!-- 添加新促销信息 -->
+	<insert id="addPromotionSequence" parameterClass="promotionSequenceDAO">
+		insert into promotionsequence (id,promotionid,hasload,nextorder,starttime,endtime,yn) values
+		(#id#,#promotionId#,#hasLoad#,#nextOrder#,#startTime#,#endTime#,#yn#)
+        <selectKey keyProperty="id" resultClass="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+
+	<!-- 更新促销信息 -->
+	<update id="updatePromotionSequence" parameterClass="promotionSequenceDAO">
+		update promotionsequence set 
+			<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend=","  property="promotionId">
+					promotionid= #promotionId#
+				</isNotNull>
+				<isNotNull prepend=","  property="hasLoad">
+					hasload= #hasLoad#
+				</isNotNull>
+				<isNotNull prepend=","  property="nextOrder">
+					nextorder= #nextOrder#
+				</isNotNull>
+				<isNotNull prepend=","  property="startTime">
+					starttime= #startTime#
+				</isNotNull>
+				<isNotNull prepend=","  property="endTime">
+					endtime= #endTime#
+				</isNotNull>
+				<isNotNull prepend=","  property="yn">
+					yn= #yn#
+				</isNotNull>
+			</dynamic>
+		where id=#id#
+	</update>
+	
+	<!--根据id查询某一个促销信息-->
+	<select id="queryPromotionSequence" resultClass="promotionSequenceResult" parameterClass="promotionSequenceDAO">
+		select <include refid="promotionSequenceTable.allFileds" /> from promotionsequence 
+		where
+			<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend="and"  property="promotionId">
+					promotionid= #promotionId#
+				</isNotNull>
+				<isNotNull prepend="and"  property="hasLoad">
+					hasload= #hasLoad#
+				</isNotNull>
+				<isNotNull prepend="and"  property="nextOrder">
+					nextorder= #nextOrder#
+				</isNotNull>
+				<isNotNull prepend="and"  property="startTime">
+					starttime <![CDATA[ >= ]]> #startTime#
+				</isNotNull>
+				<isNotNull prepend="and"  property="endTime">
+					endtime  <![CDATA[ <= ]]> #endTime#
+				</isNotNull>
+				<isNotNull prepend="and"  property="yn">
+					yn= #yn#
+				</isNotNull>
+			</dynamic>
+	</select>
+	
+	<!-- 批量删除促销信息 -->
+	<delete id="delPromotionSequence" parameterClass="promotionSequenceDAO">
+		delete from promotionsequence where
+			<dynamic>
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend="and"  property="promotionId">
+					promotionid= #promotionId#
+				</isNotNull>
+				<isNotNull prepend="and"  property="hasLoad">
+					hasload= #hasLoad#
+				</isNotNull>
+				<isNotNull prepend="and"  property="nextOrder">
+					nextorder= #nextOrder#
+				</isNotNull>
+				<isNotNull prepend="and"  property="startTime">
+					starttime <![CDATA[ >= ]]> #startTime#
+				</isNotNull>
+				<isNotNull prepend="and"  property="endTime">
+					endtime  <![CDATA[ <= ]]> #endTime#
+				</isNotNull>
+				<isNotNull prepend="and"  property="yn">
+					yn= #yn#
+				</isNotNull>
+			</dynamic>
+	</delete>
+</sqlMap>
