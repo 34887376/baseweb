@@ -8,19 +8,20 @@
 		<result property="promotionId" column="promotionid" />
 		<result property="hasLoad" column="hasload" />
 		<result property="nextOrder" column="nextorder" />
+		<result property="previosOrder" column="previosOrder" />
 		<result property="startTime" column="starttime" />
-		<result property="endtime" column="endTime" />
+		<result property="endTime" column="endTime" />
 		<result property="yn" column="yn" />
 	</resultMap>
 
 	<sql id="allFileds">
-		id,promotionid,hasload,nextorder,starttime,endtime,yn
+		id,promotionid,hasload,previosOrder,nextorder,starttime,endtime,yn
 	</sql>
 	
 	<!-- 添加新促销信息 -->
 	<insert id="addPromotionSequence" parameterClass="promotionSequenceDAO">
-		insert into promotionsequence (id,promotionid,hasload,nextorder,starttime,endtime,yn) values
-		(#id#,#promotionId#,#hasLoad#,#nextOrder#,#startTime#,#endTime#,#yn#)
+		insert into promotionsequence (id,promotionid,hasload,previosOrder,nextorder,starttime,endtime,yn) values
+		(#id#,#promotionId#,#hasLoad#,#previosOrder#,#nextOrder#,#startTime#,#endTime#,#yn#)
         <selectKey keyProperty="id" resultClass="long">
             select LAST_INSERT_ID()
         </selectKey>
@@ -28,14 +29,17 @@
 
 	<!-- 更新促销信息 -->
 	<update id="updatePromotionSequence" parameterClass="promotionSequenceDAO">
-		update promotionsequence set 
-			<dynamic>
+		update promotionsequence
+			<dynamic prepend="set">
 				<!-- isNotNull判断参数是否存在,Integer类型 -->
 				<isNotNull prepend=","  property="promotionId">
 					promotionid= #promotionId#
 				</isNotNull>
 				<isNotNull prepend=","  property="hasLoad">
 					hasload= #hasLoad#
+				</isNotNull>
+				<isNotNull prepend=","  property="previosOrder">
+					previosOrder= #previosOrder#
 				</isNotNull>
 				<isNotNull prepend=","  property="nextOrder">
 					nextorder= #nextOrder#
@@ -54,16 +58,18 @@
 	</update>
 	
 	<!--根据id查询某一个促销信息-->
-	<select id="queryPromotionSequence" resultClass="promotionSequenceResult" parameterClass="promotionSequenceDAO">
+	<select id="queryPromotionSequence" resultMap="promotionSequenceResult" parameterClass="promotionSequenceDAO">
 		select <include refid="promotionSequenceTable.allFileds" /> from promotionsequence 
-		where
-			<dynamic>
+			<dynamic prepend="where">
 				<!-- isNotNull判断参数是否存在,Integer类型 -->
 				<isNotNull prepend="and"  property="promotionId">
 					promotionid= #promotionId#
 				</isNotNull>
 				<isNotNull prepend="and"  property="hasLoad">
 					hasload= #hasLoad#
+				</isNotNull>
+				<isNotNull prepend=","  property="previosOrder">
+					previosOrder= #previosOrder#
 				</isNotNull>
 				<isNotNull prepend="and"  property="nextOrder">
 					nextorder= #nextOrder#
@@ -80,11 +86,22 @@
 			</dynamic>
 	</select>
 	
-	<!-- 批量删除促销信息 -->
+		<!-- 批量删除促销排序信息 -->
+	<delete id="delPromotionSequenceByIds" parameterClass="java.util.List">
+		delete from promotionsequence where id in
+		 <iterate conjunction="," open="(" close=")">
+		  #idList[]#
+		 </iterate>
+	</delete>
+	
+	<!--根据页数查询促销排序信息-->
+	<select id="queryPromotionSequenceListByPageNum" resultClass="promotionSequenceDAO" parameterClass="java.util.Map">
+		select <include refid="promotionSequenceTable.allFileds" /> from promotionsequence where 1=1 limit #startIndex#,#endIndex#
+	</select>
+	<!-- 批量删除促销信息
 	<delete id="delPromotionSequence" parameterClass="promotionSequenceDAO">
 		delete from promotionsequence where
 			<dynamic>
-				<!-- isNotNull判断参数是否存在,Integer类型 -->
 				<isNotNull prepend="and"  property="promotionId">
 					promotionid= #promotionId#
 				</isNotNull>
@@ -105,4 +122,5 @@
 				</isNotNull>
 			</dynamic>
 	</delete>
+	 -->
 </sqlMap>

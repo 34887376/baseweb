@@ -25,12 +25,23 @@ public interface IPromotionSequenceDAO {
 	 * @param promotionSequenceDAO
 	 * @return
 	 */
-	boolean delPromotionSequence(PromotionSequenceDAO promotionSequenceDAO) throws Exception;
+	boolean delPromotionSequence(List<Long> idList) throws Exception;
 	
 	/**
 	 * 根据条件查询促销排序信息
 	 * @param promotionSequenceDAO
 	 * @return
 	 */
-	List<PromotionSequenceDAO> queryPromotionSequence(PromotionSequenceDAO promotionSequenceDAO) throws Exception;
+	List<PromotionSequenceDAO> queryPromotionSequenceByCondition(PromotionSequenceDAO promotionSequenceDAO) throws Exception;
+	
+	/**
+	 * 根据分页查询促销排序信息
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 * @throws Exception
+	 */
+	List<PromotionSequenceDAO> queryPromotionSequenceByPageNum(int page, int pageSize) throws Exception;
+	
+	
 }

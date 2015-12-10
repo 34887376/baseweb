@@ -48,6 +48,5 @@ public interface IPromotionService {
 	 * @return
 	 */
 	List<PromotionInfoBO> queryLastNumPromotion(int num);
-
 	
 }

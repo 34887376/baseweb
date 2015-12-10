@@ -1,7 +1,9 @@
 package com.ms.dao.promotion.face.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
@@ -9,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.ms.dao.base.dao.BaseMysqlDAO;
 import com.ms.dao.promotion.face.IPromotionDAO;
 import com.ms.domain.promotion.dao.PromotionDAO;
+import com.ms.domain.sku.dao.SkuDAO;
 
 public class PromotionDAOImpl extends BaseMysqlDAO implements IPromotionDAO {
 	
@@ -66,6 +69,27 @@ public class PromotionDAOImpl extends BaseMysqlDAO implements IPromotionDAO {
 			return true;
 		}
 		return false;
+	}
+
+	public List<PromotionDAO> queryPromotionByCondition(PromotionDAO promotionDAO)
+			throws Exception {
+		if(promotionDAO==null){
+			return new ArrayList<PromotionDAO>();
+		}
+		List<PromotionDAO> promotionList = this.queryForList(namespace+"queryPromotionByCondition", promotionDAO);
+		return promotionList;
+	}
+
+	public List<PromotionDAO> queryPromotionByPageNum(int page, int pageSize)
+			throws Exception {
+		if(page< 0 || pageSize<0){
+			return new ArrayList<PromotionDAO>();
+		}
+		Map<String,Integer> paramMap = new HashMap<String,Integer>();
+		paramMap.put("startIndex", (page-1)*pageSize);
+		paramMap.put("endIndex", page*pageSize);
+		List<PromotionDAO> promotionList = this.queryForList(namespace+"queryPromotionListByPageNum", paramMap);
+		return promotionList;
 	}
 
 }

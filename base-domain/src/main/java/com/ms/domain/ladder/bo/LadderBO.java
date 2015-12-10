@@ -10,7 +10,7 @@ public class LadderBO implements Serializable {
 	/**
 	 * 阶梯促销规则id
 	 */
-	private Integer id;
+	private Long id;
 	
 	/**
 	 * 价格折扣比率(商品原价的)
@@ -26,14 +26,12 @@ public class LadderBO implements Serializable {
 	 * 阶梯类型
 	 */
 	private Integer type;
+	
+	/**
+	 * 是否有效
+	 */
+	private Boolean yn;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public BigDecimal getPriceDiscount() {
 		return priceDiscount;
@@ -57,5 +55,21 @@ public class LadderBO implements Serializable {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Boolean getYn() {
+		return yn;
+	}
+
+	public void setYn(Boolean yn) {
+		this.yn = yn;
 	}
 }

@@ -1,7 +1,9 @@
 package com.ms.dao.sku.face.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
@@ -9,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.ms.dao.base.dao.BaseMysqlDAO;
 import com.ms.dao.sku.face.ISkuDAO;
 import com.ms.domain.ladder.dao.LadderDAO;
+import com.ms.domain.promotion.dao.PromotionDAO;
 import com.ms.domain.sku.dao.SkuDAO;
 
 public class SkuDAOImpl extends BaseMysqlDAO implements ISkuDAO {
@@ -66,6 +69,25 @@ public class SkuDAOImpl extends BaseMysqlDAO implements ISkuDAO {
 			return new ArrayList<SkuDAO>();
 		}
 		List<SkuDAO> skuList = this.queryForList(namespace+"querySkuListByIds", idList);
+		return skuList;
+	}
+	
+	public List<SkuDAO> querySkuListByPageNum(int page,int pageSize) throws Exception {
+		if(page< 0 || pageSize<0){
+			return new ArrayList<SkuDAO>();
+		}
+		Map<String,Integer> paramMap = new HashMap<String,Integer>();
+		paramMap.put("startIndex", (page-1)*pageSize);
+		paramMap.put("endIndex", page*pageSize);
+		List<SkuDAO> skuList = this.queryForList(namespace+"querySkuListByPageNum", paramMap);
+		return skuList;
+	}
+
+	public List<SkuDAO> querySkuListByCondition(SkuDAO skuDAO) throws Exception {
+		if(skuDAO==null){
+			return new ArrayList<SkuDAO>();
+		}
+		List<SkuDAO> skuList = this.queryForList(namespace+"queryPromotionByCondition", skuDAO);
 		return skuList;
 	}
 

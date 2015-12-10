@@ -31,6 +31,11 @@ public class LadderPromotionInfoBO implements Serializable {
 	 * 折扣力度
 	 */
 	private String discount;
+	
+	/**
+	 * 阶梯类型，一等奖，二等奖，三等奖
+	 */
+	private int type;
 
 	public Long getPromotionLadderId() {
 		return promotionLadderId;

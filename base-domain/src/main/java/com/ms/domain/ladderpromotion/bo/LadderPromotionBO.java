@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class LadderPromotionBO implements Serializable {
 	
-	private static final long serialVersionUID = 1098519671754528393L;
+	private static final long serialVersionUID = -4179399505022261079L;
 
 	/**
 	 * 主键id
 	 */
-	private Long id;
+	private Long ladderPromotionId;
 	
 	/**
 	 * 促销id
@@ -20,14 +20,11 @@ public class LadderPromotionBO implements Serializable {
 	 * 阶梯促销规则id
 	 */
 	private Long ladderId;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
+	/**
+	 * 是否有效
+	 */
+	private Boolean yn;
 
 	public Long getPromotionId() {
 		return promotionId;
@@ -43,6 +40,22 @@ public class LadderPromotionBO implements Serializable {
 
 	public void setLadderId(Long ladderId) {
 		this.ladderId = ladderId;
+	}
+
+	public Long getLadderPromotionId() {
+		return ladderPromotionId;
+	}
+
+	public void setLadderPromotionId(Long ladderPromotionId) {
+		this.ladderPromotionId = ladderPromotionId;
+	}
+
+	public Boolean getYn() {
+		return yn;
+	}
+
+	public void setYn(Boolean yn) {
+		this.yn = yn;
 	}
 
 }

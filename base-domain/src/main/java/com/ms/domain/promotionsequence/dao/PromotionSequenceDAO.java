@@ -23,6 +23,11 @@ public class PromotionSequenceDAO implements Serializable {
 	private Integer hasLoad;
 	
 	/**
+	 * 上一个序号，指的是id
+	 */
+	private Long previosOrder;
+	
+	/**
 	 * 下一个序号，指的是id
 	 */
 	private Long nextOrder;
@@ -36,6 +41,11 @@ public class PromotionSequenceDAO implements Serializable {
 	 * 促销结束时间
 	 */
 	private Date endTime;
+	
+	/**
+	 * 是否有效
+	 */
+	private Integer yn;
 	
 	public Long getId() {
 		return id;
@@ -83,6 +93,22 @@ public class PromotionSequenceDAO implements Serializable {
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+
+	public Long getPreviosOrder() {
+		return previosOrder;
+	}
+
+	public void setPreviosOrder(Long previosOrder) {
+		this.previosOrder = previosOrder;
+	}
+
+	public Integer getYn() {
+		return yn;
+	}
+
+	public void setYn(Integer yn) {
+		this.yn = yn;
 	}
 
 }

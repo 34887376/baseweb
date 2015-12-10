@@ -46,4 +46,22 @@ public interface ILadderDAO {
 	 * @return
 	 */
 	List<LadderDAO> queryAllLadder() throws Exception;
+	
+	/**
+	 * 根据分页查询阶梯规则信息
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 * @throws Exception
+	 */
+	List<LadderDAO> queryLadderListByPageNum(int page, int pageSize)
+			throws Exception;
+	
+	/**
+	 * 根据组合规则查询阶梯规则信息
+	 * @param ladderDAO
+	 * @return
+	 * @throws Exception
+	 */
+	List<LadderDAO> queryLadderListByCondition(LadderDAO ladderDAO) throws Exception;
 }

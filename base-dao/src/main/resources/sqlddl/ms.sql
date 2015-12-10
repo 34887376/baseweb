@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50517
 File Encoding         : 65001
 
-Date: 2015-09-13 17:04:29
+Date: 2015-10-27 11:37:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -86,6 +86,7 @@ CREATE TABLE `promotion` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '促销id,主键',
   `skuid` bigint(20) DEFAULT NULL COMMENT '促销的商品id',
   `skunum` int(11) DEFAULT NULL COMMENT '促销的商品总数量',
+  `yn` tinyint(2) DEFAULT NULL COMMENT '是否有效1有效，0无效',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -97,9 +98,11 @@ CREATE TABLE `promotionsequence` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `promotionid` bigint(20) DEFAULT NULL COMMENT '促销id',
   `hasload` tinyint(1) DEFAULT NULL COMMENT '是否刷新到缓存',
+  `previosOrder` bigint(20) DEFAULT NULL COMMENT '上一个促销id',
   `nextorder` bigint(20) DEFAULT NULL COMMENT '下一个促销信息id',
-  `startTime` datetime DEFAULT NULL COMMENT '促销开始时间',
+  `starttime` datetime DEFAULT NULL COMMENT '促销开始时间',
   `endtime` datetime DEFAULT NULL COMMENT '促销结束时间',
+  `yn` tinyint(2) DEFAULT NULL COMMENT '是否有效，1有效，0无效',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -110,7 +113,9 @@ DROP TABLE IF EXISTS `sku`;
 CREATE TABLE `sku` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL COMMENT '商品名称',
+  `num` int(3) DEFAULT NULL COMMENT '商品的总数量',
   `adverst` varchar(100) DEFAULT NULL COMMENT '广告语',
+  `imgUrl` varchar(100) DEFAULT NULL COMMENT '图片链接',
   `inprice` decimal(10,0) DEFAULT NULL COMMENT '进货价',
   `outprice` decimal(10,0) DEFAULT NULL COMMENT '出货价',
   `yn` tinyint(1) DEFAULT NULL COMMENT '是否有效，1有效，0无效',

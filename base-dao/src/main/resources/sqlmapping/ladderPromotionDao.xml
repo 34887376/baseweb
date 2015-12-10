@@ -7,16 +7,17 @@
 		<result property="id" column="id" />
 		<result property="promotionId" column="promotionid" />
 		<result property="ladderId" column="ladderid" />
+		<result property="yn" column="yn" />
 	</resultMap>
 
 	<sql id="allFileds">
-		id,promotionid,ladderid
+		id,promotionid,ladderid,yn
 	</sql>
 	
 	<!-- 添加新促销信息 -->
 	<insert id="addLadderPromotion" parameterClass="ladderPromotionDAO">
-		insert into ladderpromotion (id,promotionid,ladderid) values
-		(#id#,#promotionId#,#ladderId#)
+		insert into ladderpromotion (id,promotionid,ladderid,yn) values
+		(#id#,#promotionId#,#ladderId#,#yn#)
         <selectKey keyProperty="id" resultClass="long">
             select LAST_INSERT_ID()
         </selectKey>
@@ -24,8 +25,8 @@
 
 	<!-- 更新促销信息 -->
 	<update id="updateLadderPromotion" parameterClass="ladderPromotionDAO">
-		update ladderpromotion set 
-				<dynamic>
+		update ladderpromotion
+				<dynamic prepend="set">
 				<!-- isNotNull判断参数是否存在,Integer类型 -->
 				<isNotNull prepend=","  property="promotionId">
 					promotionid= #promotionId#
@@ -33,30 +34,39 @@
 				<isNotNull prepend=","  property="ladderId">
 					ladderid= #ladderId#
 				</isNotNull>
+				<isNotNull prepend=","  property="yn">
+					yn= #yn#
+				</isNotNull>
 			</dynamic>
 		where id=#id#
 	</update>
 	
 	<!--根据id查询某一个促销信息-->
-	<select id="queryLadderPromoitonByCondition" resultClass="ladderPromotionResult" parameterClass="ladderPromotionDAO">
+	<select id="queryLadderPromoitonByCondition" resultMap="ladderPromotionResult" parameterClass="ladderPromotionDAO">
 		select <include refid="ladderpromotionTable.allFileds" /> from ladderpromotion 
-		where 1=1
-		<dynamic>
+		<dynamic prepend="where">
 			<!-- isNotNull判断参数是否存在,Integer类型 -->
 			<isNotNull prepend="and"  property="promotionId">
 				promotionid= #promotionId#
 			</isNotNull>
 			<isNotNull prepend="and"  property="ladderId">
 				ladderid= #ladderId#
+			</isNotNull>
+			<isNotNull prepend="and"  property="yn">
+				yn= #yn#
 			</isNotNull>
 		</dynamic>
 	</select>
 	
-	<!-- 批量删除促销信息 -->
+		<!--按页批量查询阶梯促销信息-->
+	<select id="queryPromotionListByPageNum" resultMap="ladderPromotionResult" parameterClass="java.util.Map">
+		select <include refid="ladderpromotionTable.allFileds" /> from ladderpromotion where 1=1 limit #startIndex#,#endIndex#
+	</select>
+	
+	<!-- 批量删除促销信息
 	<delete id="delLadderPromotion" parameterClass="ladderPromotionDAO">
 		delete from ladderpromotion where 1=1
 		<dynamic>
-			<!-- isNotNull判断参数是否存在,Integer类型 -->
 			<isNotNull prepend="and"  property="promotionId">
 				promotionid= #promotionId#
 			</isNotNull>
@@ -64,5 +74,13 @@
 				ladderid= #ladderId#
 			</isNotNull>
 		</dynamic>
+	</delete> -->
+	
+	<!-- 批量删除阶梯促销信息 -->
+	<delete id="delPromotionsByIds" parameterClass="java.util.List">
+		delete from ladderpromotion where id in
+		 <iterate conjunction="," open="(" close=")">
+		  #idList[]#
+		 </iterate>
 	</delete>
 </sqlMap>

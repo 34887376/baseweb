@@ -5,5 +5,16 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd"
 	default-autowire="byName" default-lazy-init="false">
 	
+	<!-- 用户登录 -->
 	<bean id="iUserLoginDAO" class="com.ms.dao.user.face.impl.UserLoginDAOImpl"/>
+	<!-- 查询促销 -->
+	<bean id="iPromotionDAO" class="com.ms.dao.promotion.face.impl.PromotionDAOImpl"/>
+	<!-- 阶梯规则 -->
+	<bean id="iLadderDAO" class="com.ms.dao.ladder.face.impl.LadderDAOImpl"/>
+	<!-- 商品信息 -->
+	<bean id="iSkuDAO" class="com.ms.dao.sku.face.impl.SkuDAOImpl"/>
+	<!-- 促销序列 -->
+	<bean id="iPromotionSequenceDAO" class="com.ms.dao.promotionsequence.face.impl.PromotionSequenceDAOImpl"/>
+	<!-- 阶梯促销关系 -->
+	<bean id="iLadderPromotionDAO" class="com.ms.dao.ladderpromotion.face.impl.LadderPromotionDAOImpl"/>
 </beans>

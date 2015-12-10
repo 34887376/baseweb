@@ -1,0 +1,44 @@
+
+.ladderPromotionPopdivhead{
+	 background-color: red;
+	 width: 100%;
+}
+
+.ladderPromotionPopdivhidden{
+	 display: none;
+}
+
+.ladderPromotionPopdivshow{
+	 display: block;
+	 position: absolute;
+	 top: 25%;
+	 left: 25%;
+	 width: 50%;
+	 padding: 6px 3px;
+	 border: 3px solid #00E9F1;
+	 background-color: white;
+	 z-index:1002;
+	 overflow: auto;
+     margin-bottom: 38px;
+}
+
+.ladderPromotionPopdivhead titletip{
+	width: 80%;
+	float:left;
+	background-color: #D6E9F1;
+	margin-left: 0px;
+	text-decoration:none;
+ 	font-size:14px;
+ 	font-weight:700;
+    height: 26px;
+    margin-top: -6px;
+}
+
+.ladderPromotionPopdivhead closebutton{
+	width: 20%;
+	float:right;
+	background-color: #D6E9F1;
+	text-align:right;
+    height: 26px;
+    margin-top: -6px;
+}

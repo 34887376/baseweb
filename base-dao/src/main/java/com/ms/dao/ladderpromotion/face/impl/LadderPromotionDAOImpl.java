@@ -1,17 +1,19 @@
 package com.ms.dao.ladderpromotion.face.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 
 import com.ms.dao.base.dao.BaseMysqlDAO;
-import com.ms.dao.ladderpromotion.face.ILadderPromotion;
+import com.ms.dao.ladderpromotion.face.ILadderPromotionDAO;
 import com.ms.domain.ladderpromotion.dao.LadderPromotionDAO;
 import com.ms.domain.sku.dao.SkuDAO;
 
-public class LadderPromotionDAOImpl extends BaseMysqlDAO implements ILadderPromotion {
+public class LadderPromotionDAOImpl extends BaseMysqlDAO implements ILadderPromotionDAO {
 
 	private Logger logger = Logger.getLogger(this.getClass());
 	
@@ -42,11 +44,11 @@ public class LadderPromotionDAOImpl extends BaseMysqlDAO implements ILadderPromo
 		return false;
 	}
 
-	public boolean delLadderPromotion(LadderPromotionDAO ladderPromotionDAO)  throws Exception{
-		if(ladderPromotionDAO==null){
+	public boolean delLadderPromotion(List<Long> idList)  throws Exception{
+		if(CollectionUtils.isEmpty(idList)){
 			return false;
 		}
-		int effectRow = this.delete(namespace+"delLadderPromotion", ladderPromotionDAO);
+		int effectRow = this.delete(namespace+"delLadderPromotion", idList);
 		if(effectRow>0){
 			return true;
 		}
@@ -60,6 +62,18 @@ public class LadderPromotionDAOImpl extends BaseMysqlDAO implements ILadderPromo
 		}
 		List<LadderPromotionDAO> ladderPromotionList = this.queryForList(namespace+"queryLadderPromoitonByCondition", ladderPromotionDAO);
 		return ladderPromotionList;
+	}
+
+	public List<LadderPromotionDAO> querySkuListByPageNum(int page, int pageSize)
+			throws Exception {
+		if(page< 0 || pageSize<0){
+			return new ArrayList<LadderPromotionDAO>();
+		}
+		Map<String,Integer> paramMap = new HashMap<String,Integer>();
+		paramMap.put("startIndex", (page-1)*pageSize);
+		paramMap.put("endIndex", page*pageSize);
+		List<LadderPromotionDAO> promotionList = this.queryForList(namespace+"queryPromotionListByPageNum", paramMap);
+		return promotionList;
 	}
 
 }

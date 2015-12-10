@@ -7,13 +7,13 @@
             <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %7r %6p - %.65c - %m%n" />
         </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="levelMin" value="WARN" />
+            <param name="levelMin" value="ERROR" />
             <param name="levelMax" value="ERROR" />
             <param name="AcceptOnMatch" value="true" />
         </filter>
     </appender>
    	<appender name="APP-APPENDER" class="org.apache.log4j.FileAppender">
-		<param name="file" value="/home/admin/base/logs/baseservice.log" />
+		<param name="file" value="D:/home/admin/base/logs/baseservice.log" />
 		<param name="append" value="true" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -31,7 +31,7 @@
         </filter>
     </appender> -->
     <root>
-        <priority value="debug" />
+        <priority value="ERROR" />
         <appender-ref ref="console" />
         <appender-ref ref="APP-APPENDER" />
     </root>

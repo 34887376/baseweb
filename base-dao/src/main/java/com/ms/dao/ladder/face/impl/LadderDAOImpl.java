@@ -1,7 +1,9 @@
 package com.ms.dao.ladder.face.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
@@ -9,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.ms.dao.base.dao.BaseMysqlDAO;
 import com.ms.dao.ladder.face.ILadderDAO;
 import com.ms.domain.ladder.dao.LadderDAO;
+import com.ms.domain.ladderpromotion.dao.LadderPromotionDAO;
 import com.ms.domain.promotion.dao.PromotionDAO;
 
 public class LadderDAOImpl extends BaseMysqlDAO implements ILadderDAO {
@@ -66,6 +69,26 @@ public class LadderDAOImpl extends BaseMysqlDAO implements ILadderDAO {
 			return new ArrayList<LadderDAO>();
 		}
 		List<LadderDAO> ladderList = this.queryForList(namespace+"queryLadderList", idList);
+		return ladderList;
+	}
+	
+	public List<LadderDAO> queryLadderListByCondition(LadderDAO ladderDAO) throws Exception{
+		if(ladderDAO==null){
+			return new ArrayList<LadderDAO>();
+		}
+		List<LadderDAO> ladderList = this.queryForList(namespace+"queryLadderListByCondition", ladderDAO);
+		return ladderList;
+	}
+	
+	public List<LadderDAO> queryLadderListByPageNum(int page, int pageSize)
+			throws Exception {
+		if(page< 0 || pageSize<0){
+			return new ArrayList<LadderDAO>();
+		}
+		Map<String,Integer> paramMap = new HashMap<String,Integer>();
+		paramMap.put("startIndex", (page-1)*pageSize);
+		paramMap.put("endIndex", page*pageSize);
+		List<LadderDAO> ladderList = this.queryForList(namespace+"queryLadderListByPageNum", paramMap);
 		return ladderList;
 	}
 

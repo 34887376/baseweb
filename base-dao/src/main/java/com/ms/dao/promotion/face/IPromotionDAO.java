@@ -1,5 +1,6 @@
 package com.ms.dao.promotion.face;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ms.domain.promotion.dao.PromotionDAO;
@@ -17,6 +18,22 @@ public interface IPromotionDAO {
 	 * @return
 	 */
 	PromotionDAO queryPromotionById(Long id) throws Exception;
+	
+	/**
+	 * 根据多个条件查询促销信息
+	 * @param id
+	 * @return
+	 */
+	List<PromotionDAO> queryPromotionByCondition(PromotionDAO promotionDAO) throws Exception;
+	
+	/**
+	 * 根据页数批量查询促销信息
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 * @throws Exception
+	 */
+	List<PromotionDAO> queryPromotionByPageNum(int page, int pageSize) throws Exception;
 	
 	/**
 	 * 根据促销id列表批量获取促销

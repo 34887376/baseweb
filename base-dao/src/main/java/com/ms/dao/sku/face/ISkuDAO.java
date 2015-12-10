@@ -45,5 +45,22 @@ public interface ISkuDAO {
 	 * @return
 	 */
 	List<SkuDAO> querySkuListByIds(List<Long> skuIds) throws Exception;
+	
+	/**
+	 * 根据综合条件查询某一类商品信息
+	 * @param skuDAO
+	 * @return
+	 * @throws Exception
+	 */
+	List<SkuDAO> querySkuListByCondition(SkuDAO skuDAO) throws Exception;
+	
+	/**
+	 * 分页查询商品列表信息
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 * @throws Exception
+	 */
+	List<SkuDAO> querySkuListByPageNum(int page,int pageSize) throws Exception;
 
 }

@@ -5,7 +5,7 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">  
 <struts>
 	<package name="indexPage" namespace="/" extends="struts-base">
-		<action name="index" method="showIndex" class="base.test.inde.action.IndexAction">
+		<action name="index" method="showIndex" class="com.ms.index.action.IndexAction">
 			<result name="success" type="velocity">/WEB-INF/page/index/index.vm</result>
 		</action>
 	</package>

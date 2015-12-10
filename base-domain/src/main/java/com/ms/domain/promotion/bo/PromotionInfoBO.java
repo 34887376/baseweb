@@ -25,6 +25,11 @@ public class PromotionInfoBO implements Serializable {
 	private String skuName;
 	
 	/**
+	 * 商品图片链接
+	 */
+	private String skuImgUrl;
+	
+	/**
 	 * 广告促销语
 	 */
 	private String advert;
@@ -65,6 +70,14 @@ public class PromotionInfoBO implements Serializable {
 	public void setLadderPromotionList(
 			List<LadderPromotionInfoBO> ladderPromotionList) {
 		this.ladderPromotionList = ladderPromotionList;
+	}
+
+	public String getSkuImgUrl() {
+		return skuImgUrl;
+	}
+
+	public void setSkuImgUrl(String skuImgUrl) {
+		this.skuImgUrl = skuImgUrl;
 	}
 	
 }

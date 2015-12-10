@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+    <link href="../../../css/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet">
+	<link href="../../../css/ms/backStage/ladderManager.css" rel="stylesheet">
+</head> 
+<body>
+<div>
+	#parse("/htmlPage/common/header.vm")
+	<h1>促销信息管理后台</h1>
+	<hr style="height:10px;size:5;border:3px;border-top:1px solid #FF0066;"/>
+	<div class="container">
+		<div class="col-md-2 col-sm-offset-1"><label>阶梯规则编号<lable></div><div class="col-md-2"><input type="text" id="queryLadderId" placeholder="阶梯规则编号"></div>
+		<div class="col-md-2"><label>阶梯规则类型<lable></div><div class="col-md-2"><input type="text" id="queryLadderType" placeholder="阶梯规则类型"></div>
+		<div class="col-md-1"><input type="button" onclick="queryLadderInfo();" id="userName" value="查询"></div><div class="col-md-1"><input type="button" onclick="addLadder();" value="添加阶梯规则信息"></div>
+	</div>
+	<hr style="height:10px;size:5;border:3px;border-top:3px solid #FF0066;"/>
+    <div class="list pad7" id="ladderList">
+	#if($ladderList)
+		<table class="table table-bordered table-striped">
+			<thead>
+				<th>阶梯规则id</th><th>价格折扣率</th><th>促销商品数量</th><th>阶梯类型</th><th>是否有效</th><th>操作编辑</th>
+			</thead>
+			<tbody id="ladderInfoBody">
+		#foreach( $ladderInfo in $ladderList)
+			<tr>
+				<td>$!{ladderInfo.id}</td><td>$!{ladderInfo.priceDiscount}</td><td>$!{ladderInfo.numPercent}</td><td>$!{ladderInfo.type}</td>
+				#if(${ladderInfo.yn})
+					<td>有效</td>
+				#else
+					<td>无效</td>
+				#end
+				<td><input type="button" onclick="makeInvalidLadder('$!{ladderInfo.id}')" value="置为无效"> <input type="button" onclick="editLadder('$!{ladderInfo.id}')" value="修改信息"><input type="button" onclick="delLadder('$!{ladderInfo.id}')" value="删除"></td>
+			</tr>
+		#end
+			</tbody>
+		</table>
+	#else
+		查询结果为空！！！
+	#end  
+	<!-- 弹出对话框 -->
+	<div id="ladderPopdiv" class="ladderPopdivhidden">
+		<div class ="ladderPopdivhead">
+			<titletip>商品信息</titletip>
+			<closebutton><button type="button" onclick="closeLadderPopDiv();">×</button></closebutton>
+		</div>
+		<div class="container-fluid">
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-1"><label>阶梯规则编号:<lable></div><div class="col-md-2"><input type="text" id="ladderId" placeholder="阶梯规则编号(禁止编辑)"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-2"><label>价格折扣率:<lable></div><div class="col-md-2"><input type="text" id="priceDiscount" placeholder="价格折扣率"></div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-1"><label>数量折扣率:<lable></div><div class="col-md-2"><input type="text" id="numPercent" placeholder="数量折扣率"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-2"><label>阶梯规则类型:<lable></div><div class="col-md-2"><input type="text" id="type" placeholder="阶梯规则类型"></div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-1"><label>是否有效:<lable></div>
+				<div class="col-md-2">
+					<input type="radio" name="isvaliade" value="1" checked="checked" />有效 
+					<input type="radio" name="isvaliade" value="0" />无效
+				</div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-2"><input type="button" id="submitLadder" onclick="submitLadder();" value="提   交" size="15"></div>
+				<div class="col-md-3"></div>
+				<div class="col-md-2"><input type="button" id="cancleLadder" onclick="cancleLadder();" value="取   消"></div>
+			</div>
+		</div>
+	</div>
+    
+</div>
+</div>
+<div style="margin-top:400px;">
+#parse("/htmlPage/common/bottom.html")
+</div>
+  	<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+	<script src="../../../js/bootstrap-3.3.5/bootstrap.js?r=20150707"></script>
+	<script src="../../../js/common/utils.js?r=20150707"></script>
+	<script src="../../../js/ms/backStage/ladder/ladderManager.js?r=2015120711"></script>
+
+</body>
+</html>

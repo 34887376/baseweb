@@ -8,7 +8,7 @@
 		<result property="name" column="name" />
 		<result property="num" column="num" />
 		<result property="adverst" column="adverst" />
-		<result property="imgUrl" column="imgUrl" />
+		<result property="imgUrl" column="imgUrl" nullValue=""/>
 		<result property="inprice" column="inprice" />
 		<result property="outprice" column="outprice" />
 		<result property="yn" column="yn" />
@@ -29,8 +29,8 @@
 
 	<!-- 更新阶梯规则-->
 	<update id="updateSkuInfo" parameterClass="skuDAO">
-		update sku set
-				<dynamic>
+		update sku 
+				<dynamic prepend="set">
 				<!-- isNotNull判断参数是否存在,Integer类型 -->
 				<isNotNull prepend=","  property="name">
 					name= #name#
@@ -58,7 +58,7 @@
 	</update>
 	
 	<!-- 根据id批量查询阶梯规则 -->
-	<select id="querySkuListByIds" resultClass="java.util.list" parameterClass="java.util.list">
+	<select id="querySkuListByIds" resultClass="java.util.List" parameterClass="java.util.List">
 		select
 		<include refid="skuTable.allFileds" />
 		from sku where yn=1 and id in
@@ -68,12 +68,40 @@
 	</select>
 	
 	<!--根据id查询阶梯规则-->
-	<select id="querySkuById" resultClass="skuDAO" parameterClass="long">
-		select <include refid="skuTable.allFileds" /> from sku where id=#id# and yn=1
+	<select id="querySkuById" resultMap="skuResult" parameterClass="long">
+		select <include refid="skuTable.allFileds" /> from sku where id=#id#
+	</select>
+	
+	<!--根据综合条件查询某一类商品信息-->
+	<select id="querySkuByCondition" resultMap="skuResult" parameterClass="skuDAO">
+		select <include refid="skuTable.allFileds" /> from sku where
+			<dynamic prepend="and">
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend="and"  property="id">
+					id=#id#
+				</isNotNull>
+				<isNotNull prepend="and"  property="name">
+					name like %#name#%
+				</isNotNull>
+				<isNotNull prepend="and"  property="num">
+					num= #num#
+				</isNotNull>
+				<isNotNull prepend="and"  property="adverst">
+					adverst like %#adverst#%
+				</isNotNull>
+				<isNotNull prepend="and"  property="yn">
+					yn= #yn#
+				</isNotNull>
+			</dynamic>
+	</select>
+	
+	<!--根据页数查询商品信息-->
+	<select id="querySkuListByPageNum" resultClass="skuDAO" parameterClass="java.util.Map">
+		select <include refid="skuTable.allFileds" /> from sku where 1=1 limit #startIndex#,#endIndex#
 	</select>
 	
 	<!-- 根据id删除阶梯规则 -->
-	<delete id="delSkuInfo" parameterClass="java.lang.long">
+	<delete id="delSkuInfo" parameterClass="long">
 		delete from sku where id =#id#
 	</delete>
 </sqlMap>

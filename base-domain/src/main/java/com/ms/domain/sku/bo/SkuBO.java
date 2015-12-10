@@ -15,12 +15,17 @@ public class SkuBO implements Serializable {
 	/**
 	 * 商品id
 	 */
-	private long id;
+	private Long id;
 	
 	/**
 	 * 商品名称
 	 */
 	private String name;
+	
+	/**
+	 * 商品数量
+	 */
+	private int num;
 	
 	/**
 	 * 商品广告
@@ -47,13 +52,6 @@ public class SkuBO implements Serializable {
 	 */
 	private boolean yn;
 	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -101,6 +99,22 @@ public class SkuBO implements Serializable {
 
 	public void setYn(boolean yn) {
 		this.yn = yn;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 

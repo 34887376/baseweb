@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+    <link href="../../../css/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet">
+	<link href="../../../css/ms/backStage/promotionManager.css" rel="stylesheet">
+</head> 
+<body>
+<div>
+	#parse("/htmlPage/common/header.vm")
+	<h1>促销信息管理后台</h1>
+	<hr style="height:10px;size:5;border:3px;border-top:1px solid #FF0066;"/>
+	<div class="container">
+		<div class="col-md-1 col-sm-offset-1"><label>商品编号<lable></div><div class="col-md-2"><input type="text" id="querySkuId" placeholder="商品编号"></div>
+		<div class="col-md-1"><label>促销编号<lable></div><div class="col-md-2"><input type="text" id="queryPromotionId" placeholder="促销编号"></div>
+		<div class="col-md-1"><input type="button" onclick="queryPromotionInfo();" id="userName" value="查询"></div><div class="col-md-1"><input type="button" onclick="addPromotion();" value="添加促销信息"></div>
+	</div>
+	<hr style="height:10px;size:5;border:3px;border-top:3px solid #FF0066;"/>
+    <div class="list pad7" id="promotionList">
+	#if($promotionListInfoList)
+		<table class="table table-bordered table-striped">
+			<thead>
+				<th>促销id</th><th>商品id</th><th>商品数量</th><th>是否有效</th><th>操作编辑</th>
+			</thead>
+			<tbody id="promotionInfoBody">
+		#foreach( $promotionInfo in $promotionListInfoList)
+			<tr>
+				<td>$!{promotionInfo.id}</td><td>$!{promotionInfo.skuId}</td><td>$!{promotionInfo.skuNum}</td>
+				#if(${promotionInfo.yn})
+					<td>有效</td>
+				#else
+					<td>无效</td>
+				#end
+				
+				<td><input type="button" onclick="delPromotion('$!{promotionInfo.id}')" value="置为无效"> <input type="button" onclick="editPromotion('$!{promotionInfo.id}')" value="修改信息"></td>
+			</tr>
+		#end
+			</tbody>
+		</table>
+	#else
+		查询结果为空！！！
+	#end  
+	<!-- 弹出对话框 -->
+	<div id="promotionPopdiv" class="promotionPopdivhidden">
+		<div class ="promotionPopdivhead">
+			<titletip>商品信息</titletip>
+			<closebutton><button type="button" onclick="closePromotionPopDiv();">×</button></closebutton>
+		</div>
+		<div class="container-fluid">
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-1"><label>促销编号:<lable></div><div class="col-md-2"><input type="text" id="promotionId" placeholder="促销编号(禁止编辑)"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-2"><label>商品编号:<lable></div><div class="col-md-2"><input type="text" id="skuId" placeholder="商品编号"></div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-1"><label>商品数量:<lable></div><div class="col-md-2"><input type="text" id="skuNum" placeholder="商品数量"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-2"><label>是否有效:<lable></div>
+				<div class="col-md-2">
+					<input type="radio" name="isvaliade" value="1" checked="checked" />有效 
+					<input type="radio" name="isvaliade" value="0" />无效
+				</div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-2"><input type="button" id="submitPromotion" onclick="submitPromotion();" value="提   交" size="15"></div>
+				<div class="col-md-3"></div>
+				<div class="col-md-2"><input type="button" id="canclePromotion" onclick="canclePromotion();" value="取   消"></div>
+			</div>
+		</div>
+	</div>
+    
+</div>
+</div>
+<div style="margin-top:400px;">
+#parse("/htmlPage/common/bottom.html")
+</div>
+  	<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+	<script src="../../../js/bootstrap-3.3.5/bootstrap.js?r=20150707"></script>
+	<script src="../../../js/common/utils.js?r=20150707"></script>
+	<script src="../../../js/ms/backStage/promotion/promotionManager.js?r=2015120711"></script>
+
+</body>
+</html>

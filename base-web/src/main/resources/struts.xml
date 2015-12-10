@@ -62,5 +62,6 @@
 	<constant name="struts.mapper.alwaysSelectFullNamespace" value="true" />
 	<include file="struts/struts-login.xml" />
 	<include file="struts/struts-index.xml" />
+	<include file="struts/struts-backStage.xml" />
 	
 </struts>

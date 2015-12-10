@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+    <link href="../../../css/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet">
+	<link href="../../../css/ms/backStage/promotionSequenceManager.css" rel="stylesheet">
+</head> 
+<body>
+<div>
+	#parse("/htmlPage/common/header.vm")
+	<h1>促销序列管理后台</h1>
+	<hr style="height:10px;size:5;border:3px;border-top:1px solid #FF0066;"/>
+	<div class="container">
+		<div class="col-md-1 col-sm-offset-1"><label>促销序列编号<lable></div><div class="col-md-2"><input type="text" id="queryPromotionSequenceId" placeholder="促销序列编号"></div>
+		<div class="col-md-1"><label>促销编号<lable></div><div class="col-md-2"><input type="text" id="queryPromotionId" placeholder="促销编号"></div>
+		<div class="col-md-1"><input type="button" onclick="queryPromotionSequenceInfo();" id="userName" value="查询"></div><div class="col-md-1"><input type="button" onclick="addPromotionSequence();"  value="添加促销序列信息"></div>
+	</div>
+	<hr style="height:10px;size:5;border:3px;border-top:3px solid #FF0066;"/>
+    <div class="list pad7" id="promotionSequenceList">
+	#if($promotionSeqList)
+		<table class="table table-bordered table-striped">
+			<thead>
+				<th>促销序列id</th><th>促销id</th><th>上一个序列id</th><th>下一个序列id</th><th>开始时间</th><th>结束时间</th><th>是否加载</th><th>是否有效</th><th>操作编辑</th>
+			</thead>
+			<tbody id="promotionSequenceInfoBody">
+		#foreach( $promotionSeqInfo in $promotionSeqList)
+			<tr>
+				<td>$!{promotionSeqInfo.id}</td><td>$!{promotionSeqInfo.promotionId}</td><td>$!{promotionSeqInfo.previosOrder}</td><td>$!{promotionSeqInfo.nextOrder}</td><td>$!{promotionSeqInfo.startTime}</td><td>$!{promotionSeqInfo.endTime}</td>
+				#if(${promotionSeqInfo.hasLoad}==1)
+					<td>已加载</td>
+				#else
+					<td>未加载</td>
+				#end
+				#if(${promotionSeqInfo.yn}==1)
+					<td>有效</td>
+				#else
+					<td>无效</td>
+				#end
+				<td><input type="button" onclick="makeInvalidePromotionSeq('$!{promotionSeqInfo.id}')" value="置为无效"> <input type="button" onclick="editPromotionSequence('$!{promotionSeqInfo.id}')" value="修改信息"><input type="button" onclick="delPromotionSequence('$!{promotionSeqInfo.id}')" value="删除"></td>
+			</tr>
+		#end
+			</tbody>
+		</table>
+	#else
+		查询结果为空！！！
+	#end  
+	<!-- 弹出对话框 -->
+	<div id="promotionSequencePopdiv" class="promotionSequencePopdivhidden">
+		<div class ="promotionSequencePopdivhead">
+			<titletip>商品信息</titletip>
+			<closebutton><button type="button" onclick="closePromotionSequencePopDiv();">×</button></closebutton>
+		</div>
+		<div class="container-fluid">
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-1"><label>促销序列编号:<lable></div><div class="col-md-2"><input type="text" id="promotionSequenceId" placeholder="促销序列编号"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-2"><label>促销编号:<lable></div><div class="col-md-2"><input type="text" id="promotionId" placeholder="促销编号"></div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-1"><label>上一个序列id:<lable></div><div class="col-md-2"><input type="text" id="previosOrder" placeholder="上一个序列id"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-2"><label>下一个序列id:<lable></div><div class="col-md-2"><input type="text" id="nextOrder" placeholder="下一个序列id"></div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-1"><label>开始时间:<lable></div><div class="col-md-2"><input type="text" id="startTime" placeholder="开始时间"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-2"><label>结束时间:<lable></div><div class="col-md-2"><input type="text" id="endTime" placeholder="结束时间"></div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-1"><label>是否加载:<lable></div><div class="col-md-2"><input type="text" id="hasLoad" placeholder="是否加载"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-2 col-md-offset-1"><label>是否有效:<lable></div>
+				<div class="col-md-2">
+					<input type="radio" name="isvaliade" value="1" checked="checked" />有效 
+					<input type="radio" name="isvaliade" value="0" />无效
+				</div>
+			</div>
+			<div class="row"><div class="col-md-1">&nbsp;&nbsp;&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-2"><input type="button" id="submit" onclick="submitPromotionSequence();" value="提   交" size="15"></div>
+				<div class="col-md-3"></div>
+				<div class="col-md-2"><input type="button" id="cancle" onclick="canclePromotionSequence();" value="取   消"></div>
+			</div>
+		</div>
+	</div>
+    
+</div>
+</div>
+<div style="margin-top:400px;">
+#parse("/htmlPage/common/bottom.html")
+</div>
+  	<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+	<script src="../../../js/bootstrap-3.3.5/bootstrap.js?r=20150707"></script>
+	<script src="../../../js/common/utils.js?r=20150707"></script>
+	<script src="../../../js/ms/backStage/promotionsequence/promotionSequenceManager.js?r=2015120711"></script>
+
+</body>
+</html>

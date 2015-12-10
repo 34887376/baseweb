@@ -9,7 +9,7 @@ public class PromotionRedisImpl extends AbstractBaseRedisDao implements IPromoti
 
 	public boolean setValue(String key, String value) {
 		try{
-			return this.set(key, value);
+			return super.set(key, value);
 		}catch(Exception e){
 			return false;
 		}
@@ -17,7 +17,7 @@ public class PromotionRedisImpl extends AbstractBaseRedisDao implements IPromoti
 
 	public boolean setValue(String key, String value, long expriedTime) {
 		try{
-			return this.set(key, value, expriedTime);
+			return super.set(key, value, expriedTime);
 		}catch(Exception e){
 			return false;
 		}
@@ -25,7 +25,7 @@ public class PromotionRedisImpl extends AbstractBaseRedisDao implements IPromoti
 
 	public long delValue(String key) {
 		try{
-			return this.del(key);
+			return super.del(key);
 		}catch(Exception e){
 			return -1L;
 		}
@@ -33,7 +33,7 @@ public class PromotionRedisImpl extends AbstractBaseRedisDao implements IPromoti
 
 	public String getValue(String key) {
 		try{
-			return this.getValue(key);
+			return super.get(key);
 		}catch(Exception e){
 			return null;
 		}
@@ -41,7 +41,7 @@ public class PromotionRedisImpl extends AbstractBaseRedisDao implements IPromoti
 	
 	public List<String> getValuesByKeyList(List<String> keys){
 		try{
-			return this.getValuesByKeyList(keys);
+			return super.getValuesByKeys(keys);
 		}catch(Exception e){
 			return null;
 		}

@@ -15,7 +15,7 @@
 	</sql>
 	
 	<!-- 根据促销id查询多个促销信息 -->
-	<select id="queryPromotionsByIds" resultClass="java.util.list" parameterClass="java.util.list">
+	<select id="queryPromotionsByIds" resultClass="java.util.List" parameterClass="java.util.List">
 		select
 		<include refid="promotionTable.allFileds" />
 		from promotion where id in
@@ -27,7 +27,7 @@
 	<!-- 添加新促销信息 -->
 	<insert id="addPromotion" parameterClass="promotionDAO">
 		insert into promotion (id,skuid,skunum,yn) values
-		(#id#,#skuId#,#skuNum#,1)
+		(#id#,#skuId#,#skuNum#,#yn#)
         <selectKey keyProperty="id" resultClass="long">
             select LAST_INSERT_ID()
         </selectKey>
@@ -35,13 +35,13 @@
 
 	<!-- 更新促销信息 -->
 	<update id="updatePromotion" parameterClass="promotionDAO">
-		update promotion set 
-				<dynamic>
+		update promotion
+			<dynamic prepend="set">
 				<!-- isNotNull判断参数是否存在,Integer类型 -->
-				<isNotNull prepend=","  property="skuid">
+				<isNotNull prepend=","  property="skuId">
 					skuid= #skuId#
 				</isNotNull>
-				<isNotNull prepend=","  property="skunum">
+				<isNotNull prepend=","  property="skuNum">
 					skunum= #skuNum#
 				</isNotNull>
 				<isNotNull prepend=","  property="yn">
@@ -52,12 +52,37 @@
 	</update>
 	
 	<!--根据id查询某一个促销信息-->
-	<select id="queryPromotionById" resultClass="promotionResult" parameterClass="long">
+	<select id="queryPromotionById" resultMap="promotionResult" parameterClass="long">
 		select <include refid="promotionTable.allFileds" /> from promotion where id=#id#
 	</select>
 	
+	<!--根据多个条件查询某一类促销信息-->
+	<select id="queryPromotionByCondition" resultClass="promotionDAO" parameterClass="promotionDAO">
+		select <include refid="promotionTable.allFileds" /> from promotion  
+			<dynamic prepend="where">
+				<!-- isNotNull判断参数是否存在,Integer类型 -->
+				<isNotNull prepend="and"  property="id">
+					id=#id#
+				</isNotNull>
+				<isNotNull prepend="and"  property="skuId">
+					skuid= #skuId#
+				</isNotNull>
+				<isNotNull prepend="and"  property="skuNum">
+					skunum= #skuNum#
+				</isNotNull>
+				<isNotNull prepend="and"  property="yn">
+					yn= #yn#
+				</isNotNull>
+			</dynamic>
+	</select>
+	
+	<!--根据页数查询促销信息-->
+	<select id="queryPromotionListByPageNum" resultClass="promotionDAO" parameterClass="java.util.Map">
+		select <include refid="promotionTable.allFileds" /> from promotion where 1=1 and id limit #startIndex#,#endIndex#
+	</select>
+	
 	<!-- 批量删除促销信息 -->
-	<delete id="delPromotionsByIds" parameterClass="java.util.list">
+	<delete id="delPromotionsByIds" parameterClass="java.util.List">
 		delete from promotion where id in
 		 <iterate conjunction="," open="(" close=")">
 		  #idList[]#

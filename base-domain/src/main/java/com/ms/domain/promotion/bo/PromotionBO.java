@@ -24,7 +24,7 @@ public class PromotionBO implements Serializable {
 	/**
 	 * 是否有效
 	 */
-	private boolean yn;
+	private Boolean yn;
 
 	public Long getId() {
 		return id;
@@ -50,11 +50,11 @@ public class PromotionBO implements Serializable {
 		this.skuNum = skuNum;
 	}
 
-	public boolean isYn() {
+	public Boolean getYn() {
 		return yn;
 	}
 
-	public void setYn(boolean yn) {
+	public void setYn(Boolean yn) {
 		this.yn = yn;
 	}
 }

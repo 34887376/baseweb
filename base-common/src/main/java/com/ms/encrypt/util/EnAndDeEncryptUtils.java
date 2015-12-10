@@ -1,7 +1,6 @@
 package com.ms.encrypt.util;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 
@@ -10,8 +9,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+//import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Encoder;
+import sun.misc.*;
 
 public class EnAndDeEncryptUtils {
 

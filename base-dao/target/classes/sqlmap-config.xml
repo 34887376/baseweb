@@ -6,4 +6,10 @@
 		defaultStatementTimeout="3" maxTransactions="5"
 		useStatementNamespaces="true" />
 	<sqlMap resource="sqlmapping/userLoginDao.xml" />
+	<sqlMap resource="sqlmapping/skuDao.xml" />
+	<sqlMap resource="sqlmapping/ladderDao.xml" />
+	<sqlMap resource="sqlmapping/ladderPromotionDao.xml" />
+	<sqlMap resource="sqlmapping/promotionDao.xml" />
+	<sqlMap resource="sqlmapping/promotionSequenceDao.xml" />
+
 </sqlMapConfig>

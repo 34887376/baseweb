@@ -5,5 +5,20 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd"
 	default-autowire="byName" default-lazy-init="false">
 	
+	<!-- 用户登录 -->
 	<bean id="userLonginService" class="com.ms.service.user.face.impl.UserLonginServiceImpl"/>
+	
+	<!-- 促销查询 -->
+	<bean id="iPromotionService" class="com.ms.service.promotion.face.impl.PromotionServiceImpl"/>
+	
+	<!-- 促销管理后台 -->
+	<bean id="iBackPromotionService" class="com.ms.service.backStage.promotion.face.impl.BackPromotionServiceImpl"/>
+	<!-- 商品后台管理 -->
+	<bean id="iSkuManagerService" class="com.ms.service.backStage.sku.face.impl.BackSkuServiceImpl"/>
+	<!-- 促销排序后台管理 -->
+	<bean id="iBackPromotionSeqSerivce" class="com.ms.service.backStage.promotion.face.impl.BackPromotionSeqSerivceImpl"/>
+	<!-- 阶梯规则后台管理 -->
+	<bean id="iBackLadderService" class="com.ms.service.backStage.ladder.face.impl.BackLadderServiceImpl"/>
+		<!-- 阶梯促销规则后台管理 -->
+	<bean id="iBackLadderPromotionService" class="com.ms.service.backStage.ladder.face.impl.BackLadderPromotionServiceImpl"/>
 </beans>

@@ -23,6 +23,11 @@ public class PromotionSequenceBO implements Serializable {
 	private Integer hasLoad;
 	
 	/**
+	 * 上一个序号，指的是id
+	 */
+	private Long previosOrder;
+	
+	/**
 	 * 下一个序号，指的是id
 	 */
 	private Long nextOrder;
@@ -35,7 +40,12 @@ public class PromotionSequenceBO implements Serializable {
 	/**
 	 * 促销结束时间
 	 */
-	private Date endtime;
+	private Date endTime;
+	
+	/**
+	 * 是否有效
+	 */
+	private Integer yn;
 	
 	public Long getId() {
 		return id;
@@ -77,12 +87,28 @@ public class PromotionSequenceBO implements Serializable {
 		this.startTime = startTime;
 	}
 
-	public Date getEndtime() {
-		return endtime;
+	public Long getPreviosOrder() {
+		return previosOrder;
 	}
 
-	public void setEndtime(Date endtime) {
-		this.endtime = endtime;
+	public void setPreviosOrder(Long previosOrder) {
+		this.previosOrder = previosOrder;
+	}
+
+	public Integer getYn() {
+		return yn;
+	}
+
+	public void setYn(Integer yn) {
+		this.yn = yn;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 

@@ -20,6 +20,11 @@ public class LadderPromotionDAO implements Serializable {
 	 * 阶梯促销规则id
 	 */
 	private Long ladderId;
+	
+	/**
+	 * 是否有效
+	 */
+	private Boolean yn;
 
 	public Long getId() {
 		return id;
@@ -43,6 +48,14 @@ public class LadderPromotionDAO implements Serializable {
 
 	public void setLadderId(Long ladderId) {
 		this.ladderId = ladderId;
+	}
+
+	public Boolean getYn() {
+		return yn;
+	}
+
+	public void setYn(Boolean yn) {
+		this.yn = yn;
 	}
 
 }
