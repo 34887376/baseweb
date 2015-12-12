@@ -3,7 +3,8 @@ package com.ms.service.promotion.face;
 import java.util.List;
 
 import com.ms.domain.promotion.bo.PromotionBO;
-import com.ms.domain.promotion.bo.PromotionInfoBO;
+import com.ms.domain.promotion.bo.PromotionBriefBOInfo;
+import com.ms.domain.promotion.bo.PromotionDetailInfoBO;
 
 public interface IPromotionService {
 	
@@ -47,6 +48,20 @@ public interface IPromotionService {
 	 * @param num
 	 * @return
 	 */
-	List<PromotionInfoBO> queryLastNumPromotion(int num);
+	List<PromotionDetailInfoBO> queryLastNumPromotion(int num);
+	
+	/**
+	 * 根据促销id查询促销的详细信息
+	 * @param promotionId
+	 * @return
+	 */
+	PromotionDetailInfoBO queryKillPromotionDetail(long promotionId);
+	
+	/**
+	 * 给首页提供的查询最近num个促销的信息
+	 * @param num
+	 * @return
+	 */
+	List<PromotionBriefBOInfo> queryLastPromotionInfoForIndex(int num);
 	
 }

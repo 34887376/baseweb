@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" /> 
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>靠谱APP</title>
+    <link href="../../../css/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet">
+    <link href="../../../css/ms/kill/kill.css" rel="stylesheet">
+
+</head> 
+<body>
+<div>
+	#parse("/htmlPage/common/header.vm")
+	<div id="killBodytop" class="killBodytopDivStyle">
+		<!--flash
+		<object id="flash_obj" width="300" height="250" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" type="application/x-shockwave-flash">
+			<param value="http://ubmcmm.baidustatic.com/media/v1/0f000DH-9QBJy6hnLq-Jj0.swf" name="movie">
+			<param value="high" name="quality">
+			<param value="always" name="AllowScriptAccess">
+			<param value="opaque" name="wmode">
+			<param value="" name="FlashVars">
+			<embed width="300" height="250" align="middle" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" src="http://ubmcmm.baidustatic.com/media/v1/0f000DH-9QBJy6hnLq-Jj0.swf" wmode="opaque">
+		</object>-->
+		<!--img-->
+		<img width="1210" height="80" src="//img10.360buyimg.com/da/jfs/t1963/54/1101337437/88594/b0525f82/5667c50dNec0f2b0a.jpg">
+	</div>
+	<div id="killBodyContent" class="killBodyContentDivStyle">
+		<table class="killContentTableStyle">
+			<tr>
+				<td>
+					<img width="350" height="350" alt="CNCN 百分百羊毛新款男装羊毛衫男士套头V领毛衫NYYY4670 橙色 175" src="//img10.360buyimg.com/n1/jfs/t1897/272/588771888/158370/4498b10/561874e6N4f3d195c.jpg">
+				</td>
+				<td>
+					<table>
+						<tr>
+							<td>
+								<label class="killContentTextNameStyle">测试商品1</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="killContentTextPriceStyle">价格￥1.00</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="button" id="crashBuy" class="crashBuyButtonStyle" value="抢购" onclick="crashBuy();"/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+   	<div id="indexBodyBootom" class="indexBodyBootomDivStyle">
+    	#parse("/htmlPage/common/bottom.html")
+    </div>
+</div>
+
+  	<script src="../../../js/jquery-1.11.3/jquery-1.11.3.min.js?r=20150707"></script>
+	<script src="../../../js/bootstrap-3.3.5/bootstrap.js?r=20150707"></script>
+	<script src="../../../js/common/utils.js?r=20150707"></script>
+	<script src="../../../js/ms/index/index.js?r=20150707"></script>
+
+</body>
+</html>

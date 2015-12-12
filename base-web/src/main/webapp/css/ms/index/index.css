@@ -1,0 +1,48 @@
+/*首页头部flash*/
+.indexBodytopDivStyle{
+	display: block;
+	 position: absolute;
+	 top: 10%;
+	 left: 0%;
+	 width: 100%;
+	 padding: 1px 1px;
+	 border: 1px solid #000000;
+	 background-color: white;
+	 z-index:1002;
+	 overflow: auto;
+	 text-align:center;
+     margin-bottom: 20px;
+}
+
+/*首页内容样式*/
+.indexBodyContentDivStyle{
+	display: block;
+	position: absolute;
+	top: 21%;
+	width: 82%;
+	left: 15%;
+}
+.contentTableStyle{
+	border:3px none #000;
+	text-align:center;
+}
+
+.contentTextNameStyle{
+	text-align:center;
+	color:red;
+	text-shadow: 5px 5px 5px #FF0000;
+	font:blod 12px "宋体";
+}
+
+.contentTextPriceStyle{
+	text-align:center;
+	color:red;
+	text-shadow: 5px 5px 5px #FF0000;
+	font:blod 12px "宋体";
+}
+
+/*首页底部定位*/
+.indexBodyBootomDivStyle{
+	display: block;
+	margin-top:900px;
+}

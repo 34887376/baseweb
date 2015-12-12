@@ -21,7 +21,7 @@ import com.ms.domain.ladder.dao.LadderDAO;
 import com.ms.domain.ladderpromotion.bo.LadderPromotionInfoBO;
 import com.ms.domain.ladderpromotion.dao.LadderPromotionDAO;
 import com.ms.domain.promotion.bo.PromotionBO;
-import com.ms.domain.promotion.bo.PromotionInfoBO;
+import com.ms.domain.promotion.bo.PromotionDetailInfoBO;
 import com.ms.domain.promotionsequence.bo.PromotionSequenceBO;
 import com.ms.domain.promotionsequence.dao.PromotionSequenceDAO;
 import com.ms.domain.sku.dao.SkuDAO;
@@ -61,9 +61,9 @@ public class BackPromotionSeqSerivceImpl implements IBackPromotionSeqSerivce {
 	private IPromotionService iPromotionService;
 	
 	private static final String startPromotionIndexKey=RedisKeyPrefixConstant.START_PROMOTION_INDEX;
-	private static final String promotionKey=RedisKeyPrefixConstant.PROMOTION_INDEX;
+	private static final String promotionKey=RedisKeyPrefixConstant.PROMOTION_INFO_INDEX;
 	
-	public void refreshBackPromotionInfoToRedis(long startPromotionId) {
+	public boolean refreshBackPromotionInfoToRedis(long startPromotionId) {
 
 		iPromotionRedis.setValue(startPromotionIndexKey, String.valueOf(startPromotionId));
 
@@ -79,8 +79,8 @@ public class BackPromotionSeqSerivceImpl implements IBackPromotionSeqSerivce {
 					}
 					String promotionId = String.valueOf(promotionInfo.get(0).getPromotionId());
 					String promotionInfoStr = JsonUtil.toJson(promotionInfo.get(0));
-					iPromotionRedis.setValue(promotionKey+promotionId, promotionInfoStr);
-					iPromotionRedis.setValue(startPromotionIndexKey+startPromotionId, String.valueOf(promotionId));
+					iPromotionRedis.setValue(promotionKey+promotionId, promotionInfoStr,RedisKeyPrefixConstant.PROMOTION_INFO_INDEX_TIME);
+					iPromotionRedis.setValue(startPromotionIndexKey+startPromotionId,  String.valueOf(promotionId), RedisKeyPrefixConstant.START_PROMOTION_TIME);
 					
 					long nextOrderId = promotionInfo.get(0).getNextOrder();
 					PromotionSequenceDAO nextPromotionSequenceDAO = new PromotionSequenceDAO();
@@ -88,8 +88,10 @@ public class BackPromotionSeqSerivceImpl implements IBackPromotionSeqSerivce {
 					promotionInfo = iPromotionSequenceDAO.queryPromotionSequenceByCondition(nextPromotionSequenceDAO);
 					startPromotionId = promotionInfo.get(0).getPromotionId();
 			}
+			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("BackPromotionSeqSerivceImpl.refreshBackPromotionInfoToRedis往redis中刷新数据异常！！！", e);
+			return false;
 		}
 	}
 	
@@ -130,7 +132,7 @@ public class BackPromotionSeqSerivceImpl implements IBackPromotionSeqSerivce {
 			 */
 			//更改要删除节点在redis中的前序关系---将本节点的下一个节点的关系移动到前一个节点上
 			if(StringUtils.isNotBlank(iPromotionRedis.getValue(promotionKey+previosPromotionId))){
-				iPromotionRedis.setValue(startPromotionIndexKey+previosPromotionId, String.valueOf(nextPromotionId));
+				iPromotionRedis.setValue(startPromotionIndexKey+previosPromotionId, String.valueOf(nextPromotionId), RedisKeyPrefixConstant.START_PROMOTION_TIME);
 			}
 			//更改要删除节点在redis中的后序关系---直接删除本节点
 			if(StringUtils.isNotBlank(iPromotionRedis.getValue(promotionKey+promotionId))){
@@ -191,15 +193,15 @@ public class BackPromotionSeqSerivceImpl implements IBackPromotionSeqSerivce {
 	 * @param promotionIdList
 	 * @return
 	 */
-	private List<PromotionInfoBO> getPromotionInfoFromDB(List<Long> promotionIdList){
+	private List<PromotionDetailInfoBO> getPromotionInfoFromDB(List<Long> promotionIdList){
 		
-		List<PromotionInfoBO> promotionInfoBOList = new ArrayList<PromotionInfoBO>();
+		List<PromotionDetailInfoBO> promotionInfoBOList = new ArrayList<PromotionDetailInfoBO>();
 		try{
 			
 			//1. 查询促销列表
 			List<PromotionBO> promotionBOList = iPromotionService.queryPromotionsByIds(promotionIdList);
 			for(PromotionBO promotionBO : promotionBOList){
-				PromotionInfoBO promotionInfoBO = new PromotionInfoBO();
+				PromotionDetailInfoBO promotionInfoBO = new PromotionDetailInfoBO();
 				promotionInfoBO.setSkuId(promotionBO.getSkuId());
 				
 				//2. 查询商品信息
@@ -236,7 +238,7 @@ public class BackPromotionSeqSerivceImpl implements IBackPromotionSeqSerivce {
 				promotionInfoBO.setLadderPromotionList(ladderPromotionInfoBOList);
 				promotionInfoBOList.add(promotionInfoBO);
 				String promotionStr = JsonUtil.toJson(promotionInfoBO);
-				iPromotionRedis.setValue(RedisKeyPrefixConstant.PROMOTION_INDEX+promotionBO.getId(), promotionStr, 60* 60 * 30);
+				iPromotionRedis.setValue(RedisKeyPrefixConstant.PROMOTION_INFO_INDEX+promotionBO.getId(), promotionStr, 60* 60 * 30);
 			}
 			
 		}catch(Exception e){

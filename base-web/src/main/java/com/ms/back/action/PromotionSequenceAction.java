@@ -65,6 +65,9 @@ public class PromotionSequenceAction extends BaseAction{
 	 */
 	private Integer isvaliade;
 	
+	//刷入redis的第一个促销id
+	private Long startPromotionId;
+	
 
 	public String queryPromotionSequenceByPageNum(){
 		try{
@@ -198,6 +201,33 @@ public class PromotionSequenceAction extends BaseAction{
 			print(JsonUtil.toJson(backPromotionSequenceResult));
 		}
 		return "makeInvalidPromotionSequence";
+	}
+	
+	/**
+	 * 刷新redis
+	 * @return
+	 */
+	public String refreshDateToRedis(){
+		BackPromotionSequenceResult backPromotionSequenceResult = new BackPromotionSequenceResult();
+		try{
+			boolean refreshResult = iBackPromotionSeqSerivce.refreshBackPromotionInfoToRedis(startPromotionId);
+			if(refreshResult){
+				backPromotionSequenceResult.setSuccess(true);
+				backPromotionSequenceResult.setMsg("刷新成功！！！");
+				print(JsonUtil.toJson(backPromotionSequenceResult));
+			}else{
+				backPromotionSequenceResult.setSuccess(false);
+				backPromotionSequenceResult.setMsg("删除失败！！！");
+				print(JsonUtil.toJson(backPromotionSequenceResult));
+			}
+
+		}catch(Exception e){
+			logger.error("PromotionSequenceAction.physicalDel物理删除促销排序信息异常！！！", e);
+			backPromotionSequenceResult.setSuccess(false);
+			backPromotionSequenceResult.setMsg("刷新异常！！！");
+			print(JsonUtil.toJson(backPromotionSequenceResult));
+		}
+		return "refreshDateToRedis";
 	}
 	
 	/**

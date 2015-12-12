@@ -1,7 +1,10 @@
 package com.ms.domain.promotionsequence.bo;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+
+import com.ms.domain.business.constant.PromotionStatusConstant;
 
 public class PromotionSequenceBO implements Serializable {
 	
@@ -41,6 +44,11 @@ public class PromotionSequenceBO implements Serializable {
 	 * 促销结束时间
 	 */
 	private Date endTime;
+	
+	/**
+	 * 促销的状态
+	 */
+	private Integer status;
 	
 	/**
 	 * 是否有效
@@ -109,6 +117,55 @@ public class PromotionSequenceBO implements Serializable {
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+
+	public Integer getStatus() {
+		Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(startTime);
+//        int startYear = startCalendar.get(Calendar.YEAR);
+//        int startMonth = startCalendar.get(Calendar.MONTH);
+//        int startDay = startCalendar.get(Calendar.DAY_OF_MONTH);
+//        int startHour = startCalendar.get(Calendar.HOUR_OF_DAY);
+//        int startMinute = startCalendar.get(Calendar.MINUTE);
+        
+		Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(endTime);
+//        int endYear = endCalendar.get(Calendar.YEAR);
+//        int endMonth = endCalendar.get(Calendar.MONTH);
+//        int endDay = endCalendar.get(Calendar.DAY_OF_MONTH);
+//        int endHour = endCalendar.get(Calendar.HOUR_OF_DAY);
+//        int endMinute = endCalendar.get(Calendar.MINUTE);
+
+        Calendar nowCalendar = Calendar.getInstance();
+        nowCalendar.setTime(new Date());
+//        int nowYear = nowCalendar.get(Calendar.YEAR);
+//        int nowMonth = nowCalendar.get(Calendar.MONTH);
+//        int nowDay = nowCalendar.get(Calendar.DAY_OF_MONTH);
+//        int nowHour = nowCalendar.get(Calendar.HOUR_OF_DAY);
+//        int nowMinute = nowCalendar.get(Calendar.MINUTE);
+        
+
+        //未开始的
+        if(startCalendar.before(nowCalendar)){
+        	long distinctTime = startCalendar.getTimeInMillis() - nowCalendar.getTimeInMillis();
+        	long waitStart = 10 * 60 * 1000;
+        	if( distinctTime > waitStart){
+        		return PromotionStatusConstant.WAIT_PROMOTION;
+        	}else{
+        		return PromotionStatusConstant.IMMEDIATE_PROMOTION;
+        	}
+        }
+        
+        //正在进行的
+        if(startCalendar.after(nowCalendar) && nowCalendar.before(endCalendar)){
+        	return PromotionStatusConstant.START_PROMOTION;
+        }
+        
+        //结束的
+        if(nowCalendar.after(endCalendar)){
+        	return PromotionStatusConstant.LOSS_PROMOTION;
+        }
+        return PromotionStatusConstant.WAIT_PROMOTION;
 	}
 
 

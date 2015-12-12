@@ -7,8 +7,6 @@ import org.apache.commons.collections.CollectionUtils;
 
 import com.ms.domain.promotion.bo.PromotionBO;
 import com.ms.domain.promotion.dao.PromotionDAO;
-import com.ms.domain.sku.bo.SkuBO;
-import com.ms.domain.sku.dao.SkuDAO;
 
 public class PromotionConvert {
 

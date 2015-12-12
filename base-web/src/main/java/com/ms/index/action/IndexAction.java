@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ms.domain.promotion.bo.PromotionInfoBO;
+import com.ms.domain.promotion.bo.PromotionBriefBOInfo;
+import com.ms.domain.promotion.bo.PromotionDetailInfoBO;
+import com.ms.domian.action.promotion.vo.PromotionBriefVOInfo;
 import com.ms.service.promotion.face.IPromotionService;
 
 import base.test.base.action.BaseAction;
@@ -17,7 +19,8 @@ public class IndexAction extends BaseAction{
 	private IPromotionService iPromotionService;
 	
     public String showIndex() {
-    	List<PromotionInfoBO> promotionInfoList = iPromotionService.queryLastNumPromotion(1);
+    	List<PromotionBriefBOInfo> promotionInfoList = iPromotionService.queryLastPromotionInfoForIndex(8);
+    	
     	String promotionInfoStr = JsonUtil.toJson(promotionInfoList);
     	Map<String, Object> parmKeyValue = new HashMap<String, Object>();
     	parmKeyValue.put("promotionInfoList",promotionInfoList);

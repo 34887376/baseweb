@@ -1,0 +1,52 @@
+/*首页头部flash*/
+.killBodytopDivStyle{
+	display: block;
+	 position: absolute;
+	 top: 10%;
+	 left: 0%;
+	 width: 100%;
+	 padding: 1px 1px;
+	 border: 1px solid #000000;
+	 background-color: white;
+	 z-index:1002;
+	 overflow: auto;
+	 text-align:center;
+     margin-bottom: 20px;
+}
+
+/*首页内容样式*/
+.killBodyContentDivStyle{
+	display: block;
+	position: absolute;
+	top: 21%;
+	width: 82%;
+	left: 15%;
+}
+.killContentTableStyle{
+	border:3px none #000;
+	text-align:center;
+}
+
+.killContentTextNameStyle{
+	text-align:center;
+	color:red;
+	text-shadow: 5px 5px 5px #FF0000;
+	font:blod 12px "宋体";
+}
+
+.killContentTextPriceStyle{
+	text-align:center;
+	color:red;
+	text-shadow: 5px 5px 5px #FF0000;
+	font:blod 12px "宋体";
+}
+
+.crashBuyButtonStyle{
+	
+}
+
+/*首页底部定位*/
+.indexBodyBootomDivStyle{
+	display: block;
+	margin-top:900px;
+}

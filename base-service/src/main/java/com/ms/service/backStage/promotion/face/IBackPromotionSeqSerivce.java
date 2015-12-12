@@ -9,7 +9,7 @@ public interface IBackPromotionSeqSerivce {
 	/**
 	 * 后台刷新促销信息到redis中
 	 */
-	void refreshBackPromotionInfoToRedis(long startPromotionId);
+	boolean refreshBackPromotionInfoToRedis(long startPromotionId);
 	
 	
 	/**
